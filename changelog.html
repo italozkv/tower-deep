@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tower Deep — Changelog</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+    :root{--gold:#c9a84c;--gold-light:#f0d080;--gold-dim:#7a6030;--ink:#080704;--divine:#e8c96a;--glow:rgba(201,168,76,0.15);}
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+    body{background:var(--ink);color:var(--divine);font-family:'EB Garamond',serif;font-size:1.1rem;line-height:1.75;overflow-x:hidden;min-height:100vh}
+    .stars-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+    .stars-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(1px 1px at 8% 15%,rgba(201,168,76,.7) 0%,transparent 100%),radial-gradient(1px 1px at 22% 72%,rgba(201,168,76,.4) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 37% 8%,rgba(240,208,128,.8) 0%,transparent 100%),radial-gradient(1px 1px at 53% 50%,rgba(201,168,76,.5) 0%,transparent 100%),radial-gradient(2px 2px at 80% 78%,rgba(240,208,128,.6) 0%,transparent 100%),radial-gradient(1px 1px at 91% 12%,rgba(201,168,76,.5) 0%,transparent 100%),radial-gradient(2px 2px at 31% 43%,rgba(240,208,128,.9) 0%,transparent 100%),radial-gradient(1px 1px at 75% 58%,rgba(201,168,76,.4) 0%,transparent 100%),radial-gradient(1px 1px at 19% 35%,rgba(201,168,76,.4) 0%,transparent 100%);animation:twinkle 9s ease-in-out infinite alternate}
+    .stars-bg::after{content:'';position:absolute;inset:0;background-image:radial-gradient(1.5px 1.5px at 63% 18%,rgba(240,208,128,.7) 0%,transparent 100%),radial-gradient(1px 1px at 44% 92%,rgba(201,168,76,.5) 0%,transparent 100%),radial-gradient(2px 2px at 11% 7%,rgba(240,208,128,.8) 0%,transparent 100%),radial-gradient(1px 1px at 50% 3%,rgba(201,168,76,.6) 0%,transparent 100%);animation:twinkle 13s ease-in-out infinite alternate-reverse}
+    @keyframes twinkle{0%{opacity:.5}100%{opacity:1}}
+    .nebula-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 50% at 15% 25%,rgba(42,74,122,.10) 0%,transparent 70%),radial-gradient(ellipse 55% 65% at 85% 75%,rgba(139,26,26,.07) 0%,transparent 70%),radial-gradient(ellipse 90% 35% at 50% 5%,rgba(201,168,76,.04) 0%,transparent 70%)}
+    .site-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;background:rgba(8,7,4,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,.12)}
+    .nav-logo{font-family:'Cinzel Decorative',serif;font-size:.9rem;font-weight:700;color:var(--gold-light);text-decoration:none;letter-spacing:.1em;text-shadow:0 0 20px rgba(201,168,76,.4)}
+    .nav-links{display:flex;gap:4px;list-style:none}.nav-links a{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;padding:6px 16px;border:1px solid transparent;transition:all .25s ease}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold-light);border-color:rgba(201,168,76,.3);background:rgba(201,168,76,.06)}
+    .nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}.nav-hamburger span{display:block;width:22px;height:1px;background:var(--gold-dim);transition:all .3s}
+    .page{position:relative;z-index:1;padding-top:60px}
+    .section-eyebrow{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:12px;display:block}
+    .btn-divine{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-light);background:none;border:1px solid var(--gold);padding:12px 32px;cursor:pointer;text-decoration:none;display:inline-block;position:relative;overflow:hidden;transition:color .3s,box-shadow .3s}
+    .btn-divine::before{content:'';position:absolute;inset:0;background:var(--glow);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+    .btn-divine:hover{box-shadow:0 0 24px rgba(201,168,76,.2)}.btn-divine:hover::before{transform:scaleX(1)}
+    .scroll-top{position:fixed;bottom:28px;right:28px;width:40px;height:40px;border:1px solid var(--gold-dim);background:rgba(8,7,4,.9);color:var(--gold);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transform:rotate(45deg);opacity:0;transition:opacity .3s,border-color .3s;z-index:99}
+    .scroll-top span{transform:rotate(-45deg);display:block}.scroll-top:hover{border-color:var(--gold)}.scroll-top.show{opacity:1}
+    .site-footer{text-align:center;padding:60px 24px 40px;border-top:1px solid rgba(201,168,76,.1);margin-top:80px}
+    .footer-logo{font-family:'Cinzel Decorative',serif;font-size:1.2rem;color:var(--gold-dim);letter-spacing:.2em;margin-bottom:16px;display:block}
+    .site-footer p{font-size:.8rem;color:rgba(201,168,76,.3);letter-spacing:.1em;font-style:italic}.site-footer a{color:var(--gold-dim);text-decoration:none;transition:color .3s}.site-footer a:hover{color:var(--gold)}
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-24px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:700px){.nav-links{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:rgba(8,7,4,.97);border-bottom:1px solid rgba(201,168,76,.15);padding:12px 0}.nav-links.open{display:flex}.nav-links a{padding:12px 24px;border:none}.nav-hamburger{display:flex}.site-nav{padding:0 20px}}
+
+    .page-hero { text-align: center; padding: 80px 24px 60px; }
+    .page-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; color: var(--gold-light); text-shadow: 0 0 50px rgba(201,168,76,.4); animation: fadeDown .8s ease both; }
+    .page-sub { font-family: 'Cinzel', serif; font-size: .75rem; letter-spacing: .4em; text-transform: uppercase; color: var(--gold-dim); margin-top: 12px; animation: fadeDown 1s ease both; }
+    .page-desc { font-style: italic; color: rgba(240,208,128,.5); max-width: 480px; margin: 20px auto 0; animation: fadeDown 1.2s ease both; }
+
+    .changelog-wrap { max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+
+    /* LOADING */
+    .loading { text-align: center; padding: 80px 24px; color: var(--gold-dim); font-style: italic; }
+    .spinner {
+      width: 36px; height: 36px; border: 1px solid rgba(201,168,76,.2);
+      border-top-color: var(--gold); border-radius: 50%;
+      animation: spin 1s linear infinite; margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-box { text-align: center; padding: 48px; border: 1px solid rgba(139,26,26,.3); background: rgba(139,26,26,.05); font-style: italic; color: rgba(240,208,128,.5); }
+
+    /* ENTRIES */
+    .changelog { display: flex; flex-direction: column; }
+    .entry {
+      display: grid; grid-template-columns: 120px 1fr; gap: 0 32px;
+      position: relative; padding-bottom: 48px;
+    }
+    .entry::before { content:''; position:absolute; left:119px; top:24px; bottom:0; width:1px; background:linear-gradient(180deg,var(--gold-dim) 0%,transparent 100%); }
+    .entry:last-child::before { display:none; }
+    .entry::after { content:''; position:absolute; left:113px; top:18px; width:13px; height:13px; border:1px solid var(--gold); background:var(--ink); transform:rotate(45deg); box-shadow:0 0 12px rgba(201,168,76,.35); }
+    .entry-date { text-align:right; padding-top:14px; padding-right:24px; }
+    .entry-date .version { font-family:'Cinzel',serif; font-size:.85rem; color:var(--gold); display:block; letter-spacing:.1em; }
+    .entry-date .date    { font-size:.75rem; color:var(--gold-dim); font-style:italic; }
+    .entry-body { background:linear-gradient(135deg,rgba(36,30,12,.8),rgba(20,16,6,.9)); border:1px solid rgba(201,168,76,.12); border-left:3px solid var(--gold-dim); padding:24px 28px; position:relative; overflow:hidden; }
+    .entry-body::before { content:''; position:absolute; top:0; right:0; width:80px; height:80px; background:radial-gradient(circle at top right,rgba(201,168,76,.06),transparent 70%); }
+    .entry-title { font-family:'Cinzel',serif; font-size:1.1rem; color:var(--gold-light); margin-bottom:6px; letter-spacing:.05em; }
+    .entry-subtitle { font-size:.85rem; font-style:italic; color:rgba(201,168,76,.45); margin-bottom:16px; }
+    .tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+    .tag { font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.2em; padding:3px 10px; text-transform:uppercase; border:1px solid; }
+    .tag.novo    { color:#6fc98a; border-color:rgba(111,201,138,.4); background:rgba(111,201,138,.06); }
+    .tag.fix     { color:#6a9fd8; border-color:rgba(106,159,216,.4); background:rgba(106,159,216,.06); }
+    .tag.balance { color:#d8a06a; border-color:rgba(216,160,106,.4); background:rgba(216,160,106,.06); }
+    .tag.evento  { color:#d86aaa; border-color:rgba(216,106,170,.4); background:rgba(216,106,170,.06); }
+    .tag.divino  { color:var(--gold-light); border-color:rgba(201,168,76,.4); background:rgba(201,168,76,.06); }
+    .changes-list { list-style:none; display:flex; flex-direction:column; gap:8px; }
+    .changes-list li { padding-left:20px; position:relative; font-size:.93rem; color:rgba(240,208,128,.8); }
+    .changes-list li::before { content:'✦'; position:absolute; left:0; color:var(--gold-dim); font-size:.6rem; top:6px; }
+
+    /* HERALD */
+    .herald { margin-top:16px; padding:36px; border:1px solid rgba(201,168,76,.2); background:linear-gradient(135deg,rgba(36,30,12,.7),rgba(10,8,4,.9)); text-align:center; position:relative; overflow:hidden; }
+    .herald::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center,rgba(201,168,76,.05),transparent 70%); animation:herald-pulse 5s ease-in-out infinite; }
+    @keyframes herald-pulse { 0%,100%{opacity:.5} 50%{opacity:1} }
+    .herald h3 { font-family:'Cinzel',serif; font-size:.75rem; letter-spacing:.4em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:10px; }
+    .herald p  { font-style:italic; color:rgba(240,208,128,.6); }
+
+    /* EMPTY */
+    .empty { text-align:center; padding:80px 24px; font-style:italic; color:var(--gold-dim); }
+
+    @media (max-width:600px) {
+      .entry { grid-template-columns:1fr; padding-left:24px; }
+      .entry::before { left:7px; top:8px; }
+      .entry::after  { left:1px; top:4px; width:11px; height:11px; }
+      .entry-date    { text-align:left; padding-right:0; padding-left:8px; padding-top:0; margin-bottom:12px; }
+    }
+  </style>
+</head>
+<body>
+<div class="stars-bg"></div>
+<div class="nebula-bg"></div>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-logo">⚜ Tower Deep</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="changelog.html" class="active">Changelog</a></li>
+    <li><a href="roadmap.html">Roadmap</a></li>
+    <li><a href="votos.html">Votos</a></li>
+    <li><a href="https://www.roblox.com/pt/games/136302244140571/Tower-Deep" target="_blank">▶ Jogar</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="page">
+  <div class="page-hero">
+    <h1 class="page-title">Decretos Divinos</h1>
+    <p class="page-sub">Pergaminhos do Tempo</p>
+    <p class="page-desc">Os deuses observam. Cada torre erguida, cada onda enfrentada — tudo registrado nos pergaminhos eternos.</p>
+  </div>
+
+  <div class="changelog-wrap">
+    <div id="changelog-container">
+      <div class="loading"><div class="spinner"></div>Invocando os pergaminhos...</div>
+    </div>
+    <div id="herald-wrap" style="margin-top:48px;display:none;">
+      <div class="herald">
+        <div style="font-size:2rem;margin-bottom:12px;">🔱</div>
+        <h3>Próximo Decreto Divino</h3>
+        <p id="herald-text"></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <span class="footer-logo">✦ TD ✦</span>
+    <p>Tower Deep &copy; 2026 — Um jogo criado pelos mortais, abençoado pelos deuses.</p>
+    <p style="margin-top:8px"><a href="index.html">Início</a> · <a href="roadmap.html">Roadmap</a> · <a href="votos.html">Votos</a></p>
+  </footer>
+</div>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><span>↑</span></button>
+
+<script>
+  // ══════════════════════════════════════════
+  //  Cole aqui o ID do seu Gist
+  const GIST_ID = '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';
+  // ══════════════════════════════════════════
+
+  const TAG_LABELS = { novo:'🟢 Novo', fix:'🔵 Fix', balance:'🟠 Balance', evento:'🩷 Evento', divino:'✨ Divino' };
+
+  function parseBold(t) { return t.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); }
+
+  function buildEntry(u) {
+    const tags = (u.tags||[]).map(t => `<span class="tag ${t}">${TAG_LABELS[t]||t}</span>`).join('');
+    const items = (u.mudancas||[]).map(m => `<li>${parseBold(m)}</li>`).join('');
+    return `
+      <article class="entry reveal">
+        <div class="entry-date">
+          <span class="version">${u.versao}</span>
+          <span class="date">${u.data}</span>
+        </div>
+        <div class="entry-body">
+          <h2 class="entry-title">${u.titulo}</h2>
+          ${u.subtitulo ? `<p class="entry-subtitle">"${u.subtitulo}"</p>` : ''}
+          <div class="tags">${tags}</div>
+          <ul class="changes-list">${items}</ul>
+        </div>
+      </article>`;
+  }
+
+  // Fallback data shown when Gist not configured
+  const FALLBACK = {
+    updates: [
+      { versao:'v0.3.0', data:'Mar 2026', titulo:'A Ascensão de Ares', subtitulo:'O deus da guerra desceu das alturas eternas.', tags:['novo','divino'], mudancas:['**Torre de Ares** adicionada — chamas sagradas em área','**Habilidade Divina:** Fúria do Olimpo','Novo inimigo: **Guardiões de Tártaro**','Novo mapa: **Ruínas do Olimpo**'] },
+      { versao:'v0.2.5', data:'Fev 2026', titulo:'Correções dos Oráculos', subtitulo:'Os oráculos viram as falhas e as selaram.', tags:['fix','balance'], mudancas:['Corrigido bug na **Torre de Poseidon** com inimigos voadores','Inimigos da onda 15+ com **+15% velocidade**','Corrigido crash na cutscene de vitória','Melhora geral de **performance**'] },
+      { versao:'v0.1.0', data:'Dez 2025', titulo:'O Início — Decreto de Zeus', subtitulo:'No princípio, o trovão rompeu o silêncio eterno.', tags:['divino'], mudancas:['Tower Deep lançado — **Alpha Pública**','3 torres básicas disponíveis','**Torre de Zeus** lendária','Primeiro mapa: **Portal dos Deuses**'] },
+    ],
+    proximaUpdate: 'v0.4.0 — A Chegada de Hades · Abril 2026'
+  };
+
+  async function carregar() {
+    const container = document.getElementById('changelog-container');
+    let dados;
+
+    if (GIST_ID === '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') {
+      dados = FALLBACK;
+    } else {
+      try {
+        const res = await fetch(`https://api.github.com/gists/${GIST_ID}`, { headers: { Accept: 'application/vnd.github.v3+json' } });
+        if (!res.ok) throw new Error('Gist não encontrado');
+        const gist = await res.json();
+        dados = JSON.parse(Object.values(gist.files)[0].content);
+      } catch (err) {
+        container.innerHTML = `<div class="error-box">⚠️ Não foi possível invocar os pergaminhos.<br><small style="opacity:.5">${err.message}</small></div>`;
+        return;
+      }
+    }
+
+    if (!dados.updates?.length) {
+      container.innerHTML = '<div class="empty">Nenhum decreto proclamado ainda.</div>';
+      return;
+    }
+
+    container.innerHTML = `<div class="changelog">${dados.updates.map(buildEntry).join('')}</div>`;
+
+    if (dados.proximaUpdate) {
+      document.getElementById('herald-text').innerHTML = `<strong style="color:var(--gold)">${dados.proximaUpdate}</strong>`;
+      document.getElementById('herald-wrap').style.display = 'block';
+    }
+
+    const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.08 });
+    document.querySelectorAll('.entry.reveal').forEach(el => obs.observe(el));
+  }
+
+  carregar();
+  window.addEventListener('scroll', () => document.getElementById('scrollTop').classList.toggle('show', scrollY > 400));
+</script>
+</body>
+</html>

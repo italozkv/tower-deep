@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tower Deep — Dev Panel</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@700;800&display=swap');
+:root{--bg:#080a0e;--bg2:#0d1018;--bg3:#131720;--border:rgba(255,255,255,0.07);--b2:rgba(255,255,255,0.12);--gold:#f0c060;--blue:#4a9eff;--green:#3dd68c;--red:#ff5a5a;--purple:#a78bfa;--orange:#fb923c;--tx:#e2e8f0;--tx2:#94a3b8;--tx3:#475569}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--tx);font-family:'JetBrains Mono',monospace;font-size:13px;display:flex;flex-direction:column}
+
+/* TOPBAR */
+.topbar{height:46px;min-height:46px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:8px;overflow-x:auto;flex-shrink:0}
+.logo{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--gold);white-space:nowrap;margin-right:8px}
+.tab{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 13px;border:none;background:none;color:var(--tx3);cursor:pointer;border-radius:4px;white-space:nowrap;transition:all .15s}
+.tab:hover{color:var(--tx);background:rgba(255,255,255,.05)}
+.tab.on{color:var(--gold);background:rgba(240,192,96,.1);border-bottom:2px solid var(--gold)}
+.save-btn{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 12px;background:rgba(240,192,96,.1);border:1px solid rgba(240,192,96,.3);color:var(--gold);cursor:pointer;border-radius:4px;white-space:nowrap}
+
+/* PANELS */
+.panels{flex:1;overflow:hidden;position:relative}
+.panel{display:none;position:absolute;inset:0;overflow-y:auto;padding:20px;flex-direction:column;gap:16px}
+.panel.on{display:flex}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:6px}
+.ch{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ct{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:.04em}
+.cb{padding:16px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.auto{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+
+/* FORM */
+.fl{display:block;font-size:10px;color:var(--tx3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;margin-top:12px}
+.fl:first-child{margin-top:0}
+input,select,textarea{width:100%;background:var(--bg3);border:1px solid var(--b2);color:var(--tx);font-family:'JetBrains Mono',monospace;font-size:12px;padding:7px 10px;border-radius:4px;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:rgba(240,192,96,.5)}
+select option{background:var(--bg3)}
+textarea{resize:vertical;min-height:70px;line-height:1.6}
+.ir{display:flex;gap:8px}.ir>*{flex:1}
+.btn{font-family:'JetBrains Mono',monospace;font-size:11px;padding:8px 14px;border:1px solid;border-radius:4px;cursor:pointer;transition:all .15s;letter-spacing:.04em}
+.bg{background:rgba(240,192,96,.1);color:var(--gold);border-color:rgba(240,192,96,.3)}.bg:hover{background:rgba(240,192,96,.2)}
+.bb{background:rgba(74,158,255,.1);color:var(--blue);border-color:rgba(74,158,255,.3)}.bb:hover{background:rgba(74,158,255,.2)}
+.bn{background:rgba(61,214,140,.1);color:var(--green);border-color:rgba(61,214,140,.3)}.bn:hover{background:rgba(61,214,140,.2)}
+.br{background:rgba(255,90,90,.08);color:var(--red);border-color:rgba(255,90,90,.25)}.br:hover{background:rgba(255,90,90,.18)}
+.bp{background:rgba(167,139,250,.1);color:var(--purple);border-color:rgba(167,139,250,.3)}.bp:hover{background:rgba(167,139,250,.2)}
+.bw{width:100%;margin-top:12px;display:block;text-align:center}
+
+/* STAT PILLS */
+.pill{display:flex;justify-content:space-between;padding:7px 10px;background:var(--bg3);border-radius:4px;margin-bottom:5px;font-size:11px}
+.pill-l{color:var(--tx2)}.pill-v{font-weight:700}
+
+/* BARS */
+.bar-wrap{margin-bottom:8px}
+.bar-lbl{display:flex;justify-content:space-between;font-size:10px;color:var(--tx3);margin-bottom:3px}
+.bar-track{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;transition:width .5s ease}
+
+/* RESULTS */
+.rbox{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:14px;margin-top:12px}
+.rtitle{font-size:10px;color:var(--tx3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.ok{color:var(--green)}.warn{color:var(--orange)}.bad{color:var(--red)}
+
+/* TOWER CARDS */
+.twcard{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:12px;position:relative}
+.twname{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;margin-bottom:8px}
+.twstat{display:flex;justify-content:space-between;font-size:11px;color:var(--tx2);margin-bottom:3px}
+.twdel{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:13px;transition:color .2s}
+.twdel:hover{color:var(--red)}
+
+/* MAP */
+.map-tools{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.tool{font-size:11px;padding:4px 11px;border:1px solid var(--b2);background:var(--bg3);color:var(--tx2);cursor:pointer;border-radius:4px;transition:all .15s}
+.tool:hover,.tool.on{border-color:var(--gold);color:var(--gold);background:rgba(240,192,96,.07)}
+.map-leg{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;font-size:10px;color:var(--tx3)}
+.leg{display:flex;align-items:center;gap:4px}
+.ldot{width:11px;height:11px;border-radius:2px}
+#mapCanvas{border:1px solid var(--b2);border-radius:3px;display:block;cursor:crosshair;max-width:100%;touch-action:none}
+.map-inf{display:flex;gap:16px;margin-top:8px;font-size:11px;color:var(--tx2)}
+
+/* WAVES */
+.wrow{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.wrow:last-child{border:none}
+.wnum{width:34px;height:34px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;flex-direction:column;gap:1px}
+.wbar{flex:1;font-size:10px}
+.wbar-track{height:16px;background:var(--bg3);border-radius:3px;overflow:hidden;position:relative;margin-top:3px}
+.wseg{position:absolute;top:0;bottom:0;left:0;display:flex;align-items:center;padding:0 5px;font-size:9px;font-weight:700}
+.winfo{width:72px;text-align:right;font-size:10px;color:var(--tx3)}
+
+/* LORE */
+.lore-out{background:var(--bg3);border-left:3px solid var(--gold);padding:14px;border-radius:0 5px 5px 0;margin-top:12px;font-size:12px;line-height:1.9;color:var(--tx2);white-space:pre-wrap;min-height:100px}
+
+/* CONTENT TABLE */
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3);padding:8px 10px;border-bottom:1px solid var(--border)}
+td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.03);font-size:11px;vertical-align:middle}
+tr:hover td{background:rgba(255,255,255,.015)}
+tr:last-child td{border:none}
+.sbadge{display:inline-flex;padding:2px 7px;border-radius:3px;font-size:9px;letter-spacing:.07em;font-weight:600}
+
+/* KANBAN */
+.kanban{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;height:100%;min-height:400px}
+.kcol{background:var(--bg3);border:1px solid var(--border);border-radius:6px;display:flex;flex-direction:column}
+.khead{padding:10px 13px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.kcount{width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.klist{flex:1;padding:10px;display:flex;flex-direction:column;gap:7px;overflow-y:auto;min-height:200px}
+.bcard{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:10px;cursor:grab;transition:border-color .15s}
+.bcard:hover{border-color:var(--b2)}
+.bcard.dragging{opacity:.4}
+.btitle{font-size:11px;margin-bottom:7px}
+.bmeta{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.btag{font-size:9px;padding:2px 6px;border-radius:3px;letter-spacing:.05em}
+.badd{padding:10px;border-top:1px solid var(--border)}
+.badd-in{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--tx);font-family:monospace;font-size:11px;padding:6px 9px;border-radius:4px;outline:none;margin-bottom:6px}
+.badd-in:focus{border-color:rgba(240,192,96,.35)}
+.badd-row{display:flex;gap:5px}
+.badd-sel{flex:1;background:var(--bg2);border:1px solid var(--border);color:var(--tx);font-family:monospace;font-size:10px;padding:5px;border-radius:4px;outline:none}
+
+/* SECTION LABEL */
+.slbl{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;color:var(--tx3);letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.slbl::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* NOTIF */
+.notif{position:fixed;bottom:20px;right:20px;background:var(--bg2);border:1px solid var(--green);color:var(--green);padding:9px 14px;border-radius:5px;font-size:11px;z-index:999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none}
+.notif.on{opacity:1;transform:none}
+
+/* CONTENT TABS */
+.ctabs{display:flex;gap:6px;margin-bottom:14px}
+.ctab{font-size:10px;padding:4px 12px;border:1px solid var(--b2);background:var(--bg3);color:var(--tx2);cursor:pointer;border-radius:4px;transition:all .15s}
+.ctab:hover,.ctab.on{border-color:var(--gold);color:var(--gold);background:rgba(240,192,96,.07)}
+
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
+@media(max-width:700px){.row2,.row3,.kanban{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">TD / dev</div>
+  <button class="tab on"  id="tab-bal"  onclick="go('bal',this)">⚖️ Balanço</button>
+  <button class="tab"     id="tab-wav"  onclick="go('wav',this)">🌊 Ondas</button>
+  <button class="tab"     id="tab-eco"  onclick="go('eco',this)">💰 Economia</button>
+  <button class="tab"     id="tab-map"  onclick="go('map',this)">🗺️ Mapa</button>
+  <button class="tab"     id="tab-lor"  onclick="go('lor',this)">📜 Lore</button>
+  <button class="tab"     id="tab-con"  onclick="go('con',this)">📋 Conteúdo</button>
+  <button class="tab"     id="tab-bug"  onclick="go('bug',this)">🐛 Bugs</button>
+  <button class="save-btn" onclick="saveData()">💾 Salvar</button>
+</div>
+
+<div class="panels">
+
+<!-- ═══════════════════════════════════════════
+  BALANÇO
+═══════════════════════════════════════════ -->
+<div class="panel on" id="p-bal">
+  <div class="row2">
+    <div class="card">
+      <div class="ch"><div class="ct">➕ Adicionar Torre</div></div>
+      <div class="cb">
+        <label class="fl">Nome</label>
+        <input id="tn" placeholder="Torre de Zeus"/>
+        <div class="ir">
+          <div><label class="fl">Dano Base</label><input id="td" type="number" placeholder="50" min="1"/></div>
+          <div><label class="fl">Atk/seg</label><input id="ts" type="number" placeholder="1.5" step="0.1" min="0.1"/></div>
+        </div>
+        <div class="ir">
+          <div><label class="fl">Alcance</label><input id="tr" type="number" placeholder="20" min="1"/></div>
+          <div><label class="fl">Custo 🪙</label><input id="tc" type="number" placeholder="150" min="1"/></div>
+        </div>
+        <div class="ir">
+          <div><label class="fl">Área (1=single)</label><input id="ta" type="number" placeholder="1" min="1" step="0.5"/></div>
+          <div><label class="fl">Tier (1-5)</label><input id="tt" type="number" placeholder="1" min="1" max="5"/></div>
+        </div>
+        <label class="fl">Efeito Especial</label>
+        <select id="te">
+          <option value="1">Nenhum</option>
+          <option value="1.2">Slow (lentidão)</option>
+          <option value="1.3">Burn (dano/tempo)</option>
+          <option value="1.4">Freeze (paralisia)</option>
+          <option value="1.5">Charm (encantamento)</option>
+          <option value="1.6">Chain (corrente)</option>
+        </select>
+        <button class="btn bg bw" onclick="addTower()">Adicionar Torre</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="ct">📊 Análise de Balanço</div></div>
+      <div class="cb" id="bal-result">
+        <div style="color:var(--tx3);text-align:center;padding:40px 0">Adicione 2+ torres para analisar.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ch">
+      <div class="ct">🗼 Torres Cadastradas</div>
+      <span id="tw-count" style="font-size:10px;color:var(--tx3)">0 torres</span>
+    </div>
+    <div class="cb">
+      <div id="tw-grid" class="auto">
+        <div style="color:var(--tx3);font-size:11px;text-align:center;padding:20px;grid-column:1/-1">Nenhuma torre ainda.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  ONDAS
+═══════════════════════════════════════════ -->
+<div class="panel" id="p-wav">
+  <div class="row2">
+    <div class="card">
+      <div class="ch"><div class="ct">⚙️ Configuração das Ondas</div></div>
+      <div class="cb">
+        <div class="ir">
+          <div><label class="fl">Total de Ondas</label><input id="wo" type="number" value="20" min="1" max="100"/></div>
+          <div><label class="fl">HP Base (onda 1)</label><input id="wh" type="number" value="100" min="1"/></div>
+        </div>
+        <div class="ir">
+          <div><label class="fl">Mult. HP por onda</label><input id="wm" type="number" value="1.15" step="0.01" min="1"/></div>
+          <div><label class="fl">Inimigos base</label><input id="wi" type="number" value="10" min="1"/></div>
+        </div>
+        <div class="ir">
+          <div><label class="fl">Mult. Qtd por onda</label><input id="wq" type="number" value="1.08" step="0.01" min="1"/></div>
+          <div><label class="fl">DPS por Torre</label><input id="wd" type="number" value="200" min="1"/></div>
+        </div>
+        <label class="fl">Qtd. Torres Ativas</label>
+        <input id="wt" type="number" value="5" min="1"/>
+        <button class="btn bb bw" onclick="simWaves()">▶ Simular</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="ct">📈 Resultado Onda a Onda</div></div>
+      <div class="cb" style="overflow-y:auto;max-height:520px" id="wav-result">
+        <div style="color:var(--tx3);text-align:center;padding:40px 0">Configure e clique em Simular.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  ECONOMIA
+═══════════════════════════════════════════ -->
+<div class="panel" id="p-eco">
+  <div class="row2">
+    <div class="card">
+      <div class="ch"><div class="ct">💰 Parâmetros de Ouro</div></div>
+      <div class="cb">
+        <div class="ir">
+          <div><label class="fl">Ouro por inimigo</label><input id="eg" type="number" value="5" min="1"/></div>
+          <div><label class="fl">Inimigos por onda</label><input id="ei" type="number" value="15" min="1"/></div>
+        </div>
+        <div class="ir">
+          <div><label class="fl">Bônus fim de onda</label><input id="eb" type="number" value="25" min="0"/></div>
+          <div><label class="fl">Ouro inicial</label><input id="es" type="number" value="100" min="0"/></div>
+        </div>
+        <label class="fl">Total de Ondas</label>
+        <input id="ew" type="number" value="20" min="1"/>
+        <div class="slbl" style="margin-top:16px">Torres (nome / custo / upgrade)</div>
+        <div id="eco-tw">
+          <div class="ir"><div><input placeholder="Zeus" class="en"/></div><div><input type="number" placeholder="150" class="ec" min="1"/></div><div><input type="number" placeholder="80" class="eu" min="1"/></div></div>
+          <div class="ir"><div><input placeholder="Poseidon" class="en"/></div><div><input type="number" placeholder="200" class="ec" min="1"/></div><div><input type="number" placeholder="100" class="eu" min="1"/></div></div>
+          <div class="ir"><div><input placeholder="Ares" class="en"/></div><div><input type="number" placeholder="250" class="ec" min="1"/></div><div><input type="number" placeholder="120" class="eu" min="1"/></div></div>
+        </div>
+        <button class="btn bg bw" onclick="calcEco()">Calcular Economia</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="ct">📊 Análise Econômica</div></div>
+      <div class="cb" id="eco-result">
+        <div style="color:var(--tx3);text-align:center;padding:40px 0">Preencha e clique em Calcular.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  MAPA
+═══════════════════════════════════════════ -->
+<div class="panel" id="p-map">
+  <div class="card">
+    <div class="ch"><div class="ct">🗺️ Editor de Mapa</div></div>
+    <div class="cb">
+      <div class="map-tools">
+        <button class="tool on" id="tool-path"     onclick="setTool('path',this)">🟫 Caminho</button>
+        <button class="tool"    id="tool-tower"    onclick="setTool('tower',this)">🗼 Torre</button>
+        <button class="tool"    id="tool-start"    onclick="setTool('start',this)">🟢 Início</button>
+        <button class="tool"    id="tool-end"      onclick="setTool('end',this)">🔴 Fim</button>
+        <button class="tool"    id="tool-obstacle" onclick="setTool('obstacle',this)">🌲 Obstáculo</button>
+        <button class="tool"    id="tool-erase"    onclick="setTool('erase',this)">🧹 Apagar</button>
+        <div style="flex:1"></div>
+        <button class="tool" onclick="mapClear()">🗑️ Limpar</button>
+        <button class="tool" onclick="mapExport()">📋 Exportar</button>
+      </div>
+      <div class="map-leg">
+        <div class="leg"><div class="ldot" style="background:#6b4c2a"></div>Caminho</div>
+        <div class="leg"><div class="ldot" style="background:#1e3a8a"></div>Torre</div>
+        <div class="leg"><div class="ldot" style="background:#14532d"></div>Início</div>
+        <div class="leg"><div class="ldot" style="background:#7f1d1d"></div>Fim</div>
+        <div class="leg"><div class="ldot" style="background:#166534"></div>Obstáculo</div>
+      </div>
+      <canvas id="mapCanvas"></canvas>
+      <div class="map-inf">
+        <span>Caminho: <strong id="mp-path" style="color:var(--gold)">0</strong> células</span>
+        <span>Torres: <strong id="mp-tower" style="color:var(--blue)">0</strong></span>
+        <span>Grid: 32×20</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  LORE
+═══════════════════════════════════════════ -->
+<div class="panel" id="p-lor">
+  <div class="row2">
+    <div class="card">
+      <div class="ch"><div class="ct">📜 Configurar Lore</div></div>
+      <div class="cb">
+        <label class="fl">Tipo</label>
+        <select id="lt">
+          <option value="torre">Torre / Deus</option>
+          <option value="inimigo">Inimigo</option>
+          <option value="mapa">Mapa</option>
+          <option value="item">Item / Bênção</option>
+          <option value="evento">Evento</option>
+        </select>
+        <label class="fl">Nome</label>
+        <input id="ln" placeholder="ex: Torre de Cronos"/>
+        <label class="fl">Elemento / Domínio</label>
+        <select id="le">
+          <option value="fogo">🔥 Fogo / Guerra</option>
+          <option value="água">🌊 Água / Mar</option>
+          <option value="raio">⚡ Raio / Céu</option>
+          <option value="trevas">💀 Trevas / Morte</option>
+          <option value="tempo">⏳ Tempo / Cosmos</option>
+          <option value="natureza">🌿 Natureza / Caça</option>
+          <option value="forja">🔨 Forja / Criação</option>
+          <option value="amor">💗 Amor / Beleza</option>
+        </select>
+        <label class="fl">Tom</label>
+        <select id="lto">
+          <option value="epico">Épico e grandioso</option>
+          <option value="misterioso">Misterioso e sombrio</option>
+          <option value="tragico">Trágico e melancólico</option>
+          <option value="temivel">Temível e ameaçador</option>
+        </select>
+        <label class="fl">Notas extras (opcional)</label>
+        <textarea id="lno" placeholder="ex: foi banido do Olimpo, tem fraqueza a gelo..."></textarea>
+        <button class="btn bp bw" onclick="genLore()">✨ Gerar Lore</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="ct">📖 Lore Gerada</div></div>
+      <div class="cb">
+        <div class="lore-out" id="lore-out">A lore aparecerá aqui...</div>
+        <div class="ir" style="margin-top:10px">
+          <button class="btn bg" onclick="copyLore()">📋 Copiar</button>
+          <button class="btn bp" onclick="genLore()">🔄 Regerar</button>
+        </div>
+        <div id="lore-hist"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  CONTEÚDO
+═══════════════════════════════════════════ -->
+<div class="panel" id="p-con">
+  <div class="ctabs">
+    <button class="ctab on" onclick="showCon('deuses',this)">⚡ Deuses</button>
+    <button class="ctab" onclick="showCon('inimigos',this)">💀 Inimigos</button>
+    <button class="ctab" onclick="showCon('mapas',this)">🗺️ Mapas</button>
+  </div>
+
+  <div id="con-deuses" class="card">
+    <div class="ch">
+      <div class="ct">⚡ Deuses & Torres</div>
+      <button class="btn bg" onclick="addRow('tb-d','deus')" style="padding:4px 10px;font-size:10px">+ Linha</button>
+    </div>
+    <div class="cb" style="overflow-x:auto">
+      <table id="tb-d">
+        <thead><tr><th>Deus</th><th>Torre</th><th>Elemento</th><th>Habilidade</th><th>Status</th><th>Tier</th><th></th></tr></thead>
+        <tbody>
+          <tr><td contenteditable>Zeus</td><td contenteditable>Torre do Raio</td><td contenteditable>⚡ Raio</td><td contenteditable>Tempestade do Olimpo</td><td><span class="sbadge" style="background:rgba(61,214,140,.1);color:var(--green)">LANÇADO</span></td><td contenteditable>⭐⭐⭐</td><td><button class="btn br" onclick="this.closest('tr').remove()" style="padding:2px 7px;font-size:10px">✕</button></td></tr>
+          <tr><td contenteditable>Poseidon</td><td contenteditable>Torre das Marés</td><td contenteditable>🌊 Água</td><td contenteditable>Tsunami Eterno</td><td><span class="sbadge" style="background:rgba(61,214,140,.1);color:var(--green)">LANÇADO</span></td><td contenteditable>⭐⭐⭐</td><td><button class="btn br" onclick="this.closest('tr').remove()" style="padding:2px 7px;font-size:10px">✕</button></td></tr>
+          <tr><td contenteditable>Ares</td><td contenteditable>Torre da Guerra</td><td contenteditable>🔥 Fogo</td><td contenteditable>Fúria do Olimpo</td><td><span class="sbadge" style="background:rgba(61,214,140,.1);color:var(--green)">LANÇADO</span></td><td contenteditable>⭐⭐⭐⭐</td><td><button class="btn br" onclick="this.closest('tr').remove()" style="padding:2px 7px;font-size:10px">✕</button></td></tr>
+          <tr><td contenteditable>Hades</td><td contenteditable>Torre das Sombras</td><td contenteditable>💀 Trevas</td><td contenteditable>Julgamento das Almas</td><td><span class="sbadge" style="background:rgba(74,158,255,.1);color:var(--blue)">EM DEV</span></td><td contenteditable>⭐⭐⭐⭐</td><td><button class="btn br" onclick="this.closest('tr').remove()" style="padding:2px 7px;font-size:10px">✕</button></td></tr>
+          <tr><td contenteditable>Artemis</td><td contenteditable>Torre da Caça</td><td contenteditable>🌿 Natureza</td><td contenteditable>Flecha Sagrada</td><td><span class="sbadge" style="background:rgba(251,146,60,.1);color:var(--orange)">PLANEJADO</span></td><td contenteditable>⭐⭐⭐⭐⭐</td><td><button class="btn br" onclick="this.closest('tr').remove()" style="padding:2px 7px;font-size:10px">✕</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="con-inimigos" class="card" style="display:none">
+    <div class="ch">
+      <div class="ct">💀 Inimigos</div>
+      <button class="btn bg" onclick="addRow('tb-i','inimigo')" style="padding:4px 10px;font-size:10px">+ Linha</button>
+    </div>
+    <div class="cb" style="overflow-x:auto">
+      <table id="tb-i">
+        <thead><tr><th>Nome</th><th>HP</th><th>Velocidade</th><th>Fraqueza</th><th>Resistência</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr><td contenteditable>Guardião de Tártaro</td><td contenteditable>500</td><td contenteditable>Lento</td><td contenteditable>🌊 Gelo</td><td contenteditable>🔥 Fogo</td><td><span class="sbadge" style="background:rgba(61,214,140,.1);color:var(--green)">ATIVO</span></td><td><button class="btn br" onclick="this.closest('tr').remove()" style="padding:2px 7px;font-size:10px">✕</button></td></tr>
+          <tr><td contenteditable>Sereia Corrompida</td><td contenteditable>200</td><td contenteditable>Médio</td><td contenteditable>⚡ Raio</td><td contenteditable>—</td><td><span class="sbadge" style="background:rgba(61,214,140,.1);color:var(--green)">ATIVO</span></td><td><button class="btn br" onclick="this.closest('tr').remove()" style="padding:2px 7px;font-size:10px">✕</button></td></tr>
+          <tr><td contenteditable>Alma Errante</td><td contenteditable>80</td><td contenteditable>Rápido</td><td contenteditable>🔥 Fogo</td><td contenteditable>—</td><td><span class="sbadge" style="background:rgba(74,158,255,.1);color:var(--blue)">EM DEV</span></td><td><button class="btn br" onclick="this.closest('tr').remove()" style="padding:2px 7px;font-size:10px">✕</button></td></tr>
+          <tr><td contenteditable>Ceronte</td><td contenteditable>2000</td><td contenteditable>Muito lento</td><td contenteditable>—</td><td contenteditable>Tudo</td><td><span class="sbadge" style="background:rgba(74,158,255,.1);color:var(--blue)">EM DEV</span></td><td><button class="btn br" onclick="this.closest('tr').remove()" style="padding:2px 7px;font-size:10px">✕</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="con-mapas" class="card" style="display:none">
+    <div class="ch">
+      <div class="ct">🗺️ Mapas</div>
+      <button class="btn bg" onclick="addRow('tb-m','mapa')" style="padding:4px 10px;font-size:10px">+ Linha</button>
+    </div>
+    <div class="cb" style="overflow-x:auto">
+      <table id="tb-m">
+        <thead><tr><th>Nome</th><th>Ondas</th><th>Dificuldade</th><th>Tema</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr><td contenteditable>Portal dos Deuses</td><td contenteditable>20</td><td contenteditable>⭐ Fácil</td><td contenteditable>Olimpo</td><td><span class="sbadge" style="background:rgba(61,214,140,.1);color:var(--green)">LANÇADO</span></td><td><button class="btn br" onclick="this.closest('tr').remove()" style="padding:2px 7px;font-size:10px">✕</button></td></tr>
+          <tr><td contenteditable>Ruínas do Olimpo</td><td contenteditable>25</td><td contenteditable>⭐⭐ Médio</td><td contenteditable>Olimpo</td><td><span class="sbadge" style="background:rgba(61,214,140,.1);color:var(--green)">LANÇADO</span></td><td><button class="btn br" onclick="this.closest('tr').remove()" style="padding:2px 7px;font-size:10px">✕</button></td></tr>
+          <tr><td contenteditable>Portões do Érebo</td><td contenteditable>30</td><td contenteditable>⭐⭐⭐ Difícil</td><td contenteditable>Submundo</td><td><span class="sbadge" style="background:rgba(74,158,255,.1);color:var(--blue)">EM DEV</span></td><td><button class="btn br" onclick="this.closest('tr').remove()" style="padding:2px 7px;font-size:10px">✕</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  BUGS
+═══════════════════════════════════════════ -->
+<div class="panel" id="p-bug">
+  <div class="kanban">
+    <div class="kcol" ondragover="event.preventDefault()" ondrop="dropBug(event,'open')">
+      <div class="khead">
+        <span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--red)">🔴 Aberto</span>
+        <div class="kcount" style="background:rgba(255,90,90,.15);color:var(--red)" id="kc-open">0</div>
+      </div>
+      <div class="klist" id="kl-open"></div>
+      <div class="badd">
+        <input class="badd-in" id="bi-open" placeholder="Descrever bug..." onkeydown="if(event.key==='Enter')addBug('open')"/>
+        <div class="badd-row">
+          <select class="badd-sel" id="bp-open">
+            <option value="alta">🔴 Alta</option>
+            <option value="media">🟡 Média</option>
+            <option value="baixa">🟢 Baixa</option>
+          </select>
+          <select class="badd-sel" id="bc-open">
+            <option>Torre</option><option>Inimigo</option><option>UI</option><option>Mapa</option><option>Performance</option>
+          </select>
+          <button class="btn br" onclick="addBug('open')" style="padding:4px 10px">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="kcol" ondragover="event.preventDefault()" ondrop="dropBug(event,'prog')">
+      <div class="khead">
+        <span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--orange)">🟡 Em Progresso</span>
+        <div class="kcount" style="background:rgba(251,146,60,.15);color:var(--orange)" id="kc-prog">0</div>
+      </div>
+      <div class="klist" id="kl-prog"></div>
+    </div>
+    <div class="kcol" ondragover="event.preventDefault()" ondrop="dropBug(event,'done')">
+      <div class="khead">
+        <span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--green)">🟢 Resolvido</span>
+        <div class="kcount" style="background:rgba(61,214,140,.15);color:var(--green)" id="kc-done">0</div>
+      </div>
+      <div class="klist" id="kl-done"></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /panels -->
+<div class="notif" id="notif"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+var towers = JSON.parse(localStorage.getItem('td2_towers') || '[]');
+var bugs   = JSON.parse(localStorage.getItem('td2_bugs')   || '{"open":[],"prog":[],"done":[]}');
+var loreHist = [];
+var mapTool  = 'path';
+var mapGrid  = [];
+var painting = false;
+var dragBugId   = null;
+var dragBugCol  = null;
+const MCOLS = 32, MROWS = 20;
+
+// ═══════════════════════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════════════════════
+function go(id, btn) {
+  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('on'); });
+  document.querySelectorAll('.tab').forEach(function(b){ b.classList.remove('on'); });
+  document.getElementById('p-' + id).classList.add('on');
+  btn.classList.add('on');
+  if (id === 'map') { setTimeout(initMap, 60); }
+  if (id === 'bug') { renderBugs(); }
+}
+
+function saveData() {
+  localStorage.setItem('td2_towers', JSON.stringify(towers));
+  localStorage.setItem('td2_bugs',   JSON.stringify(bugs));
+  notif('✓ Dados salvos!');
+}
+
+function notif(msg) {
+  var n = document.getElementById('notif');
+  n.textContent = msg;
+  n.classList.add('on');
+  setTimeout(function(){ n.classList.remove('on'); }, 2200);
+}
+
+// ═══════════════════════════════════════════════════════════
+// BALANÇO
+// ═══════════════════════════════════════════════════════════
+function pwScore(t) {
+  var dps   = t.dmg * t.spd;
+  var reach = Math.log(t.range + 1) * 5;
+  var area  = Math.pow(t.aoe, 0.6) * 10;
+  var raw   = (dps * reach * area * t.eff) / t.cost;
+  return Math.round(raw * 10) / 10;
+}
+
+function addTower() {
+  var name = document.getElementById('tn').value.trim();
+  var dmg  = parseFloat(document.getElementById('td').value);
+  var spd  = parseFloat(document.getElementById('ts').value);
+  var rng  = parseFloat(document.getElementById('tr').value);
+  var cost = parseFloat(document.getElementById('tc').value);
+  var aoe  = parseFloat(document.getElementById('ta').value) || 1;
+  var tier = parseInt(document.getElementById('tt').value)   || 1;
+  var eff  = parseFloat(document.getElementById('te').value) || 1;
+  if (!name || !dmg || !spd || !rng || !cost) { notif('⚠️ Preencha todos os campos!'); return; }
+  towers.push({ id: Date.now(), name:name, dmg:dmg, spd:spd, range:rng, cost:cost, aoe:aoe, tier:tier, eff:eff });
+  renderTowers();
+  analyzeBalance();
+  notif('✓ Torre adicionada');
+}
+
+function delTower(id) {
+  towers = towers.filter(function(t){ return t.id !== id; });
+  renderTowers();
+  analyzeBalance();
+}
+
+function renderTowers() {
+  var grid = document.getElementById('tw-grid');
+  document.getElementById('tw-count').textContent = towers.length + ' torres';
+  if (!towers.length) {
+    grid.innerHTML = '<div style="color:var(--tx3);text-align:center;padding:20px;grid-column:1/-1;font-size:11px">Nenhuma torre cadastrada.</div>';
+    return;
+  }
+  var scores = towers.map(pwScore);
+  var maxPw  = Math.max.apply(null, scores);
+  grid.innerHTML = towers.map(function(t, i) {
+    var pw  = scores[i];
+    var pct = maxPw > 0 ? Math.round((pw / maxPw) * 100) : 0;
+    var col = pct > 80 ? 'var(--red)' : pct > 50 ? 'var(--orange)' : 'var(--green)';
+    return '<div class="twcard">'
+      + '<div class="twname">' + t.name + ' <span style="font-size:10px;color:var(--tx3)">(T' + t.tier + ')</span></div>'
+      + '<button class="twdel" onclick="delTower(' + t.id + ')">✕</button>'
+      + '<div class="twstat"><span>DPS</span><span style="color:var(--blue)">' + Math.round(t.dmg * t.spd) + '</span></div>'
+      + '<div class="twstat"><span>Alcance</span><span>' + t.range + '</span></div>'
+      + '<div class="twstat"><span>Custo</span><span style="color:var(--gold)">' + t.cost + ' 🪙</span></div>'
+      + '<div class="twstat"><span>Área</span><span>' + t.aoe + 'x</span></div>'
+      + '<div style="height:4px;background:var(--bg2);border-radius:2px;margin-top:8px"><div style="height:100%;width:' + pct + '%;background:' + col + ';border-radius:2px"></div></div>'
+      + '<div style="font-size:10px;color:var(--tx3);margin-top:5px">Score: <strong style="color:' + col + '">' + pw + '</strong> (' + pct + '%)</div>'
+      + '</div>';
+  }).join('');
+}
+
+function analyzeBalance() {
+  var box = document.getElementById('bal-result');
+  if (towers.length < 2) {
+    box.innerHTML = '<div style="color:var(--tx3);text-align:center;padding:40px 0">Adicione 2+ torres.</div>';
+    return;
+  }
+  var scored = towers.map(function(t){ return { name: t.name, pw: pwScore(t) }; });
+  var maxPw  = Math.max.apply(null, scored.map(function(s){ return s.pw; }));
+  var minPw  = Math.min.apply(null, scored.map(function(s){ return s.pw; }));
+  var avgPw  = scored.reduce(function(a,s){ return a + s.pw; }, 0) / scored.length;
+  var ratio  = minPw > 0 ? maxPw / minPw : 99;
+  var status = ratio < 1.5 ? ['ok','✅ Bem balanceado'] : ratio < 2.5 ? ['warn','⚠️ Levemente desbalanceado'] : ['bad','❌ Muito desbalanceado'];
+  var sorted = scored.slice().sort(function(a,b){ return b.pw - a.pw; });
+
+  var html = '<div class="rbox"><div class="rtitle">Diagnóstico</div>'
+    + '<div class="' + status[0] + '" style="font-size:13px;font-weight:700;margin-bottom:10px">' + status[1] + '</div>'
+    + '<div class="pill"><span class="pill-l">Razão max/min</span><span class="pill-v" style="color:' + (ratio<1.5?'var(--green)':ratio<2.5?'var(--orange)':'var(--red)') + '">' + ratio.toFixed(2) + 'x</span></div>'
+    + '<div class="pill"><span class="pill-l">Score médio</span><span class="pill-v">' + avgPw.toFixed(1) + '</span></div>'
+    + '</div><div style="margin-top:12px">';
+
+  sorted.forEach(function(s) {
+    var pct = maxPw > 0 ? Math.round((s.pw / maxPw) * 100) : 0;
+    var col = pct > 80 ? 'var(--red)' : pct > 50 ? 'var(--orange)' : 'var(--green)';
+    html += '<div class="bar-wrap">'
+      + '<div class="bar-lbl"><span>' + s.name + '</span><span style="color:' + col + '">' + s.pw + ' pts</span></div>'
+      + '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%;background:' + col + '"></div></div>'
+      + '</div>';
+  });
+
+  html += '</div><div class="rbox" style="margin-top:12px"><div class="rtitle">Recomendações</div>';
+  scored.forEach(function(s) {
+    var pct = maxPw > 0 ? (s.pw / maxPw) * 100 : 0;
+    if (pct > 85)      html += '<div class="bad">• ' + s.name + ': reduzir dano ou aumentar custo</div>';
+    else if (pct < 40) html += '<div class="warn">• ' + s.name + ': pode estar fraca — buff ou reduzir custo</div>';
+    else               html += '<div class="ok">• ' + s.name + ': balanceada ✓</div>';
+  });
+  html += '</div>';
+  box.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════
+// ONDAS
+// ═══════════════════════════════════════════════════════════
+function simWaves() {
+  var total   = parseInt(document.getElementById('wo').value)   || 20;
+  var baseHp  = parseFloat(document.getElementById('wh').value) || 100;
+  var hpMult  = parseFloat(document.getElementById('wm').value) || 1.15;
+  var baseQty = parseInt(document.getElementById('wi').value)   || 10;
+  var qtyMult = parseFloat(document.getElementById('wq').value) || 1.08;
+  var dps     = parseFloat(document.getElementById('wd').value) || 200;
+  var tqty    = parseInt(document.getElementById('wt').value)   || 5;
+
+  var totalDps = dps * tqty;
+  var survived = 0;
+  var firstFail = null;
+  var rows = '';
+
+  for (var w = 1; w <= total; w++) {
+    var hp    = Math.round(baseHp  * Math.pow(hpMult,  w - 1));
+    var qty   = Math.round(baseQty * Math.pow(qtyMult, w - 1));
+    var totalHp = hp * qty;
+    var ok    = totalDps > hp * 0.3;
+    if (ok) survived++;
+    else if (!firstFail) firstFail = w;
+
+    var c  = ok ? 'var(--green)' : 'var(--red)';
+    var bg = ok ? 'rgba(61,214,140,.08)' : 'rgba(255,90,90,.08)';
+    var barW = Math.min(100, Math.round((qty / (baseQty * Math.pow(qtyMult, total-1))) * 100));
+
+    rows += '<div class="wrow">'
+      + '<div class="wnum" style="background:' + bg + ';color:' + c + '">' + (ok?'✓':'✗') + '<br><span style="font-size:8px">' + w + '</span></div>'
+      + '<div class="wbar"><span style="color:var(--tx3)">' + qty + ' inimigos · ' + hp + ' HP</span>'
+      + '<div class="wbar-track"><div class="wseg" style="width:' + barW + '%;background:rgba(74,158,255,.25);color:var(--blue)">QTD</div></div></div>'
+      + '<div class="winfo">HP total<br><strong style="color:' + c + '">' + totalHp.toLocaleString() + '</strong></div>'
+      + '</div>';
+  }
+
+  var rate    = Math.round((survived / total) * 100);
+  var verdict = rate === 100 ? '<span class="ok">✅ Sobrevive a todas as ondas!</span>'
+              : rate >= 70   ? '<span class="warn">⚠️ Sobrevive ' + survived + '/' + total + ' ondas. Primeira falha: onda ' + firstFail + '</span>'
+              :                '<span class="bad">❌ Setup fraco — falha na onda ' + firstFail + '. Aumente DPS ou torres.</span>';
+
+  document.getElementById('wav-result').innerHTML =
+    '<div class="rbox" style="margin-bottom:14px">'
+    + '<div style="font-size:12px;font-weight:700;margin-bottom:8px">' + verdict + '</div>'
+    + '<div class="pill"><span class="pill-l">Taxa sobrevivência</span><span class="pill-v">' + rate + '%</span></div>'
+    + '<div class="pill"><span class="pill-l">DPS total</span><span class="pill-v">' + totalDps.toLocaleString() + '</span></div>'
+    + '</div>' + rows;
+}
+
+// ═══════════════════════════════════════════════════════════
+// ECONOMIA
+// ═══════════════════════════════════════════════════════════
+function calcEco() {
+  var gpe    = parseFloat(document.getElementById('eg').value) || 5;
+  var epw    = parseInt(document.getElementById('ei').value)   || 15;
+  var bonus  = parseFloat(document.getElementById('eb').value) || 0;
+  var start  = parseFloat(document.getElementById('es').value) || 0;
+  var waves  = parseInt(document.getElementById('ew').value)   || 20;
+
+  var names  = Array.from(document.querySelectorAll('.en')).map(function(i){ return i.value.trim() || null; });
+  var costs  = Array.from(document.querySelectorAll('.ec')).map(function(i){ return parseFloat(i.value) || 0; });
+  var upgs   = Array.from(document.querySelectorAll('.eu')).map(function(i){ return parseFloat(i.value) || 0; });
+
+  var gpw     = (gpe * epw) + bonus;
+  var total   = start + (gpw * waves);
+  var twCost  = costs.reduce(function(a,b){ return a+b; }, 0);
+  var twUpg   = upgs.reduce(function(a,b){ return a+b; }, 0) * 3;
+  var needed  = twCost + twUpg;
+  var surplus = total - needed;
+  var waveNeed = gpw > 0 ? Math.max(1, Math.ceil((needed - start) / gpw)) : 999;
+  var canBuy  = total >= needed;
+
+  var html = '<div class="rbox"><div class="rtitle">Resumo</div>'
+    + '<div class="pill"><span class="pill-l">Ouro por onda</span><span class="pill-v" style="color:var(--gold)">' + gpw + ' 🪙</span></div>'
+    + '<div class="pill"><span class="pill-l">Ouro total (' + waves + ' ondas)</span><span class="pill-v" style="color:var(--gold)">' + Math.round(total).toLocaleString() + ' 🪙</span></div>'
+    + '<div class="pill"><span class="pill-l">Custo torres</span><span class="pill-v">' + twCost.toLocaleString() + ' 🪙</span></div>'
+    + '<div class="pill"><span class="pill-l">Custo upgrades (est.)</span><span class="pill-v">' + twUpg.toLocaleString() + ' 🪙</span></div>'
+    + '<div class="pill"><span class="pill-l">Custo total</span><span class="pill-v">' + needed.toLocaleString() + ' 🪙</span></div>'
+    + '</div>'
+    + '<div class="rbox" style="margin-top:10px"><div class="rtitle">Diagnóstico</div>'
+    + '<div class="' + (canBuy?'ok':'bad') + '" style="font-size:12px;font-weight:700;margin-bottom:8px">'
+    + (canBuy ? '✅ Economia OK — jogador consegue tudo!' : '❌ Ouro insuficiente — faltam ' + Math.abs(Math.round(surplus)).toLocaleString() + ' 🪙')
+    + '</div>'
+    + '<div class="pill"><span class="pill-l">Onda para comprar tudo</span><span class="pill-v" style="color:var(--blue)">Onda ' + waveNeed + '</span></div>'
+    + '<div class="pill"><span class="pill-l">Ouro sobrando</span><span class="pill-v" style="color:' + (surplus>=0?'var(--green)':'var(--red)') + '">' + Math.round(surplus).toLocaleString() + ' 🪙</span></div>'
+    + '</div>';
+
+  if (names.some(function(n){ return n; })) {
+    html += '<div class="rbox" style="margin-top:10px"><div class="rtitle">Por Torre</div>';
+    names.forEach(function(name, i) {
+      if (!name || !costs[i]) return;
+      var wn = gpw > 0 ? Math.max(1, Math.ceil((costs[i] - start / (names.filter(function(x){return x;}).length || 1)) / gpw)) : 999;
+      html += '<div class="pill"><span class="pill-l">' + name + '</span><span class="pill-v">Onda ~' + wn + '</span></div>';
+    });
+    html += '</div>';
+  }
+
+  document.getElementById('eco-result').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════
+// MAPA
+// ═══════════════════════════════════════════════════════════
+var TCOL = { empty:'#0d1018', path:'#6b4c2a', tower:'#1e3a8a', start:'#14532d', end:'#7f1d1d', obstacle:'#166534' };
+var TLAB = { empty:'', path:'·', tower:'▲', start:'▶', end:'■', obstacle:'♦' };
+
+function initMap() {
+  var canvas = document.getElementById('mapCanvas');
+  if (!canvas) return;
+  var wrap = canvas.parentElement;
+  var maxW = wrap.clientWidth - 34;
+  var cs   = Math.max(14, Math.floor(Math.min(22, maxW / MCOLS)));
+  canvas.width  = MCOLS * cs;
+  canvas.height = MROWS * cs;
+  canvas._cs    = cs;
+
+  if (!mapGrid.length) {
+    mapGrid = [];
+    for (var r = 0; r < MROWS; r++) {
+      mapGrid.push([]);
+      for (var c = 0; c < MCOLS; c++) mapGrid[r].push('empty');
+    }
+  }
+  drawMap(canvas);
+
+  canvas.onmousedown  = function(e){ painting = true; paint(e, canvas); };
+  canvas.onmousemove  = function(e){ if(painting) paint(e, canvas); };
+  canvas.onmouseup    = function(){ painting = false; };
+  canvas.onmouseleave = function(){ painting = false; };
+  canvas.ontouchstart = function(e){ e.preventDefault(); painting = true; paint(e.touches[0], canvas); };
+  canvas.ontouchmove  = function(e){ e.preventDefault(); if(painting) paint(e.touches[0], canvas); };
+  canvas.ontouchend   = function(){ painting = false; };
+}
+
+function paint(e, canvas) {
+  var rect = canvas.getBoundingClientRect();
+  var cs   = canvas._cs || 20;
+  var col  = Math.floor((e.clientX - rect.left)  / cs);
+  var row  = Math.floor((e.clientY - rect.top)   / cs);
+  if (col < 0 || col >= MCOLS || row < 0 || row >= MROWS) return;
+  mapGrid[row][col] = (mapTool === 'erase') ? 'empty' : mapTool;
+  drawMap(canvas);
+}
+
+function drawMap(canvas) {
+  if (!canvas) canvas = document.getElementById('mapCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var cs  = canvas._cs || 20;
+  var pathCnt = 0, twCnt = 0;
+  for (var r = 0; r < MROWS; r++) {
+    for (var c = 0; c < MCOLS; c++) {
+      var type = mapGrid[r] ? mapGrid[r][c] : 'empty';
+      ctx.fillStyle = TCOL[type] || TCOL.empty;
+      ctx.fillRect(c*cs, r*cs, cs-1, cs-1);
+      if (type !== 'empty') {
+        ctx.fillStyle = 'rgba(255,255,255,.55)';
+        ctx.font = Math.floor(cs * .52) + 'px monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(TLAB[type] || '', c*cs + cs/2, r*cs + cs/2);
+        if (type === 'path') pathCnt++;
+        if (type === 'tower') twCnt++;
+      }
+    }
+  }
+  var pe = document.getElementById('mp-path');
+  var te = document.getElementById('mp-tower');
+  if (pe) pe.textContent = pathCnt;
+  if (te) te.textContent = twCnt;
+}
+
+function setTool(t, btn) {
+  mapTool = t;
+  document.querySelectorAll('.tool').forEach(function(b){ b.classList.remove('on'); });
+  if (btn) btn.classList.add('on');
+}
+
+function mapClear() {
+  for (var r = 0; r < MROWS; r++)
+    for (var c = 0; c < MCOLS; c++)
+      if (mapGrid[r]) mapGrid[r][c] = 'empty';
+  drawMap(null);
+}
+
+function mapExport() {
+  var out = mapGrid.map(function(row){ return row.map(function(c){ return c[0]; }).join(''); }).join('\n');
+  navigator.clipboard.writeText(out).then(function(){ notif('✓ Mapa copiado!'); }).catch(function(){ notif('Copie o mapa manualmente'); });
+}
+
+// ═══════════════════════════════════════════════════════════
+// LORE
+// ═══════════════════════════════════════════════════════════
+var LORE_TEMPLATES = {
+  torre: function(n, el, tom, notes) {
+    var abilMap = { fogo:'Chamas Eternas', agua:'Maré das Profundezas', raio:'Cólera do Céu', trevas:'Sombra da Morte', tempo:'Fio do Destino', natureza:'Flecha Sagrada', forja:'Martelada Divina', amor:'Encantamento Mortal' };
+    var ability = abilMap[el.replace('á','a').replace('ó','o').replace('é','e')] || 'Poder Divino';
+    var intro   = tom === 'misterioso' ? 'Poucos mortais conhecem a verdade sobre' : tom === 'tragico' ? 'Conta-se nos pergaminhos do Olimpo que' : tom === 'temivel' ? 'Trema, mortal. Pois' : 'Nas eras antes do tempo,';
+    return intro + ' ' + n + ' emergiu para defender os portões do Olimpo.\n\n⚔️ HISTÓRIA\n' + n + ' domina o elemento de ' + el + ' com uma precisão que envereda os mortais. ' + (notes ? notes + '.' : 'Suas origens remontam às guerras dos Titãs, quando os deuses forjaram as primeiras defesas do cosmos.') + '\n\n🔱 HABILIDADE: ' + ability.toUpperCase() + '\nQuando invocada, ' + n + ' libera a força pura de ' + el + '. O efeito é devastador — poucos inimigos resistem à sua manifestação.\n\n✦ O ORÁCULO DIZ\n"' + n + ' não defende apenas um lugar. Ela defende a ordem do cosmos."';
+  },
+  inimigo: function(n, el, tom, notes) {
+    return '💀 ORIGEM: ' + n.toUpperCase() + '\n\n' + (tom === 'temivel' ? 'Não há ameaça maior nos reinos abissais do que ' + n + '.' : 'Das profundezas do Tártaro eles surgem, corrompidos por ' + el + '.') + '\n\n⚔️ NATUREZA\n' + n + ' não é apenas um inimigo — é uma punição enviada pelos deuses para testar os defensores do Olimpo. ' + (notes ? notes + '.' : 'Cada ondada é mais intensa que a anterior.') + '\n\n🛡️ COMPORTAMENTO\nAvançam sem hesitar, guiados pelo instinto de destruição. Identifique sua fraqueza antes que atinjam o portal.\n\n✦ AVISO\n"Quando os vires chegar, lembre: não é um ataque. É um julgamento."';
+  },
+  mapa: function(n, el, tom, notes) {
+    return '🗺️ ' + n.toUpperCase() + ' — CRÔNICA DO LUGAR\n\n' + (tom === 'misterioso' ? 'Poucos mapas guardam segredos tão sombrios quanto' : 'Nas fronteiras entre o mundo mortal e o divino está') + ' ' + n + '.\n\n📜 HISTÓRIA\nAntes de ser campo de batalha, ' + n + ' foi palco de eventos que moldaram a ordem cósmica. ' + (notes ? notes + '.' : 'Os deuses escolheram este lugar por sua energia ancestral que amplifica o poder das torres.') + '\n\n⚔️ DESAFIO\nO terreno exige posicionamento estratégico. As torres aqui erguidas carregam a bênção do lugar.\n\n✦ INSCRIÇÃO NAS RUÍNAS\n"' + n + ' não pertence aos mortais. Eles apenas a defendem."';
+  },
+  item: function(n, el, tom, notes) {
+    return '✨ ' + n.toUpperCase() + ' — BÊNÇÃO DIVINA\n\nOs deuses raramente presenteiam mortais. ' + n + ' é uma dessas raras graças — e com ela vem responsabilidade.\n\n💫 EFEITO\n' + n + ' potencializa torres do domínio de ' + el + ' além da compreensão mortal. ' + (notes ? notes + '.' : 'O efeito dura enquanto durar sua concentração.') + '\n\n📜 ORIGEM\nForjada nas entranhas do Olimpo durante a Grande Guerra, ' + n + ' aguardava o defensor digno de invocá-la.\n\n✦ CUSTO DIVINO\n"Todo dom tem um preço. Use ' + n + ' com sabedoria — o cosmos observa."';
+  },
+  evento: function(n, el, tom, notes) {
+    return '⚡ EVENTO: ' + n.toUpperCase() + '\n\nOs céus se fecham. O chão treme. ' + n + ' começa.\n\n🌩️ DESCRIÇÃO\nDurante ' + n + ', as forças de ' + el + ' atingem seu pico absoluto. Os inimigos surgem com ferocidade sem precedente. ' + (notes ? notes + '.' : 'Os deuses observam cada decisão sua.') + '\n\n🏆 RECOMPENSAS\nSobreviventes de ' + n + ' receberão bênçãos que transcendem o ouro comum. Apenas os dignos merecem.\n\n✦ PROCLAMA\n"' + n + ' não é um desafio. É uma honra. Poucos sobreviverão."';
+  }
+};
+
+function genLore() {
+  var type  = document.getElementById('lt').value;
+  var name  = document.getElementById('ln').value.trim() || 'Entidade Divina';
+  var el    = document.getElementById('le').value;
+  var tom   = document.getElementById('lto').value;
+  var notes = document.getElementById('lno').value.trim();
+
+  var fn = LORE_TEMPLATES[type];
+  if (!fn) return;
+  var lore = fn(name, el, tom, notes);
+
+  var box = document.getElementById('lore-out');
+  box.textContent = lore;
+  box.style.color = 'var(--tx)';
+
+  loreHist.unshift({ name: name, lore: lore, time: new Date().toLocaleTimeString() });
+  if (loreHist.length > 5) loreHist.pop();
+
+  var hist = document.getElementById('lore-hist');
+  if (loreHist.length > 1) {
+    hist.innerHTML = '<div class="slbl" style="margin-top:14px">Histórico</div>'
+      + loreHist.slice(1).map(function(h, i) {
+        return '<div style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:9px;margin-bottom:6px;cursor:pointer;font-size:11px;color:var(--tx2)" onclick="restoreLore(' + (i+1) + ')">'
+          + '<strong style="color:var(--gold)">' + h.name + '</strong> <span style="color:var(--tx3)">' + h.time + '</span></div>';
+      }).join('');
+  }
+}
+
+function restoreLore(i) {
+  if (loreHist[i]) {
+    document.getElementById('lore-out').textContent = loreHist[i].lore;
+    document.getElementById('lore-out').style.color = 'var(--tx)';
+  }
+}
+
+function copyLore() {
+  var text = document.getElementById('lore-out').textContent;
+  if (!text || text.includes('aparecerá')) { notif('⚠️ Gere uma lore primeiro'); return; }
+  navigator.clipboard.writeText(text).then(function(){ notif('✓ Lore copiada!'); });
+}
+
+// ═══════════════════════════════════════════════════════════
+// CONTEÚDO
+// ═══════════════════════════════════════════════════════════
+function showCon(id, btn) {
+  document.querySelectorAll('#p-con .card').forEach(function(c){ c.style.display = 'none'; });
+  document.querySelectorAll('.ctab').forEach(function(b){ b.classList.remove('on'); });
+  document.getElementById('con-' + id).style.display = '';
+  btn.classList.add('on');
+}
+
+function addRow(tbId, type) {
+  var tbody = document.querySelector('#' + tbId + ' tbody');
+  var tr = document.createElement('tr');
+  var dels = '<td><button class="btn br" onclick="this.closest(\'tr\').remove()" style="padding:2px 7px;font-size:10px">✕</button></td>';
+  if (type === 'deus')    tr.innerHTML = '<td contenteditable>Novo Deus</td><td contenteditable>Torre</td><td contenteditable>Elemento</td><td contenteditable>Habilidade</td><td><span class="sbadge" style="background:rgba(251,146,60,.1);color:var(--orange)">PLANEJADO</span></td><td contenteditable>⭐</td>' + dels;
+  if (type === 'inimigo') tr.innerHTML = '<td contenteditable>Novo Inimigo</td><td contenteditable>100</td><td contenteditable>Médio</td><td contenteditable>—</td><td contenteditable>—</td><td><span class="sbadge" style="background:rgba(251,146,60,.1);color:var(--orange)">PLANEJADO</span></td>' + dels;
+  if (type === 'mapa')    tr.innerHTML = '<td contenteditable>Novo Mapa</td><td contenteditable>20</td><td contenteditable>⭐ Fácil</td><td contenteditable>Tema</td><td><span class="sbadge" style="background:rgba(251,146,60,.1);color:var(--orange)">PLANEJADO</span></td>' + dels;
+  tbody.appendChild(tr);
+}
+
+// ═══════════════════════════════════════════════════════════
+// BUGS
+// ═══════════════════════════════════════════════════════════
+function addBug(col) {
+  var inp   = document.getElementById('bi-' + col);
+  var prio  = document.getElementById('bp-' + col).value;
+  var cat   = document.getElementById('bc-' + col).value;
+  var title = inp.value.trim();
+  if (!title) return;
+  bugs[col].push({ id: Date.now(), title: title, prio: prio, cat: cat });
+  inp.value = '';
+  renderBugs();
+  saveData();
+}
+
+function delBug(col, id) {
+  bugs[col] = bugs[col].filter(function(b){ return b.id !== id; });
+  renderBugs();
+  saveData();
+}
+
+function renderBugs() {
+  var pc = { alta: 'var(--red)', media: 'var(--orange)', baixa: 'var(--green)' };
+  var pl = { alta: '🔴 Alta', media: '🟡 Média', baixa: '🟢 Baixa' };
+
+  ['open','prog','done'].forEach(function(col) {
+    document.getElementById('kc-' + col).textContent = bugs[col].length;
+    var list = document.getElementById('kl-' + col);
+    if (!list) return;
+    if (!bugs[col].length) {
+      list.innerHTML = '<div style="text-align:center;color:var(--tx3);padding:16px;font-size:11px">Vazio</div>';
+      return;
+    }
+    list.innerHTML = bugs[col].map(function(b) {
+      return '<div class="bcard" draggable="true" '
+        + 'ondragstart="dragBugId=' + b.id + ';dragBugCol=\'' + col + '\'">'
+        + '<div class="btitle">' + b.title + '</div>'
+        + '<div class="bmeta">'
+        + '<span class="btag" style="background:rgba(255,255,255,.05);color:' + pc[b.prio] + '">' + pl[b.prio] + '</span>'
+        + '<span class="btag" style="background:rgba(74,158,255,.08);color:var(--blue)">' + b.cat + '</span>'
+        + '<button onclick="delBug(\'' + col + '\',' + b.id + ')" style="margin-left:auto;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0 2px">✕</button>'
+        + '</div></div>';
+    }).join('');
+  });
+}
+
+function dropBug(e, toCol) {
+  if (!dragBugId) return;
+  var bug = null;
+  ['open','prog','done'].forEach(function(col) {
+    var found = bugs[col].filter(function(b){ return b.id === dragBugId; });
+    if (found.length) { bug = found[0]; bugs[col] = bugs[col].filter(function(b){ return b.id !== dragBugId; }); }
+  });
+  if (bug) bugs[toCol].push(bug);
+  dragBugId = null; dragBugCol = null;
+  renderBugs();
+  saveData();
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+renderTowers();
+renderBugs();
+</script>
+</body>
+</html>
