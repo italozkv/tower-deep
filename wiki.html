@@ -47,7 +47,7 @@ body{background:var(--ink);color:var(--divine);font-family:'EB Garamond',serif;f
 .nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
 .nav-hamburger span{display:block;width:22px;height:1px;background:var(--gold-dim);transition:all .3s}
 @media(max-width:700px){
-  .nav-links{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:rgba(8,7,4,.97);border-bottom:1px solid rgba(201,168,76,.15);padding:12px 0}
+  .nav-links{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--nav-bg);border-bottom:1px solid rgba(201,168,76,.15);padding:12px 0}
   .nav-links.open{display:flex}.nav-links a{padding:12px 24px;border:none}
   .nav-hamburger{display:flex}.site-nav{padding:0 20px}
 }
@@ -236,7 +236,7 @@ body{background:var(--ink);color:var(--divine);font-family:'EB Garamond',serif;f
 .admin-del{color:rgba(248,113,113,.5);border-color:rgba(248,113,113,.2)}.admin-del:hover{color:#f87171;border-color:rgba(248,113,113,.4)}
 .notif{position:fixed;bottom:24px;right:24px;background:var(--ink);border:1px solid rgba(201,168,76,.4);color:var(--gold);padding:10px 18px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.2em;z-index:300;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none}
 .notif.show{opacity:1;transform:translateY(0)}
-.admin-fab{position:fixed;bottom:28px;left:28px;width:44px;height:44px;background:rgba(8,7,4,.9);border:1px solid rgba(201,168,76,.25);color:var(--gold-dim);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:90;transition:all .25s}
+.admin-fab{position:fixed;bottom:28px;left:28px;width:44px;height:44px;background:var(--ink2);border:1px solid rgba(201,168,76,.25);color:var(--gold-dim);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:90;transition:all .25s}
 .admin-fab:hover{border-color:var(--gold);color:var(--gold);box-shadow:0 0 16px rgba(201,168,76,.15)}
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
@@ -260,6 +260,71 @@ body{background:var(--ink);color:var(--divine);font-family:'EB Garamond',serif;f
     [data-theme="light"] .nav-links a:hover,[data-theme="light"] .nav-links a.active{color:var(--gold-light);background:var(--glow)}
     [data-theme="light"] .nebula-bg{opacity:0.3}
     [data-theme="light"] .stars-bg::before,[data-theme="light"] .stars-bg::after{opacity:0.15}
+  
+    /* ═══ TEMA CLARO — OVERRIDES COMPLETOS ═══ */
+    [data-theme="light"] body { background: var(--ink); color: var(--divine); }
+    [data-theme="light"] .site-nav { background: var(--nav-bg) !important; border-bottom-color: var(--nav-border); }
+    [data-theme="light"] .nebula-bg { opacity: 0.08; }
+    [data-theme="light"] .stars-bg::before,
+    [data-theme="light"] .stars-bg::after { opacity: 0.06; }
+    /* Nav mobile */
+    [data-theme="light"] .nav-links { background: var(--nav-bg); }
+    /* Scroll-to-top button */
+    [data-theme="light"] .scroll-top { background: var(--ink2); }
+    /* Feature cards (index.html) */
+    [data-theme="light"] .feature-card { background: rgba(255,255,255,0.6) !important; border-color: var(--card-border); color: var(--divine); }
+    [data-theme="light"] .feature-icon { color: var(--gold); }
+    [data-theme="light"] .feature-title { color: var(--gold-light); }
+    [data-theme="light"] .feature-desc { color: var(--text-body); }
+    /* Discord section */
+    [data-theme="light"] .discord-section { background: rgba(255,255,255,0.5); border-color: var(--card-border); }
+    /* Stats bar */
+    [data-theme="light"] .stats-bar { background: rgba(255,255,255,0.6); border-color: var(--card-border); }
+    [data-theme="light"] .stat-value { color: var(--gold-light); }
+    [data-theme="light"] .stat-label { color: var(--text-sub); }
+    /* Changelog */
+    [data-theme="light"] .entry { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .entry-title { color: var(--gold-light); }
+    [data-theme="light"] .entry-subtitle { color: var(--text-sub); }
+    [data-theme="light"] .changes-list li { color: var(--text-body); }
+    [data-theme="light"] .changes-list li::before { color: var(--gold); }
+    /* Roadmap */
+    [data-theme="light"] .rm-card { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .rm-version { color: var(--gold-light); }
+    [data-theme="light"] .rm-title { color: var(--divine); }
+    [data-theme="light"] .rm-item { color: var(--text-body); }
+    [data-theme="light"] .timeline-line { background: var(--card-border); }
+    /* Votos */
+    [data-theme="light"] .vote-card { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .card-title { color: var(--divine); }
+    [data-theme="light"] .card-desc { color: var(--text-body); }
+    [data-theme="light"] .vote-count { color: var(--gold-light); }
+    [data-theme="light"] .filters-wrap { background: var(--card-bg); border-color: var(--card-border); }
+    /* Wiki */
+    [data-theme="light"] .wiki-sidebar { background: var(--ink2); border-color: var(--card-border); }
+    [data-theme="light"] .wiki-card { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .wiki-card-name { color: var(--gold-light); }
+    [data-theme="light"] .wiki-detail { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .modal { background: var(--ink2); border-color: var(--card-border); }
+    [data-theme="light"] .modal-overlay { background: rgba(200,180,150,0.6); }
+    [data-theme="light"] .field-input,[data-theme="light"] .field-textarea,[data-theme="light"] .field-select { background: var(--input-bg); border-color: var(--input-border); color: var(--divine); }
+    [data-theme="light"] .sidebar-link { color: var(--text-body); }
+    [data-theme="light"] .sidebar-link:hover,[data-theme="light"] .sidebar-link.active { color: var(--gold-light); }
+    [data-theme="light"] .cat-heading { color: var(--gold-dim); }
+    /* Ranking */
+    [data-theme="light"] .rank-entry { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .rank-name { color: var(--divine); }
+    [data-theme="light"] .rank-notice { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .podium-block { background: var(--card-bg); border-color: var(--card-border); }
+    /* Footer */
+    [data-theme="light"] .site-footer { border-top-color: var(--card-border); }
+    /* General */
+    [data-theme="light"] .btn-divine { color: var(--gold-light); border-color: var(--gold); }
+    [data-theme="light"] .btn-ghost { color: var(--gold-dim); border-color: var(--card-border); }
+    [data-theme="light"] .badge { background: rgba(160,114,42,0.12); color: var(--gold-light); }
+    /* Fix hardcoded dark nav bg */
+    [data-theme="light"] .site-nav { background: rgba(250,246,238,0.92) !important; }
+
   </style>
   <script>
     (function(){
@@ -921,7 +986,7 @@ document.addEventListener('click', function(e) {
 // ══════════════════════════════════════════
 
 // URL do servidor Railway do bot — configure aqui
-var BOT_URL = 'SEU_RAILWAY_URL_AQUI'; // ex: https://tower-deep-bot.up.railway.app
+var BOT_URL = 'https://tower-deep-bot-production.up.railway.app'; // ex: https://tower-deep-bot.up.railway.app
 
 var SS_LEVEL    = 'td_auth_level';
 var SS_EXPIRY   = 'td_auth_expiry';
@@ -989,6 +1054,12 @@ async function doTokenLogin() {
     return;
   }
 
+  // Verifica se BOT_URL ainda é o placeholder
+  if (BOT_URL === 'SEU_RAILWAY_URL_AQUI' || !BOT_URL) {
+    document.getElementById('token-error').textContent = '✕ BOT_URL não configurado no wiki.html. Configure a URL do Railway.';
+    return;
+  }
+
   // UI: loading
   document.getElementById('token-loading').style.display = 'block';
   document.getElementById('token-btn').disabled = true;
@@ -1000,6 +1071,13 @@ async function doTokenLogin() {
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({ token: token }),
     });
+
+    // Verifica se a resposta é realmente JSON antes de parsear
+    var contentType = res.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      throw new Error('O servidor retornou uma resposta inválida. Verifique se o bot está online no Railway.');
+    }
+
     var data = await res.json();
 
     if (!data.ok) {
@@ -1017,9 +1095,14 @@ async function doTokenLogin() {
     onAuthSuccess(data, true);
 
   } catch (err) {
-    var msg = err.message.includes('fetch') || err.message.includes('Failed')
-      ? '✕ Não foi possível conectar ao servidor. Verifique o BOT_URL.'
-      : '✕ ' + err.message;
+    var msg;
+    if (err.message.includes('fetch') || err.message.includes('Failed') || err.message.includes('NetworkError')) {
+      msg = '✕ Bot offline ou URL incorreta. Verifique se o Railway está rodando.';
+    } else if (err.message.includes('JSON') || err.message.includes('Unexpected')) {
+      msg = '✕ Bot offline ou retornou erro. Verifique o Railway.';
+    } else {
+      msg = '✕ ' + err.message;
+    }
     document.getElementById('token-error').textContent = msg;
     document.getElementById('token-input').style.borderColor = 'rgba(248,113,113,.5)';
   } finally {

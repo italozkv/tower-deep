@@ -33,7 +33,7 @@
     .stars-bg::after{content:'';position:absolute;inset:0;background-image:radial-gradient(1.5px 1.5px at 63% 18%,rgba(240,208,128,.7) 0%,transparent 100%),radial-gradient(1px 1px at 44% 92%,rgba(201,168,76,.5) 0%,transparent 100%),radial-gradient(2px 2px at 11% 7%,rgba(240,208,128,.8) 0%,transparent 100%),radial-gradient(1px 1px at 50% 3%,rgba(201,168,76,.6) 0%,transparent 100%);animation:twinkle 13s ease-in-out infinite alternate-reverse}
     @keyframes twinkle{0%{opacity:.5}100%{opacity:1}}
     .nebula-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 50% at 15% 25%,rgba(42,74,122,.10) 0%,transparent 70%),radial-gradient(ellipse 55% 65% at 85% 75%,rgba(139,26,26,.07) 0%,transparent 70%),radial-gradient(ellipse 90% 35% at 50% 5%,rgba(201,168,76,.04) 0%,transparent 70%)}
-    .site-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;background:rgba(8,7,4,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,.12)}
+    .site-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,.12)}
     .nav-logo{font-family:'Cinzel Decorative',serif;font-size:.9rem;font-weight:700;color:var(--gold-light);text-decoration:none;letter-spacing:.1em;text-shadow:0 0 20px rgba(201,168,76,.4)}
     .nav-links{display:flex;gap:4px;list-style:none}.nav-links a{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;padding:6px 16px;border:1px solid transparent;transition:all .25s ease}
     .nav-links a:hover,.nav-links a.active{color:var(--gold-light);border-color:rgba(201,168,76,.3);background:rgba(201,168,76,.06)}
@@ -43,7 +43,7 @@
     .btn-divine{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-light);background:none;border:1px solid var(--gold);padding:12px 32px;cursor:pointer;text-decoration:none;display:inline-block;position:relative;overflow:hidden;transition:color .3s,box-shadow .3s}
     .btn-divine::before{content:'';position:absolute;inset:0;background:var(--glow);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
     .btn-divine:hover{box-shadow:0 0 24px rgba(201,168,76,.2)}.btn-divine:hover::before{transform:scaleX(1)}
-    .scroll-top{position:fixed;bottom:28px;right:28px;width:40px;height:40px;border:1px solid var(--gold-dim);background:rgba(8,7,4,.9);color:var(--gold);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transform:rotate(45deg);opacity:0;transition:opacity .3s,border-color .3s;z-index:99}
+    .scroll-top{position:fixed;bottom:28px;right:28px;width:40px;height:40px;border:1px solid var(--gold-dim);background:var(--ink2);color:var(--gold);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transform:rotate(45deg);opacity:0;transition:opacity .3s,border-color .3s;z-index:99}
     .scroll-top span{transform:rotate(-45deg);display:block}.scroll-top:hover{border-color:var(--gold)}.scroll-top.show{opacity:1}
     .site-footer{text-align:center;padding:60px 24px 40px;border-top:1px solid rgba(201,168,76,.1);margin-top:80px}
     .footer-logo{font-family:'Cinzel Decorative',serif;font-size:1.2rem;color:var(--gold-dim);letter-spacing:.2em;margin-bottom:16px;display:block}
@@ -53,7 +53,7 @@
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
     @keyframes spin{to{transform:rotate(360deg)}}
     .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}.reveal.visible{opacity:1;transform:translateY(0)}
-    @media(max-width:700px){.nav-links{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:rgba(8,7,4,.97);border-bottom:1px solid rgba(201,168,76,.15);padding:12px 0}.nav-links.open{display:flex}.nav-links a{padding:12px 24px;border:none}.nav-hamburger{display:flex}.site-nav{padding:0 20px}}
+    @media(max-width:700px){.nav-links{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--nav-bg);border-bottom:1px solid rgba(201,168,76,.15);padding:12px 0}.nav-links.open{display:flex}.nav-links a{padding:12px 24px;border:none}.nav-hamburger{display:flex}.site-nav{padding:0 20px}}
 
     .hero {
       min-height: 100vh; display: flex; flex-direction: column;
@@ -223,6 +223,71 @@
     [data-theme="light"] .nav-links a:hover,[data-theme="light"] .nav-links a.active{color:var(--gold-light);background:var(--glow)}
     [data-theme="light"] .nebula-bg{opacity:0.3}
     [data-theme="light"] .stars-bg::before,[data-theme="light"] .stars-bg::after{opacity:0.15}
+  
+    /* ═══ TEMA CLARO — OVERRIDES COMPLETOS ═══ */
+    [data-theme="light"] body { background: var(--ink); color: var(--divine); }
+    [data-theme="light"] .site-nav { background: var(--nav-bg) !important; border-bottom-color: var(--nav-border); }
+    [data-theme="light"] .nebula-bg { opacity: 0.08; }
+    [data-theme="light"] .stars-bg::before,
+    [data-theme="light"] .stars-bg::after { opacity: 0.06; }
+    /* Nav mobile */
+    [data-theme="light"] .nav-links { background: var(--nav-bg); }
+    /* Scroll-to-top button */
+    [data-theme="light"] .scroll-top { background: var(--ink2); }
+    /* Feature cards (index.html) */
+    [data-theme="light"] .feature-card { background: rgba(255,255,255,0.6) !important; border-color: var(--card-border); color: var(--divine); }
+    [data-theme="light"] .feature-icon { color: var(--gold); }
+    [data-theme="light"] .feature-title { color: var(--gold-light); }
+    [data-theme="light"] .feature-desc { color: var(--text-body); }
+    /* Discord section */
+    [data-theme="light"] .discord-section { background: rgba(255,255,255,0.5); border-color: var(--card-border); }
+    /* Stats bar */
+    [data-theme="light"] .stats-bar { background: rgba(255,255,255,0.6); border-color: var(--card-border); }
+    [data-theme="light"] .stat-value { color: var(--gold-light); }
+    [data-theme="light"] .stat-label { color: var(--text-sub); }
+    /* Changelog */
+    [data-theme="light"] .entry { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .entry-title { color: var(--gold-light); }
+    [data-theme="light"] .entry-subtitle { color: var(--text-sub); }
+    [data-theme="light"] .changes-list li { color: var(--text-body); }
+    [data-theme="light"] .changes-list li::before { color: var(--gold); }
+    /* Roadmap */
+    [data-theme="light"] .rm-card { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .rm-version { color: var(--gold-light); }
+    [data-theme="light"] .rm-title { color: var(--divine); }
+    [data-theme="light"] .rm-item { color: var(--text-body); }
+    [data-theme="light"] .timeline-line { background: var(--card-border); }
+    /* Votos */
+    [data-theme="light"] .vote-card { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .card-title { color: var(--divine); }
+    [data-theme="light"] .card-desc { color: var(--text-body); }
+    [data-theme="light"] .vote-count { color: var(--gold-light); }
+    [data-theme="light"] .filters-wrap { background: var(--card-bg); border-color: var(--card-border); }
+    /* Wiki */
+    [data-theme="light"] .wiki-sidebar { background: var(--ink2); border-color: var(--card-border); }
+    [data-theme="light"] .wiki-card { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .wiki-card-name { color: var(--gold-light); }
+    [data-theme="light"] .wiki-detail { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .modal { background: var(--ink2); border-color: var(--card-border); }
+    [data-theme="light"] .modal-overlay { background: rgba(200,180,150,0.6); }
+    [data-theme="light"] .field-input,[data-theme="light"] .field-textarea,[data-theme="light"] .field-select { background: var(--input-bg); border-color: var(--input-border); color: var(--divine); }
+    [data-theme="light"] .sidebar-link { color: var(--text-body); }
+    [data-theme="light"] .sidebar-link:hover,[data-theme="light"] .sidebar-link.active { color: var(--gold-light); }
+    [data-theme="light"] .cat-heading { color: var(--gold-dim); }
+    /* Ranking */
+    [data-theme="light"] .rank-entry { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .rank-name { color: var(--divine); }
+    [data-theme="light"] .rank-notice { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .podium-block { background: var(--card-bg); border-color: var(--card-border); }
+    /* Footer */
+    [data-theme="light"] .site-footer { border-top-color: var(--card-border); }
+    /* General */
+    [data-theme="light"] .btn-divine { color: var(--gold-light); border-color: var(--gold); }
+    [data-theme="light"] .btn-ghost { color: var(--gold-dim); border-color: var(--card-border); }
+    [data-theme="light"] .badge { background: rgba(160,114,42,0.12); color: var(--gold-light); }
+    /* Fix hardcoded dark nav bg */
+    [data-theme="light"] .site-nav { background: rgba(250,246,238,0.92) !important; }
+
   </style>
   <script>
     (function(){

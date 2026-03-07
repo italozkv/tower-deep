@@ -156,6 +156,71 @@
     .site-footer{padding:40px 24px;text-align:center;border-top:1px solid var(--card-border);margin-top:80px}
     .footer-logo{font-family:'Cinzel Decorative',serif;font-size:1rem;color:var(--gold-dim);letter-spacing:.2em;display:block;margin-bottom:10px}
     .site-footer p{font-size:.8rem;color:var(--text-sub);font-style:italic}
+  
+    /* ═══ TEMA CLARO — OVERRIDES COMPLETOS ═══ */
+    [data-theme="light"] body { background: var(--ink); color: var(--divine); }
+    [data-theme="light"] .site-nav { background: var(--nav-bg) !important; border-bottom-color: var(--nav-border); }
+    [data-theme="light"] .nebula-bg { opacity: 0.08; }
+    [data-theme="light"] .stars-bg::before,
+    [data-theme="light"] .stars-bg::after { opacity: 0.06; }
+    /* Nav mobile */
+    [data-theme="light"] .nav-links { background: var(--nav-bg); }
+    /* Scroll-to-top button */
+    [data-theme="light"] .scroll-top { background: var(--ink2); }
+    /* Feature cards (index.html) */
+    [data-theme="light"] .feature-card { background: rgba(255,255,255,0.6) !important; border-color: var(--card-border); color: var(--divine); }
+    [data-theme="light"] .feature-icon { color: var(--gold); }
+    [data-theme="light"] .feature-title { color: var(--gold-light); }
+    [data-theme="light"] .feature-desc { color: var(--text-body); }
+    /* Discord section */
+    [data-theme="light"] .discord-section { background: rgba(255,255,255,0.5); border-color: var(--card-border); }
+    /* Stats bar */
+    [data-theme="light"] .stats-bar { background: rgba(255,255,255,0.6); border-color: var(--card-border); }
+    [data-theme="light"] .stat-value { color: var(--gold-light); }
+    [data-theme="light"] .stat-label { color: var(--text-sub); }
+    /* Changelog */
+    [data-theme="light"] .entry { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .entry-title { color: var(--gold-light); }
+    [data-theme="light"] .entry-subtitle { color: var(--text-sub); }
+    [data-theme="light"] .changes-list li { color: var(--text-body); }
+    [data-theme="light"] .changes-list li::before { color: var(--gold); }
+    /* Roadmap */
+    [data-theme="light"] .rm-card { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .rm-version { color: var(--gold-light); }
+    [data-theme="light"] .rm-title { color: var(--divine); }
+    [data-theme="light"] .rm-item { color: var(--text-body); }
+    [data-theme="light"] .timeline-line { background: var(--card-border); }
+    /* Votos */
+    [data-theme="light"] .vote-card { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .card-title { color: var(--divine); }
+    [data-theme="light"] .card-desc { color: var(--text-body); }
+    [data-theme="light"] .vote-count { color: var(--gold-light); }
+    [data-theme="light"] .filters-wrap { background: var(--card-bg); border-color: var(--card-border); }
+    /* Wiki */
+    [data-theme="light"] .wiki-sidebar { background: var(--ink2); border-color: var(--card-border); }
+    [data-theme="light"] .wiki-card { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .wiki-card-name { color: var(--gold-light); }
+    [data-theme="light"] .wiki-detail { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .modal { background: var(--ink2); border-color: var(--card-border); }
+    [data-theme="light"] .modal-overlay { background: rgba(200,180,150,0.6); }
+    [data-theme="light"] .field-input,[data-theme="light"] .field-textarea,[data-theme="light"] .field-select { background: var(--input-bg); border-color: var(--input-border); color: var(--divine); }
+    [data-theme="light"] .sidebar-link { color: var(--text-body); }
+    [data-theme="light"] .sidebar-link:hover,[data-theme="light"] .sidebar-link.active { color: var(--gold-light); }
+    [data-theme="light"] .cat-heading { color: var(--gold-dim); }
+    /* Ranking */
+    [data-theme="light"] .rank-entry { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .rank-name { color: var(--divine); }
+    [data-theme="light"] .rank-notice { background: var(--card-bg); border-color: var(--card-border); }
+    [data-theme="light"] .podium-block { background: var(--card-bg); border-color: var(--card-border); }
+    /* Footer */
+    [data-theme="light"] .site-footer { border-top-color: var(--card-border); }
+    /* General */
+    [data-theme="light"] .btn-divine { color: var(--gold-light); border-color: var(--gold); }
+    [data-theme="light"] .btn-ghost { color: var(--gold-dim); border-color: var(--card-border); }
+    [data-theme="light"] .badge { background: rgba(160,114,42,0.12); color: var(--gold-light); }
+    /* Fix hardcoded dark nav bg */
+    [data-theme="light"] .site-nav { background: rgba(250,246,238,0.92) !important; }
+
   </style>
 </head>
 <body>
