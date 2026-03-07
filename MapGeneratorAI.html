@@ -392,7 +392,7 @@ ${arenaName ? 'Nome sugerido: '+arenaName : 'Crie nome criativo'}
 Número da arena: ${arenaNum}
 ${extra ? 'Extras: '+extra : ''}`;
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
   const resp = await fetch(url, {
     method: 'POST',
@@ -528,7 +528,7 @@ function renderResult(cfg, posX) {
 
   const isGemini = cfg.source === 'gemini';
   document.getElementById('resultBadge').textContent = isGemini ? '🤖 GEMINI AI' : '⚙️ LOCAL';
-  document.getElementById('sourceTag').textContent = isGemini ? 'Gemini 1.5 Flash' : 'Geração Local';
+  document.getElementById('sourceTag').textContent = isGemini ? 'Gemini 2.0 Flash' : 'Geração Local';
   document.getElementById('sourceTag').className = 'source-tag ' + (isGemini ? 'source-gemini' : 'source-local');
 
   document.getElementById('configGrid').innerHTML = [
