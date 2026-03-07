@@ -392,20 +392,16 @@ ${arenaName ? 'Nome sugerido: '+arenaName : 'Crie nome criativo'}
 Número da arena: ${arenaNum}
 ${extra ? 'Extras: '+extra : ''}`;
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-  const resp = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 0.8, maxOutputTokens: 800 }
-    })
-  });
-
-  const data = await resp.json();
-
-  if (data.error) throw new Error('Gemini: ' + data.error.message);
+  const MODELS = ['gemini-2.0-flash-lite','gemini-1.5-flash-8b','gemini-1.5-flash-latest','gemini-1.5-flash','gemini-1.0-pro'];
+  let data = null;
+  for (const model of MODELS) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    const r = await fetch(url, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.8,maxOutputTokens:800}}) });
+    data = await r.json();
+    if (!data.error) { console.log('[MapGen] Modelo:', model); break; }
+    console.warn('[MapGen]', model, data.error?.message);
+  }
+  if (!data || data.error) throw new Error('Todos os modelos Gemini falharam. Verifique sua API key em aistudio.google.com/app/apikey');
 
   const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
   // Remove markdown se vier
