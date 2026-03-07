@@ -885,12 +885,501 @@ async function loadWiki() {
 function getDefaultData() {
   return {
     torres: [
-      { id:'zeus', name:'Zeus', icon:'⚡', elem:'Raio', origin:'Grego', dmg:50, spd:1.5, range:20, cost:150, ability:'Cólera do Olimpo', status:'available', lore:'O senhor dos raios, rei dos deuses do Olimpo. Zeus protege os portões com a força indomável de seus relâmpagos. Dizem que cada raio disparado carrega a ira de mil tempestades.', tip:'Posicione no começo do caminho. Eficaz contra inimigos com baixa resistência mágica. Combine com Poseidon para maximizar dano.' },
-      { id:'poseidon', name:'Poseidon', icon:'🌊', elem:'Água', origin:'Grego', dmg:35, spd:1.2, range:18, cost:200, ability:'Tsunami Eterno', status:'available', lore:'O senhor dos mares e dos terremotos. Poseidon não apenas destrói inimigos — ele os paralisa com o peso do oceano inteiro.', tip:'Melhor usado no meio do caminho onde inimigos se concentram. O efeito de lentidão é valioso em ondas numerosas.' },
-      { id:'ares', name:'Ares', icon:'🔥', elem:'Fogo', origin:'Grego', dmg:80, spd:0.8, range:15, cost:180, ability:'Fúria de Guerra', status:'available', lore:'O deus da guerra. Brutal e implacável, Ares foi banido do Olimpo por sua ferocidade excessiva — mas seus inimigos descobriram que banimento não o tornara mais gentil.', tip:'Alto dano por hit. Ideal para inimigos tanques com muito HP. Fraco contra inimigos rápidos.' },
-      { id:'hades', name:'Hades', icon:'💀', elem:'Trevas', origin:'Grego', dmg:45, spd:1.8, range:22, cost:220, ability:'Julgamento das Almas', status:'dev', lore:'O soberano do submundo observa a batalha de longe. Hades não precisa matar — ele simplesmente reclama as almas que já lhe pertencem.', tip:'Em desenvolvimento. Terá habilidade de enfraquecer resistências inimigas.' },
-      { id:'artemis', name:'Artemis', icon:'🌿', elem:'Natureza', origin:'Grego', dmg:60, spd:2.2, range:30, cost:280, ability:'Flecha Sagrada', status:'planned', lore:'A deusa da caça nunca erra. Artemis vê cada inimigo com a precisão fria de quem caça há milênios — e nenhuma presa jamais escapou.', tip:'Planejado. Será a torre de maior alcance do jogo.' },
-    ],
+        {
+                "id": "shu",
+                "name": "Shu",
+                "icon": "🌪️",
+                "elem": "Vento",
+                "origin": "Egípcio",
+                "rarity": "Common",
+                "role": "DPS",
+                "dmg": 6,
+                "spd": 1.0,
+                "range": 16,
+                "cost": 40,
+                "ability": "Rajada Divina",
+                "evol": "Shu → Thor → Loki → Odin → Ra",
+                "lore": "O deus egípcio do ar e do vento. Leve e ágil, mas ainda inexperiente. Primeiro passo no caminho do trovão. Dano máximo: 13 (nível 3). Alcance máximo: 24.",
+                "tip": "DPS: Posicione no começo ou meio do caminho para máximo tempo de disparo. Evolui para Thor — invista upgrades antes de evoluir.",
+                "stars": "★",
+                "status": "available"
+        },
+        {
+                "id": "thoth",
+                "name": "Thoth",
+                "icon": "🪙",
+                "elem": "Ouro",
+                "origin": "Egípcio",
+                "rarity": "Common",
+                "role": "FARM",
+                "dmg": 0,
+                "spd": 1.0,
+                "range": 0,
+                "cost": 50,
+                "ability": "Escriba dos Deuses",
+                "evol": "Thoth → Freyr",
+                "lore": "O escriba dos deuses. Sua sabedoria gera riqueza com o tempo. Gera até 7 moedas/tick no nível 3.",
+                "tip": "FARM: Coloque cedo — cada segundo conta para acumular ouro. Evolui para Freyr. Quanto mais cedo colocado, maior o retorno total.",
+                "stars": "★",
+                "status": "available"
+        },
+        {
+                "id": "apophis",
+                "name": "Apophis",
+                "icon": "🌑",
+                "elem": "Trevas",
+                "origin": "Egípcio",
+                "rarity": "Common",
+                "role": "DPS",
+                "dmg": 10,
+                "spd": 1.0,
+                "range": 20,
+                "cost": 50,
+                "ability": "Devorar a Luz",
+                "evol": "Apophis → Anubis → Tyr → Odin → Ra",
+                "lore": "A serpente eterna que devora a luz. Força sombria inicial. Dano máximo: 24. Alcance máximo: 28.",
+                "tip": "DPS: Posicione no começo ou meio do caminho para máximo tempo de disparo. Evolui para Anubis. Bom alcance para um Common.",
+                "stars": "★",
+                "status": "available"
+        },
+        {
+                "id": "anubis",
+                "name": "Anubis",
+                "icon": "💀",
+                "elem": "Morte",
+                "origin": "Egípcio",
+                "rarity": "Rare",
+                "role": "DPS",
+                "dmg": 11,
+                "spd": 1.0,
+                "range": 22,
+                "cost": 65,
+                "ability": "Julgamento das Almas",
+                "evol": "Apophis → Anubis → Tyr → Odin → Ra",
+                "lore": "Guardião dos mortos. Cada golpe pesa como o julgamento das almas. CritChance 12% no nível 3. Dano máximo: 25. Alcance: 30.",
+                "tip": "DPS: Posicione no começo ou meio do caminho para máximo tempo de disparo. Evolui para Tyr. Crítico cresce com upgrades.",
+                "stars": "★★★",
+                "status": "available"
+        },
+        {
+                "id": "thor",
+                "name": "Thor",
+                "icon": "⚡",
+                "elem": "Trovão",
+                "origin": "Nórdico",
+                "rarity": "Rare",
+                "role": "DPS",
+                "dmg": 10,
+                "spd": 0.9,
+                "range": 20,
+                "cost": 70,
+                "ability": "Mjolnir",
+                "evol": "Shu → Thor → Loki → Odin → Ra",
+                "lore": "O filho de Odin empunha Mjolnir. Trovão que não perdoa. Crit 10% no máximo. Dano: 22. Alcance: 28.",
+                "tip": "DPS: Posicione no começo ou meio do caminho para máximo tempo de disparo. Evolui para Loki. Eficaz contra grupos numerosos.",
+                "stars": "★★★",
+                "status": "available"
+        },
+        {
+                "id": "set",
+                "name": "Set",
+                "icon": "🌑",
+                "elem": "Trevas",
+                "origin": "Egípcio",
+                "rarity": "Rare",
+                "role": "DPS",
+                "dmg": 12,
+                "spd": 1.0,
+                "range": 22,
+                "cost": 75,
+                "ability": "Tempestade de Areia",
+                "evol": "Set → Horus → Heimdall → Ra",
+                "lore": "O deus do caos e das tempestades de areia. Maior alcance entre os raros. Dano: 26. Alcance: 30.",
+                "tip": "DPS: Posicione no começo ou meio do caminho para máximo tempo de disparo. Evolui para Horus. Posicione em ponto elevado para máximo alcance.",
+                "stars": "★★★",
+                "status": "available"
+        },
+        {
+                "id": "freyr",
+                "name": "Freyr",
+                "icon": "🪙",
+                "elem": "Ouro",
+                "origin": "Nórdico",
+                "rarity": "Rare",
+                "role": "FARM",
+                "dmg": 0,
+                "spd": 1.0,
+                "range": 0,
+                "cost": 60,
+                "ability": "Abundância Nórdica",
+                "evol": "Thoth → Freyr",
+                "lore": "Senhor da fertilidade e da abundância. Gera até 14 moedas/tick no nível 3. Riqueza flui de sua presença.",
+                "tip": "FARM: Coloque cedo — cada segundo conta para acumular ouro. Farm raro de alta renda. Prioridade máxima de upgrade.",
+                "stars": "★★★",
+                "status": "available"
+        },
+        {
+                "id": "loki",
+                "name": "Loki",
+                "icon": "🌀",
+                "elem": "Caos",
+                "origin": "Nórdico",
+                "rarity": "Epic",
+                "role": "DPS",
+                "dmg": 20,
+                "spd": 1.3,
+                "range": 18,
+                "cost": 95,
+                "ability": "Explosão do Enganador",
+                "evol": "Shu → Thor → Loki → Odin → Ra",
+                "lore": "O Enganador. Seu ataque explode em área — como uma brincadeira fatal. Burst caótico. Dano: 45. Alcance: 22.",
+                "tip": "Burst: devastador em grupos. Targeting Closest para hordas densas. Evolui para Odin.",
+                "stars": "★★★★",
+                "status": "available"
+        },
+        {
+                "id": "tyr",
+                "name": "Tyr",
+                "icon": "⚔️",
+                "elem": "Ferro",
+                "origin": "Nórdico",
+                "rarity": "Epic",
+                "role": "WALL",
+                "dmg": 0,
+                "spd": 1.0,
+                "range": 0,
+                "cost": 90,
+                "ability": "Mão de Ferro",
+                "evol": "Apophis → Anubis → Tyr → Odin → Ra",
+                "lore": "O deus do combate justo. Barreira de 650 HP no nível 3. Sua mão de ferro segura os inimigos no lugar.",
+                "tip": "WALL: Posicione na entrada para segurar inimigos enquanto DPS atacam. Evolui para Odin. Cada upgrade quase dobra o HP da barreira.",
+                "stars": "★★★★",
+                "status": "available"
+        },
+        {
+                "id": "horus",
+                "name": "Horus",
+                "icon": "🦅",
+                "elem": "Céu",
+                "origin": "Egípcio",
+                "rarity": "Epic",
+                "role": "DPS",
+                "dmg": 13,
+                "spd": 1.0,
+                "range": 24,
+                "cost": 75,
+                "ability": "Olhar do Falcão",
+                "evol": "Set → Horus → Heimdall → Ra",
+                "lore": "O falcão do horizonte. Enxerga tudo. Maior alcance épico: 32 no nível 3. Dano: 28.",
+                "tip": "DPS: Posicione no começo ou meio do caminho para máximo tempo de disparo. Evolui para Heimdall. Alcance excepcional — cobre boa parte do mapa.",
+                "stars": "★★★★",
+                "status": "available"
+        },
+        {
+                "id": "sentinelaDeAres",
+                "name": "Sentinela de Ares",
+                "icon": "🪖",
+                "elem": "Guerra",
+                "origin": "Grego",
+                "rarity": "Rare",
+                "role": "DPS",
+                "dmg": 18,
+                "spd": 1.0,
+                "range": 10,
+                "cost": 350,
+                "ability": "Frenesi de Batalha",
+                "evol": "—",
+                "lore": "Campeão divino corpo-a-corpo. Entra em frenesi após kills consecutivas. Dano: 42. Menor alcance (12u) mas devastador.",
+                "tip": "Melee: posicione direto na entrada do caminho. Alto dano compensa o alcance reduzido.",
+                "stars": "★★★",
+                "status": "available"
+        },
+        {
+                "id": "oraculoDeApolo",
+                "name": "Oráculo de Apolo",
+                "icon": "✨",
+                "elem": "Luz",
+                "origin": "Grego",
+                "rarity": "Epic",
+                "role": "SUPPORT",
+                "dmg": 6,
+                "spd": 1.1,
+                "range": 22,
+                "cost": 420,
+                "ability": "Bênção Solar",
+                "evol": "—",
+                "lore": "Suporte divino. Marca alvos e abençoa torres próximas com cura passiva. Alcance 30 no nível 3.",
+                "tip": "SUPPORT: Posicione no centro do campo para alcançar mais torres aliadas. Cura torres aliadas — protege investimentos de upgrade.",
+                "stars": "★★★★",
+                "status": "available"
+        },
+        {
+                "id": "forjaDeHefesto",
+                "name": "Forja de Hefesto",
+                "icon": "🔨",
+                "elem": "Forja",
+                "origin": "Grego",
+                "rarity": "Epic",
+                "role": "SUPPORT",
+                "dmg": 0,
+                "spd": 1.0,
+                "range": 14,
+                "cost": 500,
+                "ability": "Bênção Forjada",
+                "evol": "—",
+                "lore": "Forja sagrada. Melhora passivamente torres próximas com buff de até 30% de dano. Alcance 18 no nível 3.",
+                "tip": "SUPPORT: Posicione no centro do campo para alcançar mais torres aliadas. Coloque no centro da composição para cobrir mais torres.",
+                "stars": "★★★★",
+                "status": "available"
+        },
+        {
+                "id": "abismoDePoseidon",
+                "name": "Abismo de Poseidon",
+                "icon": "🌊",
+                "elem": "Água",
+                "origin": "Grego",
+                "rarity": "Epic",
+                "role": "CONTROL",
+                "dmg": 4,
+                "spd": 1.2,
+                "range": 18,
+                "cost": 460,
+                "ability": "Zona de Abismo",
+                "evol": "—",
+                "lore": "Cria zonas de água que ralentam inimigos em até 45%. Sinergia devastadora com raios elétricos. Dano: 8. Alcance: 22.",
+                "tip": "CONTROL: Combine com torres de DPS para maximizar o efeito de câmara lenta. Sinergia direta com Tempestade de Zeus — raio se amplifica em zonas molhadas.",
+                "stars": "★★★★",
+                "status": "available"
+        },
+        {
+                "id": "berserkerDeOdin",
+                "name": "Berserker de Odin",
+                "icon": "🪖",
+                "elem": "Guerra",
+                "origin": "Nórdico",
+                "rarity": "Epic",
+                "role": "DPS",
+                "dmg": 12,
+                "spd": 0.95,
+                "range": 18,
+                "cost": 480,
+                "ability": "Fúria Nórdica",
+                "evol": "—",
+                "lore": "Fica mais forte quanto mais perto da base inimiga. Fúria nórdica. Dano: 28. Mecânica de escala por posição.",
+                "tip": "DPS: Posicione no começo ou meio do caminho para máximo tempo de disparo. Mecânica especial: dano escala com proximidade da base inimiga. Jogue agressivo.",
+                "stars": "★★★★",
+                "status": "available"
+        },
+        {
+                "id": "serpenteDeLoki",
+                "name": "Serpente de Loki",
+                "icon": "🐍",
+                "elem": "Veneno",
+                "origin": "Nórdico",
+                "rarity": "Epic",
+                "role": "DPS",
+                "dmg": 10,
+                "spd": 0.8,
+                "range": 16,
+                "cost": 520,
+                "ability": "Golpe Traiçoeiro",
+                "evol": "—",
+                "lore": "Disfarça-se e ataca por trás. Veneno e golpes traiçoeiros. Crítico 30% no máximo. Dano: 26.",
+                "tip": "Assassin: alta crit e velocidade de ataque. Targeting Closest — letal contra grupos densos.",
+                "stars": "★★★★",
+                "status": "available"
+        },
+        {
+                "id": "olhoDeRa",
+                "name": "Olho de Rá",
+                "icon": "☀️",
+                "elem": "Solar",
+                "origin": "Egípcio",
+                "rarity": "Epic",
+                "role": "DPS",
+                "dmg": 14,
+                "spd": 0.95,
+                "range": 26,
+                "cost": 560,
+                "ability": "Carga Solar",
+                "evol": "—",
+                "lore": "Carrega energia durante o dia e dispara com mais força à noite. Mecânica dia/noite. Dano: 34. Alcance: 34.",
+                "tip": "DPS: Posicione no começo ou meio do caminho para máximo tempo de disparo. Dano amplificado à noite por carga solar. Altíssimo alcance.",
+                "stars": "★★★★",
+                "status": "available"
+        },
+        {
+                "id": "pilarDeThoth",
+                "name": "Pilar de Thoth",
+                "icon": "📜",
+                "elem": "Arcano",
+                "origin": "Egípcio",
+                "rarity": "Epic",
+                "role": "SUPPORT",
+                "dmg": 4,
+                "spd": 1.2,
+                "range": 20,
+                "cost": 520,
+                "ability": "Revelar Fraqueza",
+                "evol": "—",
+                "lore": "Revela fraquezas elementais dos inimigos. Conhecimento que amplifica dano aliado. Alcance 28 no nível 3.",
+                "tip": "SUPPORT: Posicione no centro do campo para alcançar mais torres aliadas. Amplifica DPS de todas as torres ao revelar fraquezas inimigas.",
+                "stars": "★★★★",
+                "status": "available"
+        },
+        {
+                "id": "odin",
+                "name": "Odin",
+                "icon": "🔮",
+                "elem": "Vazio",
+                "origin": "Nórdico",
+                "rarity": "Legendary",
+                "role": "DPS",
+                "dmg": 18,
+                "spd": 0.85,
+                "range": 26,
+                "cost": 0,
+                "ability": "Gungnir — A Lança que Nunca Erra",
+                "evol": "Shu→Thor→Loki→Odin→Ra / Apophis→Anubis→Tyr→Odin→Ra",
+                "lore": "O pai de todos os deuses. Gungnir nunca erra. Assassin lendário do Vazio. Crit 25%. Dano: 42. Alcance: 36.",
+                "tip": "Targeting Strongest — foca o inimigo mais perigoso. Obtido por evolução. A penúltima forma.",
+                "stars": "★★★★★",
+                "status": "available"
+        },
+        {
+                "id": "heimdall",
+                "name": "Heimdall",
+                "icon": "✨",
+                "elem": "Luz",
+                "origin": "Nórdico",
+                "rarity": "Legendary",
+                "role": "DPS",
+                "dmg": 8,
+                "spd": 1.1,
+                "range": 32,
+                "cost": 85,
+                "ability": "Visão da Bifrost",
+                "evol": "Set → Horus → Heimdall → Ra",
+                "lore": "Guarda a Bifrost com olhos que nunca dormem. Maior alcance do jogo: 44u. Dano: 17.",
+                "tip": "Guardian: alcance 44 no nível 3 — cobre quase todo o mapa. Targeting Closest para máxima cobertura.",
+                "stars": "★★★★★",
+                "status": "available"
+        },
+        {
+                "id": "tempestadeDeZeus",
+                "name": "Tempestade de Zeus",
+                "icon": "⚡",
+                "elem": "Elétrico",
+                "origin": "Grego",
+                "rarity": "Legendary",
+                "role": "DPS",
+                "dmg": 16,
+                "spd": 0.9,
+                "range": 28,
+                "cost": 650,
+                "ability": "Relâmpago em Cadeia",
+                "evol": "—",
+                "lore": "Relâmpagos que ricocheteiam entre inimigos (até 6). Mais forte em zonas de água. Dano: 40. Alcance: 36.",
+                "tip": "Sinergia com Abismo de Poseidon: zonas molhadas amplificam o dano de cadeia drasticamente.",
+                "stars": "★★★★★",
+                "status": "available"
+        },
+        {
+                "id": "veuDeHecate",
+                "name": "Véu de Hécate",
+                "icon": "🌙",
+                "elem": "Maldição",
+                "origin": "Grego",
+                "rarity": "Legendary",
+                "role": "CONTROL",
+                "dmg": 10,
+                "spd": 1.0,
+                "range": 26,
+                "cost": 620,
+                "ability": "Maldição das Trevas",
+                "evol": "—",
+                "lore": "Amaldiçoa inimigos e revela invisíveis. Debuff de 30%. Controle supremo das trevas. Dano: 24. Alcance: 34.",
+                "tip": "CONTROL: Combine com torres de DPS para maximizar o efeito de câmara lenta. Revela invisíveis — indispensável em mapas avançados.",
+                "stars": "★★★★★",
+                "status": "available"
+        },
+        {
+                "id": "valkiriaDeFreya",
+                "name": "Valquíria de Freya",
+                "icon": "✨",
+                "elem": "Luz",
+                "origin": "Nórdico",
+                "rarity": "Legendary",
+                "role": "SUPPORT",
+                "dmg": 6,
+                "spd": 1.1,
+                "range": 22,
+                "cost": 700,
+                "ability": "Asa da Ressurreição",
+                "evol": "—",
+                "lore": "Ressuscita torres destruídas. A asa da deusa traz o retorno. Cooldown de revive: 40 segundos.",
+                "tip": "SUPPORT: Posicione no centro do campo para alcançar mais torres aliadas. Única torre com revive. Essencial quando você usa torres caras como Ra.",
+                "stars": "★★★★★",
+                "status": "available"
+        },
+        {
+                "id": "marteloDeThor",
+                "name": "Martelo de Thor",
+                "icon": "⚡",
+                "elem": "Elétrico",
+                "origin": "Nórdico",
+                "rarity": "Legendary",
+                "role": "CONTROL",
+                "dmg": 14,
+                "spd": 0.95,
+                "range": 20,
+                "cost": 680,
+                "ability": "Knockback Divino",
+                "evol": "—",
+                "lore": "Knockback pesado de 20 unidades — empurra inimigos de volta. O trovão abre caminho. Dano: 34.",
+                "tip": "CONTROL: Combine com torres de DPS para maximizar o efeito de câmara lenta. Combina com torres de área no início para forçar inimigos a reiniciar.",
+                "stars": "★★★★★",
+                "status": "available"
+        },
+        {
+                "id": "juizoDeAnubis",
+                "name": "Juízo de Anubis",
+                "icon": "💀",
+                "elem": "Morte",
+                "origin": "Egípcio",
+                "rarity": "Legendary",
+                "role": "DPS",
+                "dmg": 18,
+                "spd": 0.9,
+                "range": 24,
+                "cost": 720,
+                "ability": "Execução Divina",
+                "evol": "—",
+                "lore": "Amplifica dano em inimigos com HP baixo. Execute: 35% de chance. O julgamento é inevitável. Dano: 48. Alcance: 32.",
+                "tip": "Targeting Strongest. Execute passivo torna bosses muito mais gerenciáveis nas fases finais.",
+                "stars": "★★★★★",
+                "status": "available"
+        },
+        {
+                "id": "ra",
+                "name": "Ra",
+                "icon": "☀️",
+                "elem": "Solar",
+                "origin": "Egípcio",
+                "rarity": "Mythic",
+                "role": "DPS",
+                "dmg": 24,
+                "spd": 0.85,
+                "range": 36,
+                "cost": 0,
+                "ability": "Olho Solar — Incineração Total",
+                "evol": "Fim de todas as cadeias de evolução",
+                "lore": "O deus-sol supremo. Não existe forma além de Ra. Stats absolutos: Dano 60, Alcance 50, CritChance 32%. Obtido apenas por evolução.",
+                "tip": "A forma final. Targeting Strongest. Proteja a todo custo — é o topo absoluto do jogo.",
+                "stars": "★★★★★★",
+                "status": "available"
+        }
+],
     inimigos: [
       { id:'guardiao', name:'Guardião de Tártaro', icon:'⛓️', hp:500, spd:'Lento', armor:30, mres:0, weak:['Gelo','Raio'], immune:['Fogo'], phase:'A partir da onda 8', desc:'Guerreiros corrompidos pelas chamas do Tártaro. Sua armadura forjada nos fornos do submundo resiste ao fogo, mas racha sob o gelo.', strat:'Use Torres de Gelo ou Raio. Evite Ares. Graças à baixa velocidade, são vulneráveis a torres de área posicionadas no início do caminho.' },
       { id:'sereia', name:'Sereia Corrompida', icon:'🧜', hp:200, spd:'Médio', armor:0, mres:20, weak:['Raio'], immune:[], phase:'A partir da onda 3', desc:'Criaturas do mar corrompidas pelo poder de Poseidon às avessas. Elas emitem sons que temporariamente desativam as torres próximas.', strat:'Prioridade alta. Elimine rapidamente para proteger suas torres. Zeus é altamente eficaz contra elas.' },
@@ -993,12 +1482,24 @@ function renderTorre(t) {
   var heroImg = t.imagem
     ? '<div class="entry-hero-img"><img src="' + t.imagem + '" alt="' + t.name + '" onerror="this.parentElement.innerHTML=\'<span class=entry-icon>' + (t.icon||'🗼') + '</span>\'"/></div>'
     : '<span class="entry-icon">' + (t.icon||'🗼') + '</span>';
+
+  // Cor do badge por raridade
+  var rarityBadgeClass = { Common:'badge-green', Rare:'badge-blue', Epic:'badge-purple', Legendary:'badge-gold', Mythic:'badge-red' };
+  var rarityLabel = { Common:'Comum', Rare:'Raro', Epic:'Épico', Legendary:'Lendário', Mythic:'Mítico' };
+  var roleBadgeClass = { DPS:'badge-red', FARM:'badge-gold', WALL:'badge-blue', CONTROL:'badge-purple', SUPPORT:'badge-green' };
+  var rbc = rarityBadgeClass[t.rarity] || 'badge-gold';
+  var rbl = (t.stars || '') + ' ' + (rarityLabel[t.rarity] || t.rarity || '');
+  var roleClass = roleBadgeClass[t.role] || 'badge-gold';
+  var custoStr = (t.cost === 0 || t.cost == null) ? '🔄 Evolução' : t.cost + ' 🪙';
+
   return '<div class="entry-header">'
     + heroImg
     + '<h1 class="entry-title">' + t.name + '</h1>'
     + '<div class="entry-subtitle">' + t.origin + ' · ' + t.elem + '</div>'
     + '<div class="entry-badges">'
     + (STATUS_BADGE[t.status] || '')
+    + '<span class="badge ' + rbc + '">' + rbl + '</span>'
+    + '<span class="badge ' + roleClass + '">' + (t.role||'') + '</span>'
     + '<span class="badge badge-gold">' + t.elem + '</span>'
     + '<span class="badge badge-gold">' + t.origin + '</span>'
     + '</div>'
@@ -1007,15 +1508,18 @@ function renderTorre(t) {
     + '<div class="wiki-section">'
     + '<div class="wiki-section-title">Stats Base</div>'
     + '<div class="stats-grid">'
-    + statBox('Dano Base', t.dmg, 'por hit')
+    + statBox('Dano Base', t.dmg || '—', 'por hit')
     + statBox('Atk/seg', t.spd, 'ataques')
-    + statBox('DPS', dps, 'dano/seg')
-    + statBox('Alcance', t.range, 'unidades')
-    + statBox('Custo', t.cost + '🪙', '')
+    + (t.dmg > 0 ? statBox('DPS', dps, 'dano/seg') : '')
+    + statBox('Alcance', t.range || '—', 'unidades')
+    + statBox('Custo', custoStr, '')
     + '</div>'
-    + hpBar('DPS', dps, 300)
-    + hpBar('Alcance', t.range, 40)
+    + (t.dmg > 0 ? hpBar('DPS', dps, 300) : '')
+    + (t.range > 0 ? hpBar('Alcance', t.range, 50) : '')
     + '</div>'
+
+    + (t.evol && t.evol !== '—' ? '<div class="wiki-section"><div class="wiki-section-title">Cadeia de Evolução</div>'
+    + '<div class="lore-box" style="font-style:normal;font-family:\'Cinzel\',serif;font-size:.8rem;letter-spacing:.1em">🔱 ' + t.evol + '</div></div>' : '')
 
     + '<div class="wiki-section">'
     + '<div class="wiki-section-title">Habilidade Especial</div>'
@@ -1024,7 +1528,7 @@ function renderTorre(t) {
     + '</div>'
     + '</div>'
 
-    + (t.lore ? '<div class="wiki-section"><div class="wiki-section-title">Lore</div>'
+    + (t.lore ? '<div class="wiki-section"><div class="wiki-section-title">Lore & Stats</div>'
     + '<div class="lore-box">' + t.lore + '<cite>— Fragmento dos Pergaminhos do Olimpo</cite></div></div>' : '')
 
     + (t.tip ? '<div class="wiki-section"><div class="wiki-section-title">Como Usar</div>'
