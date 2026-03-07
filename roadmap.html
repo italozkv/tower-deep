@@ -6,7 +6,26 @@
   <title>Tower Deep — Roadmap Divino</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
-    :root{--gold:#c9a84c;--gold-light:#f0d080;--gold-dim:#7a6030;--ink:#080704;--divine:#e8c96a;--glow:rgba(201,168,76,0.15);}
+        :root,[data-theme="dark"]{
+      --gold:#c9a84c;--gold-light:#f0d080;--gold-dim:#7a6030;
+      --ink:#080704;--ink2:#0f0d08;--ink3:#161208;
+      --divine:#e8c96a;--glow:rgba(201,168,76,0.15);
+      --text-body:rgba(232,201,106,0.75);--text-sub:rgba(201,168,76,0.5);
+      --card-bg:rgba(255,255,255,0.02);--card-border:rgba(201,168,76,0.12);
+      --nav-bg:rgba(8,7,4,0.88);--nav-border:rgba(201,168,76,0.12);
+      --input-bg:rgba(255,255,255,0.04);--input-border:rgba(201,168,76,0.2);
+      --shadow:rgba(0,0,0,0.4);
+    }
+    [data-theme="light"]{
+      --gold:#a0722a;--gold-light:#7a5218;--gold-dim:#c8a05a;
+      --ink:#faf6ee;--ink2:#f4ede0;--ink3:#ede3d0;
+      --divine:#5a3e10;--glow:rgba(160,114,42,0.12);
+      --text-body:rgba(90,62,16,0.85);--text-sub:rgba(120,85,30,0.6);
+      --card-bg:rgba(255,255,255,0.7);--card-border:rgba(160,114,42,0.2);
+      --nav-bg:rgba(250,246,238,0.92);--nav-border:rgba(160,114,42,0.2);
+      --input-bg:rgba(255,255,255,0.8);--input-border:rgba(160,114,42,0.3);
+      --shadow:rgba(90,62,16,0.15);
+    }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
     body{background:var(--ink);color:var(--divine);font-family:'EB Garamond',serif;font-size:1.1rem;line-height:1.75;overflow-x:hidden;min-height:100vh}
     .stars-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
@@ -153,7 +172,24 @@
     }
     .contribute h3 { font-family: 'Cinzel', serif; font-size: .8rem; letter-spacing: .4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 10px; }
     .contribute p { font-style: italic; color: rgba(240,208,128,.5); margin-bottom: 24px; }
+  
+    #theme-toggle{background:none;border:1px solid var(--card-border);color:var(--gold);width:32px;height:32px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .25s;flex-shrink:0}
+    #theme-toggle:hover{border-color:var(--gold);background:var(--glow)}
+    body{transition:background .3s,color .3s}
+    [data-theme="light"] body{background:var(--ink)}
+    [data-theme="light"] .site-nav{background:var(--nav-bg);border-bottom-color:var(--nav-border)}
+    [data-theme="light"] .nav-logo{color:var(--gold-light)}
+    [data-theme="light"] .nav-links a{color:var(--gold-dim)}
+    [data-theme="light"] .nav-links a:hover,[data-theme="light"] .nav-links a.active{color:var(--gold-light);background:var(--glow)}
+    [data-theme="light"] .nebula-bg{opacity:0.3}
+    [data-theme="light"] .stars-bg::before,[data-theme="light"] .stars-bg::after{opacity:0.15}
   </style>
+  <script>
+    (function(){
+      var t=localStorage.getItem('td_theme')||'dark';
+      document.documentElement.setAttribute('data-theme',t);
+    })();
+  </script>
 </head>
 <body>
 <div class="stars-bg"></div>
@@ -167,8 +203,10 @@
     <li><a href="changelog.html">Changelog</a></li>
     <li><a href="roadmap.html" class="active">Roadmap</a></li>
     <li><a href="votos.html">Votos</a></li>
+    <li><a href="ranking.html">Ranking</a></li>
     <li><a href="https://www.roblox.com/pt/games/136302244140571/Tower-Deep" target="_blank">▶ Jogar</a></li>
   </ul>
+  <button id="theme-toggle" onclick="toggleTheme()" title="Tema Claro" aria-label="Alternar tema">☀️</button>
   <button class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -280,5 +318,20 @@ function renderFallback() {
 carregarRoadmap();
 window.addEventListener('scroll', () => document.getElementById('scrollTop').classList.toggle('show', scrollY > 400));
 </script>
+
+  <script>
+  function toggleTheme(){
+    var t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme',t);
+    localStorage.setItem('td_theme',t);
+    var btn=document.getElementById('theme-toggle');
+    if(btn)btn.innerHTML=t==='light'?'🌙':'☀️';
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    var btn=document.getElementById('theme-toggle');
+    var t=localStorage.getItem('td_theme')||'dark';
+    if(btn)btn.innerHTML=t==='light'?'🌙':'☀️';
+  });
+  </script>
 </body>
 </html>
