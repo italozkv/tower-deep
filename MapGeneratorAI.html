@@ -7,37 +7,42 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:#0a0c14; --surface:#111420; --card:#161a28; --border:#1e2540;
-    --accent:#3d7fff; --accent2:#00e5a0; --danger:#ff4757;
-    --text:#c8d4f0; --muted:#5a6480; --glow:0 0 20px rgba(61,127,255,0.3);
+    --bg:#0a0c14;--surface:#111420;--card:#161a28;--border:#1e2540;
+    --accent:#3d7fff;--accent2:#00e5a0;--danger:#ff4757;
+    --text:#c8d4f0;--muted:#5a6480;--glow:0 0 20px rgba(61,127,255,0.3);
+    --gemini:#4285f4;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;min-height:100vh;overflow-x:hidden;}
   body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(61,127,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(61,127,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;}
   body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.06) 2px,rgba(0,0,0,0.06) 4px);pointer-events:none;z-index:9999;}
+
   .container{max-width:900px;margin:0 auto;padding:40px 24px;}
-  header{text-align:center;margin-bottom:48px;}
+
+  header{text-align:center;margin-bottom:40px;}
   .logo-tag{display:inline-block;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent2);letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;opacity:.8;}
-  h1{font-size:clamp(32px,6vw,56px);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,#fff 30%,var(--accent) 70%,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;}
+  h1{font-size:clamp(32px,6vw,54px);font-weight:700;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,#fff 30%,var(--gemini) 70%,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;}
   .subtitle{font-size:13px;color:var(--muted);letter-spacing:2px;font-family:'Share Tech Mono',monospace;}
 
-  /* API KEY BANNER */
-  .api-banner{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-  .api-banner .mode-badge{padding:4px 10px;border-radius:20px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;flex-shrink:0;}
-  .mode-offline{background:rgba(255,71,87,0.15);border:1px solid var(--danger);color:var(--danger);}
-  .mode-online{background:rgba(0,229,160,0.15);border:1px solid var(--accent2);color:var(--accent2);}
-  .api-banner input{flex:1;min-width:200px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:12px;padding:7px 12px;outline:none;}
-  .api-banner input:focus{border-color:var(--accent);}
-  .btn-sm{padding:7px 14px;border-radius:6px;border:none;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;}
-  .btn-activate{background:var(--accent);color:#fff;}
+  /* API BANNER */
+  .api-banner{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:24px;}
+  .api-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px;}
+  .mode-badge{padding:4px 12px;border-radius:20px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;flex-shrink:0;white-space:nowrap;}
+  .mode-offline{background:rgba(255,71,87,.15);border:1px solid var(--danger);color:var(--danger);}
+  .mode-online{background:rgba(66,133,244,.2);border:1px solid var(--gemini);color:#6fa8ff;}
+  .api-input{flex:1;min-width:220px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:12px;padding:9px 14px;outline:none;transition:border-color .2s;}
+  .api-input:focus{border-color:var(--gemini);}
+  .btn-activate{padding:9px 18px;border-radius:8px;border:none;background:var(--gemini);color:#fff;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap;}
   .btn-activate:hover{background:#5b9dff;}
-  .api-note{width:100%;font-size:12px;color:var(--muted);font-family:'Share Tech Mono',monospace;}
+  .api-note{font-size:12px;color:var(--muted);font-family:'Share Tech Mono',monospace;line-height:1.5;}
+  .api-note a{color:var(--gemini);text-decoration:none;}
+  .api-note a:hover{text-decoration:underline;}
 
   /* LAYOUT */
   .layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
   @media(max-width:640px){.layout{grid-template-columns:1fr;}}
   .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;position:relative;overflow:hidden;transition:border-color .2s;}
-  .card:hover{border-color:rgba(61,127,255,.4);}
+  .card:hover{border-color:rgba(61,127,255,.35);}
   .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .3s;}
   .card:hover::before{opacity:1;}
   .card-full{grid-column:1/-1;}
@@ -45,79 +50,89 @@
   .card-title::before{content:'';width:3px;height:14px;background:var(--accent);border-radius:2px;box-shadow:0 0 8px var(--accent);}
   label{display:block;font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;font-family:'Share Tech Mono',monospace;}
   textarea,input,select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:15px;padding:10px 14px;outline:none;transition:border-color .2s,box-shadow .2s;resize:none;}
-  textarea:focus,input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(61,127,255,.15);}
+  textarea:focus,input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(61,127,255,.12);}
   textarea{height:90px;line-height:1.5;}
   select option{background:var(--surface);}
-  .field{margin-bottom:16px;}
-  .field:last-child{margin-bottom:0;}
+  .field{margin-bottom:16px;}.field:last-child{margin-bottom:0;}
   .quick-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
   .tag{padding:4px 10px;border-radius:20px;border:1px solid var(--border);font-size:12px;color:var(--muted);cursor:pointer;font-family:'Share Tech Mono',monospace;transition:all .15s;user-select:none;}
-  .tag:hover,.tag.active{border-color:var(--accent);color:var(--accent);background:rgba(61,127,255,.1);}
+  .tag:hover{border-color:var(--accent);color:var(--accent);background:rgba(61,127,255,.1);}
 
-  .btn-generate{width:100%;padding:18px;background:linear-gradient(135deg,var(--accent),#5b9dff);border:none;border-radius:10px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .2s;box-shadow:var(--glow);margin-bottom:20px;}
-  .btn-generate:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(61,127,255,.5);}
+  .btn-generate{width:100%;padding:18px;background:linear-gradient(135deg,var(--gemini),#5b9dff);border:none;border-radius:10px;color:#fff;font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;position:relative;overflow:hidden;transition:transform .15s,box-shadow .2s;box-shadow:0 0 20px rgba(66,133,244,0.35);margin-bottom:20px;}
+  .btn-generate:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(66,133,244,.55);}
   .btn-generate:active{transform:translateY(0);}
-  .btn-generate::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.15) 50%,transparent 100%);transform:translateX(-100%);transition:transform .5s;}
+  .btn-generate::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);transform:translateX(-100%);transition:transform .5s;}
   .btn-generate:hover::after{transform:translateX(100%);}
   .btn-generate:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 
   .loading-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:20px;display:none;}
   .loading-bar.active{display:block;}
-  .loading-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;animation:loadpulse 1.4s ease-in-out infinite;}
-  @keyframes loadpulse{0%{width:0%;margin-left:0}50%{width:60%;margin-left:20%}100%{width:0%;margin-left:100%}}
+  .loading-fill{height:100%;background:linear-gradient(90deg,var(--gemini),var(--accent2),var(--gemini));background-size:200%;border-radius:2px;animation:shimmer 1.5s linear infinite;}
+  @keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
 
   #output-section{display:none;animation:fadeIn .4s ease;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-  .result-card{background:var(--card);border:1px solid var(--accent2);border-radius:12px;padding:28px;margin-bottom:20px;box-shadow:0 0 30px rgba(0,229,160,.08);}
-  .result-header{display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+  .result-card{background:var(--card);border:1px solid var(--accent2);border-radius:12px;padding:28px;margin-bottom:20px;box-shadow:0 0 30px rgba(0,229,160,.07);}
+  .result-header{display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
   .result-badge{background:rgba(0,229,160,.15);border:1px solid var(--accent2);border-radius:6px;padding:4px 10px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent2);letter-spacing:2px;}
   .result-title{font-size:22px;font-weight:700;color:#fff;letter-spacing:1px;}
-  .config-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:20px;}
+  .source-tag{padding:3px 9px;border-radius:4px;font-size:10px;font-family:'Share Tech Mono',monospace;letter-spacing:1px;}
+  .source-gemini{background:rgba(66,133,244,.2);border:1px solid var(--gemini);color:#6fa8ff;}
+  .source-local{background:rgba(255,71,87,.15);border:1px solid var(--danger);color:var(--danger);}
+
+  .config-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;margin-bottom:20px;}
   .config-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;}
   .config-key{font-size:10px;font-family:'Share Tech Mono',monospace;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
   .config-val{font-size:16px;font-weight:600;color:var(--accent2);}
-  .ai-description{background:var(--surface);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 16px;font-size:15px;line-height:1.6;color:var(--text);margin-bottom:20px;font-style:italic;}
+  .ai-description{background:var(--surface);border-left:3px solid var(--gemini);border-radius:0 8px 8px 0;padding:14px 16px;font-size:15px;line-height:1.6;color:var(--text);margin-bottom:20px;font-style:italic;}
+
   .code-section{margin-bottom:16px;}
   .code-label{font-size:11px;font-family:'Share Tech Mono',monospace;color:var(--muted);letter-spacing:2px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
-  .code-block{background:#080b14;border:1px solid var(--border);border-radius:8px;padding:16px;font-family:'Share Tech Mono',monospace;font-size:12px;line-height:1.6;color:#a8c0ff;white-space:pre;overflow-x:auto;max-height:300px;overflow-y:auto;}
+  .code-block{background:#060910;border:1px solid var(--border);border-radius:8px;padding:16px;font-family:'Share Tech Mono',monospace;font-size:12px;line-height:1.6;color:#a8c0ff;white-space:pre;overflow-x:auto;max-height:300px;overflow-y:auto;}
   .code-block::-webkit-scrollbar{width:6px;height:6px;}
   .code-block::-webkit-scrollbar-track{background:#0a0c14;}
   .code-block::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
   .deco-bars{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
   .deco-row{display:flex;align-items:center;gap:10px;}
   .deco-name{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);width:80px;flex-shrink:0;}
   .deco-bar-bg{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
   .deco-bar-fill{height:100%;border-radius:4px;transition:width .8s cubic-bezier(.4,0,.2,1);}
   .deco-count{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text);width:28px;text-align:right;}
+
   .btn-row{display:flex;gap:10px;flex-wrap:wrap;}
   .btn{padding:10px 20px;border-radius:8px;border:none;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;}
   .btn-copy{background:rgba(0,229,160,.15);border:1px solid var(--accent2);color:var(--accent2);}
   .btn-copy:hover{background:rgba(0,229,160,.25);}
-  .btn-regen{background:rgba(61,127,255,.15);border:1px solid var(--accent);color:var(--accent);}
-  .btn-regen:hover{background:rgba(61,127,255,.25);}
+  .btn-regen{background:rgba(66,133,244,.15);border:1px solid var(--gemini);color:#6fa8ff;}
+  .btn-regen:hover{background:rgba(66,133,244,.25);}
+
   .error-box{background:rgba(255,71,87,.1);border:1px solid var(--danger);border-radius:8px;padding:14px 16px;color:var(--danger);font-family:'Share Tech Mono',monospace;font-size:13px;margin-bottom:16px;display:none;}
   .copied-toast{position:fixed;bottom:24px;right:24px;background:var(--accent2);color:#000;padding:10px 18px;border-radius:8px;font-family:'Share Tech Mono',monospace;font-size:13px;font-weight:700;transform:translateY(60px);transition:transform .3s;z-index:9998;}
   .copied-toast.show{transform:translateY(0);}
-  .source-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-family:'Share Tech Mono',monospace;letter-spacing:1px;margin-left:8px;}
-  .source-local{background:rgba(255,71,87,.15);color:var(--danger);}
-  .source-ai{background:rgba(0,229,160,.15);color:var(--accent2);}
 </style>
 </head>
 <body>
 <div class="container">
+
   <header>
     <div class="logo-tag">// Tower Defense — Roblox Dev Tool</div>
     <h1>Map Gen AI</h1>
-    <div class="subtitle">Gerador Inteligente · Funciona offline ou com API</div>
+    <div class="subtitle">Powered by Gemini · Gerador Inteligente de Mapas</div>
   </header>
 
-  <!-- API KEY BANNER -->
-  <div class="api-banner" id="apiBanner">
-    <span class="mode-badge mode-offline" id="modeBadge">OFFLINE</span>
-    <input type="password" id="apiKeyInput" placeholder="sk-ant-... (opcional — cole sua API key para usar IA real)">
-    <button class="btn-sm btn-activate" onclick="activateApi()">Ativar IA</button>
-    <div class="api-note">⚡ Sem API key: geração inteligente local. Com API key: Claude decide tudo.</div>
+  <!-- API BANNER -->
+  <div class="api-banner">
+    <div class="api-row">
+      <span class="mode-badge mode-offline" id="modeBadge">⚙️ OFFLINE</span>
+      <input class="api-input" type="password" id="apiKeyInput" placeholder="Cole sua API Key do Gemini aqui (AIzaSy...)">
+      <button class="btn-activate" onclick="activateApi()">Ativar Gemini</button>
+    </div>
+    <div class="api-note">
+      Sem key: geração local inteligente (gratuita). Com key Gemini: IA real decide tudo. &nbsp;
+      <a href="https://aistudio.google.com/app/apikey" target="_blank">→ Pegar key grátis no Google AI Studio</a>
+    </div>
   </div>
 
   <!-- INPUTS -->
@@ -168,7 +183,7 @@
     <div class="card">
       <div class="card-title">Estilo & Nome</div>
       <div class="field">
-        <label>Nome da Arena (ou deixe a IA escolher)</label>
+        <label>Nome da Arena (ou deixe gerar automaticamente)</label>
         <input type="text" id="arenaName" placeholder="Deixe vazio para gerar automaticamente">
       </div>
       <div class="field">
@@ -200,8 +215,8 @@
       <div class="deco-bars" id="decoBars"></div>
       <div class="code-section">
         <div class="code-label">
-          <span>// Cole no Command Bar do Studio (View → Command Bar)</span>
-          <button class="btn btn-copy" onclick="copyCode('luaCode')">📋 Copiar</button>
+          <span>// Cole no Command Bar do Studio → View → Command Bar</span>
+          <button class="btn btn-copy" onclick="copyCode('luaCode')">📋 Copiar Lua</button>
         </div>
         <div class="code-block" id="luaCode">—</div>
       </div>
@@ -216,27 +231,27 @@
 <div class="copied-toast" id="toast">✓ Copiado!</div>
 
 <script>
-// ── Estado ──────────────────────────────────────────────
 let apiKey = '';
 let useApi = false;
 
+// ── API activation ───────────────────────────────────────
 function activateApi() {
   const key = document.getElementById('apiKeyInput').value.trim();
-  if (!key.startsWith('sk-ant-')) {
-    showError('API key inválida. Deve começar com sk-ant-');
+  if (!key.startsWith('AIza')) {
+    showError('API key inválida. Deve começar com AIza...');
     return;
   }
   apiKey = key;
   useApi = true;
-  document.getElementById('modeBadge').textContent = 'IA ATIVA';
+  document.getElementById('modeBadge').textContent = '🤖 GEMINI ATIVO';
   document.getElementById('modeBadge').className = 'mode-badge mode-online';
-  document.getElementById('genBtn').textContent = '🤖 GERAR COM IA REAL';
-  showToast('✓ IA ativada!');
+  document.getElementById('genBtn').textContent = '🤖 GERAR COM GEMINI';
+  showToast('✓ Gemini ativado!');
 }
 
-function addTag(text) {
+function addTag(t) {
   const ta = document.getElementById('description');
-  ta.value = ta.value ? ta.value + ', ' + text : text;
+  ta.value = ta.value ? ta.value + ', ' + t : t;
   ta.focus();
 }
 
@@ -249,37 +264,37 @@ function showToast(msg) {
 
 function copyCode(id) {
   navigator.clipboard.writeText(document.getElementById(id).textContent)
-    .then(() => showToast('✓ Lua copiado! Cole no Command Bar do Studio.'));
+    .then(() => showToast('✓ Copiado! Cole no Command Bar do Studio.'));
 }
 
 function showError(msg) {
   const eb = document.getElementById('errorBox');
   eb.textContent = '⚠ ' + msg;
   eb.style.display = 'block';
-  setTimeout(() => eb.style.display = 'none', 4000);
+  setTimeout(() => eb.style.display = 'none', 5000);
 }
 
-// ── Geração LOCAL inteligente ──────────────────────────
+// ── Geração LOCAL ────────────────────────────────────────
 const KEYWORDS = {
   template: {
-    Floresta: ['floresta','arvore','árvore','verde','mata','selva','bosque','goku','ninja','samurai','névoa','sombri'],
-    Praia:    ['praia','areia','palmeir','tropical','ilha','mar','oceano','litoral','verão'],
-    Castelo:  ['castelo','pedra','medieval','muralha','torre','dungeon','masmorr','sombri','dark','escuro'],
-    Ilha:     ['ilha','flutuante','penhasco','cliff','floating','nuvem'],
+    Floresta: ['floresta','arvore','árvore','verde','mata','selva','bosque','névoa','sombri','ninja','samurai','goku'],
+    Praia:    ['praia','areia','palmeir','tropical','mar','oceano','litoral','verão','summer'],
+    Castelo:  ['castelo','pedra','medieval','muralha','torre','dungeon','masmor','dark','escuro','knight'],
+    Ilha:     ['ilha','flutuante','penhasco','cliff','floating','nuvem','sky'],
   },
   path: {
-    Espiral:  ['difícil','dificil','espiral','longo','extremo','complexo','confuso'],
+    Espiral:  ['difícil','dificil','espiral','longo','extremo','complexo','confuso','serpenteia'],
     ZigZag:   ['zigzag','zigue','curva','médio','medio','moderado'],
-    Cruz:     ['cruz','bifurc','dividido'],
-    Linear:   ['fácil','facil','reto','direto','curto','simples'],
+    Cruz:     ['cruz','bifurc','dividido','split'],
+    Linear:   ['fácil','facil','reto','direto','curto','simples','linear'],
   }
 };
 
 const NAMES = {
-  Floresta: ['Darkwood Vale','Sombra Verde','Floresta Maldita','Mata Fechada','Bosque Sombrio','Névoa Profunda','Silent Grove','Black Forest'],
-  Praia:    ['Praia Perdida','Coastal Ruins','Areia Sangrenta','Ilha do Naufrágio','Sunset Shore','Dead Tide','Recife Fantasma'],
-  Castelo:  ['Fortaleza Sombria','Dungeon Keep','Muralha Caída','Castelo Maldito','Iron Bastion','Stone Citadel','Dark Fortress'],
-  Ilha:     ['Floating Ruins','Ilha do Caos','Sky Archipelago','Penhascos do Fim','Void Islands','Floating Hell'],
+  Floresta: ['Darkwood Vale','Sombra Verde','Floresta Maldita','Bosque Sombrio','Névoa Profunda','Silent Grove','Black Forest','Shadow Woods'],
+  Praia:    ['Praia Perdida','Coastal Ruins','Areia Sangrenta','Sunset Shore','Dead Tide','Recife Fantasma','Crimson Shore'],
+  Castelo:  ['Fortaleza Sombria','Dungeon Keep','Muralha Caída','Iron Bastion','Stone Citadel','Dark Fortress','Castle Ruins'],
+  Ilha:     ['Floating Ruins','Ilha do Caos','Sky Archipelago','Penhascos do Fim','Void Islands','Floating Hell','Sky Citadel'],
 };
 
 const DESCRIPTIONS = {
@@ -288,177 +303,151 @@ const DESCRIPTIONS = {
     'Árvores centenárias bloqueiam a luz do sol. O chão úmido guarda as marcas dos inimigos que vieram antes.',
     'O verde sombrio engole tudo. Pedras musgosas marcam o caminho por entre a vegetação densa e ameaçadora.',
   ],
-  Praia:    [
+  Praia: [
     'A areia dourada esconde perigos. Palmeiras dobradas pelo vento litorâneo fazem sombra sobre o caminho sinuoso.',
     'Ondas quebram ao longe enquanto inimigos avançam pela costa. O sal do ar mistura-se com o cheiro da batalha.',
     'Uma praia de aparência tranquila que esconde um pesadelo. Rochas afiadas flanqueiam o caminho pela areia.',
   ],
-  Castelo:  [
+  Castelo: [
     'Muralhas de pedra fria cercam o campo de batalha. Torres guardam cada ângulo, e as tochas iluminam um cenário sombrio.',
     'As pedras do castelo guardam séculos de batalhas. O caminho pavimentado leva direto ao coração da fortaleza.',
     'Uma fortaleza medieval em ruínas que ainda impõe respeito. Cada pedra carrega o peso das guerras passadas.',
   ],
-  Ilha:     [
+  Ilha: [
     'Ilhas flutuantes conectadas por caminhos estreitos sobre o abismo. Um passo errado e tudo é perdido.',
     'Penhascos de rocha sólida suspensos no ar. A gravidade parece questionável neste campo de batalha único.',
     'Fragmentos de terra suspensa no céu. Árvores resistentes crescem nas bordas, desafiando o vazio abaixo.',
   ],
 };
 
-function detectFromText(text, map) {
+function detectKey(text, map) {
   const lower = text.toLowerCase();
-  for (const [key, keywords] of Object.entries(map)) {
-    if (keywords.some(k => lower.includes(k))) return key;
+  for (const [k, kws] of Object.entries(map)) {
+    if (kws.some(w => lower.includes(w))) return k;
   }
   return null;
 }
 
 function generateLocal(desc, difficulty, density, arenaName, arenaNum, extra) {
-  const allText = (desc + ' ' + extra).toLowerCase();
+  const all = (desc + ' ' + extra).toLowerCase();
+  const template  = detectKey(all, KEYWORDS.template) || 'Floresta';
+  const pathMap   = { facil:'Linear', medio:'ZigZag', dificil:'Espiral', extremo:'Espiral' };
+  const pathShape = detectKey(all, KEYWORDS.path) || pathMap[difficulty] || 'ZigZag';
+  const nameList  = NAMES[template];
+  const finalName = arenaName || ('Arena_' + arenaNum + '_' + nameList[Math.floor(Math.random()*nameList.length)].replace(/\s/g,''));
+  const finalDesc = DESCRIPTIONS[template][Math.floor(Math.random()*DESCRIPTIONS[template].length)];
 
-  // Template
-  let template = detectFromText(allText, KEYWORDS.template) || 'Floresta';
+  const base = { minima:{A:6,P:5,Arb:4}, normal:{A:14,P:10,Arb:10}, densa:{A:22,P:16,Arb:14} }[density] || {A:14,P:10,Arb:10};
+  let dA=base.A, dP=base.P, dArb=base.Arb;
 
-  // Path shape
-  let pathShape;
-  if (difficulty === 'facil') pathShape = 'Linear';
-  else if (difficulty === 'extremo') pathShape = 'Espiral';
-  else pathShape = detectFromText(allText, KEYWORDS.path) || (difficulty === 'dificil' ? 'Espiral' : 'ZigZag');
-
-  // Nome
-  const nameList = NAMES[template];
-  const finalName = arenaName || ('Arena_' + arenaNum + '_' + nameList[Math.floor(Math.random() * nameList.length)].replace(/\s/g,''));
-
-  // Descrição
-  const descList = DESCRIPTIONS[template];
-  const finalDesc = descList[Math.floor(Math.random() * descList.length)];
-
-  // Decorações por densidade e template
-  const base = { minima:{A:6,P:4,Arb:4}, normal:{A:14,P:10,Arb:10}, densa:{A:22,P:16,Arb:14} }[density] || {A:14,P:10,Arb:10};
-
-  // Ajusta por template
-  let dA = base.A, dP = base.P, dArb = base.Arb;
-  if (template === 'Castelo') { dA = Math.floor(dA*0.3); dP = Math.floor(dP*1.8); dArb = Math.floor(dArb*0.6); }
-  if (template === 'Praia')   { dA = Math.floor(dA*0.8); dP = Math.floor(dP*0.7); }
-  if (template === 'Ilha')    { dP = Math.floor(dP*1.3); }
-
-  // Ajusta por palavras-chave extras
-  if (allText.includes('pedra') || allText.includes('rocha')) dP = Math.floor(dP * 1.4);
-  if (allText.includes('árvore') || allText.includes('arvore')) dA = Math.floor(dA * 1.3);
-  if (allText.includes('poucas árvores') || allText.includes('pouca arvore')) dA = Math.max(2, Math.floor(dA * 0.4));
-
-  const nodeCount = { facil:4, medio:5, dificil:6, extremo:6 }[difficulty] || 5;
+  if (template==='Castelo') { dA=Math.floor(dA*.3); dP=Math.floor(dP*1.8); dArb=Math.floor(dArb*.6); }
+  if (template==='Praia')   { dA=Math.floor(dA*.9); dP=Math.floor(dP*.7); }
+  if (template==='Ilha')    { dP=Math.floor(dP*1.3); }
+  if (all.includes('muitas pedras')||all.includes('muita pedra')) dP=Math.floor(dP*1.5);
+  if (all.includes('poucas árvores')||all.includes('pouca arvore')) dA=Math.max(2,Math.floor(dA*.4));
+  if (all.includes('muitas árvores')||all.includes('muita arvore')) dA=Math.floor(dA*1.4);
 
   return {
-    arenaName: finalName,
-    template, pathShape,
-    difficulty: { facil:'Fácil', medio:'Médio', dificil:'Difícil', extremo:'Extremo' }[difficulty],
-    nodeCount,
+    arenaName: finalName, template, pathShape,
+    difficulty: {facil:'Fácil',medio:'Médio',dificil:'Difícil',extremo:'Extremo'}[difficulty],
+    nodeCount: {facil:4,medio:5,dificil:6,extremo:6}[difficulty]||5,
     description: finalDesc,
-    decorations: { Arvores: dA, Pedras: dP, Arbustos: dArb },
-    totalDecos: dA + dP + dArb,
-    source: 'local'
+    decorations: {Arvores:dA, Pedras:dP, Arbustos:dArb},
+    totalDecos: dA+dP+dArb,
+    source:'local'
   };
 }
 
-// ── Geração via API ─────────────────────────────────────
-async function generateWithApi(desc, difficulty, density, arenaName, arenaNum, extra) {
-  const system = `Você é um gerador de configurações para mapas de Tower Defense no Roblox.
-Responda SOMENTE com JSON válido, sem markdown, sem texto extra.
-Templates: Floresta, Praia, Castelo, Ilha
-Caminhos: ZigZag, Cruz, Espiral, Linear
-JSON:
+// ── Gemini API ───────────────────────────────────────────
+async function generateWithGemini(desc, difficulty, density, arenaName, arenaNum, extra) {
+  const prompt = `Você é um gerador de configurações para mapas de Tower Defense no Roblox.
+Responda SOMENTE com JSON válido, sem markdown, sem texto extra, sem comentários.
+
+Templates disponíveis: Floresta, Praia, Castelo, Ilha
+Formatos de caminho: ZigZag, Cruz, Espiral, Linear
+
+JSON obrigatório (exatamente esta estrutura):
 {
-  "arenaName": "string",
+  "arenaName": "string criativo",
   "template": "Floresta|Praia|Castelo|Ilha",
   "pathShape": "ZigZag|Cruz|Espiral|Linear",
-  "difficulty": "string",
-  "nodeCount": number,
-  "description": "string (2-3 frases poéticas em português)",
-  "decorations": {"Arvores": number, "Pedras": number, "Arbustos": number},
-  "totalDecos": number
+  "difficulty": "string descritiva",
+  "nodeCount": 4,
+  "description": "2-3 frases poéticas em português",
+  "decorations": {"Arvores": 14, "Pedras": 10, "Arbustos": 10},
+  "totalDecos": 34
 }
-Densidades: mínima=10-20, normal=20-35, densa=35-55`;
 
-  const user = `Descrição: ${desc}
+Regras:
+- Template deve combinar com a descrição
+- Dificuldade fácil = Linear ou ZigZag; difícil/extremo = Espiral
+- Densidades: mínima=10-20 total, normal=20-35, densa=35-55
+- Castelo: mais Pedras. Floresta/Ilha: mais Árvores. Praia: equilibrado.
+
+Pedido do usuário:
+Descrição: ${desc}
 Dificuldade: ${difficulty}
 Densidade: ${density}
 ${arenaName ? 'Nome sugerido: '+arenaName : 'Crie nome criativo'}
-Número: ${arenaNum}
-${extra ? 'Extra: '+extra : ''}`;
+Número da arena: ${arenaNum}
+${extra ? 'Extras: '+extra : ''}`;
 
-  const resp = await fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},
-    body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:800, system, messages:[{role:'user',content:user}] })
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+  const resp = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { temperature: 0.8, maxOutputTokens: 800 }
+    })
   });
 
   const data = await resp.json();
-  if (data.error) throw new Error(data.error.message);
-  const raw = data.content?.[0]?.text || '';
-  const config = JSON.parse(raw.replace(/```json|```/g,'').trim());
-  config.source = 'ai';
-  config.totalDecos = config.decorations.Arvores + config.decorations.Pedras + config.decorations.Arbustos;
-  return config;
+
+  if (data.error) throw new Error('Gemini: ' + data.error.message);
+
+  const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  // Remove markdown se vier
+  const clean = raw.replace(/```json|```/gi, '').trim();
+
+  let cfg;
+  try {
+    cfg = JSON.parse(clean);
+  } catch(e) {
+    // Tenta extrair JSON do texto
+    const match = clean.match(/\{[\s\S]*\}/);
+    if (match) cfg = JSON.parse(match[0]);
+    else throw new Error('Gemini retornou formato inválido. Tente novamente.');
+  }
+
+  cfg.source = 'gemini';
+  cfg.totalDecos = (cfg.decorations?.Arvores||0) + (cfg.decorations?.Pedras||0) + (cfg.decorations?.Arbustos||0);
+  return cfg;
 }
 
-// ── Render ──────────────────────────────────────────────
-function renderResult(cfg, posX) {
-  document.getElementById('resultName').textContent = cfg.arenaName;
-  document.getElementById('aiDesc').textContent = cfg.description;
-
-  const isAI = cfg.source === 'ai';
-  document.getElementById('resultBadge').textContent = isAI ? 'IA CLAUDE' : 'GERADO LOCAL';
-  document.getElementById('sourceTag').textContent = isAI ? '🤖 Claude' : '⚙️ Local';
-  document.getElementById('sourceTag').className = 'source-tag ' + (isAI ? 'source-ai' : 'source-local');
-
-  document.getElementById('configGrid').innerHTML = [
-    {key:'Template',   val:cfg.template},
-    {key:'Caminho',    val:cfg.pathShape},
-    {key:'Dificuldade',val:cfg.difficulty},
-    {key:'Nós do Path',val:cfg.nodeCount+' nodes'},
-    {key:'Total Decos',val:cfg.totalDecos+' modelos'},
-    {key:'Tamanho',    val:'240×180 studs'},
-  ].map(c=>`<div class="config-item"><div class="config-key">${c.key}</div><div class="config-val">${c.val}</div></div>`).join('');
-
-  const d = cfg.decorations;
-  const mx = Math.max(d.Arvores, d.Pedras, d.Arbustos);
-  const colors = {Arvores:'#3d7fff', Pedras:'#aaaaaa', Arbustos:'#00e5a0'};
-  document.getElementById('decoBars').innerHTML = Object.entries(d).map(([k,v])=>`
-    <div class="deco-row">
-      <div class="deco-name">${k}</div>
-      <div class="deco-bar-bg"><div class="deco-bar-fill" style="width:${v/mx*100}%;background:${colors[k]}"></div></div>
-      <div class="deco-count">${v}</div>
-    </div>`).join('');
-
-  document.getElementById('luaCode').textContent = buildLua(cfg, posX);
-  document.getElementById('output-section').style.display = 'block';
-  document.getElementById('output-section').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-// ── Build Lua ───────────────────────────────────────────
+// ── Build Lua ────────────────────────────────────────────
 function buildLua(cfg, posX) {
-  const tplData = {
+  const tpl = {
     Floresta:{fc:'Color3.fromRGB(88,125,55)',  fm:'Enum.Material.Grass',       pc:'Color3.fromRGB(120,85,45)',   pm:'Enum.Material.Mud'},
     Praia:   {fc:'Color3.fromRGB(237,201,135)',fm:'Enum.Material.Sand',        pc:'Color3.fromRGB(200,160,80)',  pm:'Enum.Material.Sand'},
     Castelo: {fc:'Color3.fromRGB(100,100,100)',fm:'Enum.Material.Cobblestone', pc:'Color3.fromRGB(65,65,65)',    pm:'Enum.Material.Cobblestone'},
     Ilha:    {fc:'Color3.fromRGB(80,160,80)',  fm:'Enum.Material.Grass',       pc:'Color3.fromRGB(160,140,100)',pm:'Enum.Material.SmoothPlastic'},
   };
-  const pathNodes = {
+  const paths = {
     ZigZag: '{Vector3.new(-100,0,80),Vector3.new(-100,0,-20),Vector3.new(0,0,-20),Vector3.new(0,0,80),Vector3.new(100,0,80),Vector3.new(100,0,-80)}',
     Cruz:   '{Vector3.new(0,0,-80),Vector3.new(0,0,0),Vector3.new(-110,0,0)}',
     Espiral:'{Vector3.new(-100,0,80),Vector3.new(100,0,80),Vector3.new(100,0,0),Vector3.new(-60,0,0),Vector3.new(-60,0,-80),Vector3.new(100,0,-80)}',
     Linear: '{Vector3.new(-110,0,0),Vector3.new(-55,0,0),Vector3.new(0,0,0),Vector3.new(55,0,0),Vector3.new(110,0,0)}',
   };
-
-  const t = tplData[cfg.template] || tplData.Floresta;
-  const nodes = pathNodes[cfg.pathShape] || pathNodes.ZigZag;
-  const {arenaName, decorations:{Arvores:dA, Pedras:dP, Arbustos:dArb}} = cfg;
-  const safeNum = arenaName.replace(/Arena_(\d+).*/,'$1') || '1';
+  const t = tpl[cfg.template]||tpl.Floresta;
+  const nd = paths[cfg.pathShape]||paths.ZigZag;
+  const {arenaName,decorations:{Arvores:dA,Pedras:dP,Arbustos:dArb}} = cfg;
+  const num = arenaName.match(/\d+/)?.[0]||'1';
 
   return `-- 🗺️ MAP GEN AI — ${arenaName}
--- Template: ${cfg.template} | Caminho: ${cfg.pathShape}
--- "${cfg.description}"
+-- Template: ${cfg.template} | Caminho: ${cfg.pathShape} | Gerado por: ${cfg.source==='gemini'?'Gemini AI':'Local'}
+-- ${cfg.description}
 
 local RS=game:GetService("ReplicatedStorage")
 local MA=RS:FindFirstChild("MapAssets")
@@ -470,9 +459,9 @@ local function spwn(fn,par,px,py,pz)
   if m:IsA("Model") then if m.PrimaryPart then m:SetPrimaryPartCFrame(cf) else m:PivotTo(cf) end
   else m.CFrame=cf; m.Anchored=true end; m.Parent=par
 end
-local function near(px,pz,nd,cx,cz,mg)
-  for i=1,#nd-1 do
-    local ax,az=cx+nd[i].X,cz+nd[i].Z; local bx,bz=cx+nd[i+1].X,cz+nd[i+1].Z
+local function near(px,pz,nd2,cx,cz,mg)
+  for i=1,#nd2-1 do
+    local ax,az=cx+nd2[i].X,cz+nd2[i].Z; local bx,bz=cx+nd2[i+1].X,cz+nd2[i+1].Z
     local dx,dz=bx-ax,bz-az; local lq=dx*dx+dz*dz
     local t2=lq>0 and math.clamp(((px-ax)*dx+(pz-az)*dz)/lq,0,1) or 0
     if (px-(ax+t2*dx))^2+(pz-(az+t2*dz))^2<mg*mg then return true end
@@ -482,7 +471,7 @@ end
 local HA=workspace:FindFirstChild("HordeArenas") or Instance.new("Folder",workspace); HA.Name="HordeArenas"
 local ex=HA:FindFirstChild("${arenaName}"); if ex then ex:Destroy() end
 local aF=Instance.new("Folder",HA); aF.Name="${arenaName}"
-local dF=Instance.new("Folder",aF); dF.Name="Arena_0${safeNum}"
+local dF=Instance.new("Folder",aF); dF.Name="Arena_0${num}"
 local pF=Instance.new("Folder",aF); pF.Name="PathNodes"
 
 local cx,cy,cz=${posX},0,0
@@ -490,12 +479,11 @@ local fl=Instance.new("Part",aF); fl.Name="ArenaFloor"
 fl.Size=Vector3.new(240,4,180); fl.CFrame=CFrame.new(cx,cy-2,cz)
 fl.BrickColor=BrickColor.new(${t.fc}); fl.Material=${t.fm}; fl.Anchored=true
 
-local nodes=${nodes}
+local nodes=${nd}
 for i=1,#nodes-1 do
   local ax,az=cx+nodes[i].X,cz+nodes[i].Z
   local bx,bz=cx+nodes[i+1].X,cz+nodes[i+1].Z
-  local mx2,mz2=(ax+bx)/2,(az+bz)/2
-  local dx,dz=bx-ax,bz-az
+  local mx2,mz2=(ax+bx)/2,(az+bz)/2; local dx,dz=bx-ax,bz-az
   local seg=Instance.new("Part",dF); seg.Name="Path_"..i
   seg.Size=Vector3.new(10,0.6,math.sqrt(dx*dx+dz*dz))
   seg.CFrame=CFrame.new(mx2,cy+0.5,mz2)*CFrame.Angles(0,math.atan2(dx,dz),0)
@@ -503,19 +491,17 @@ for i=1,#nodes-1 do
 end
 
 for i,o in ipairs(nodes) do
-  local nd2=Instance.new("Part",pF); nd2.Name="Node_"..i
-  nd2.Size=Vector3.new(10,0.5,10)
-  nd2.CFrame=CFrame.new(cx+o.X,cy+0.6,cz+o.Z)
-  nd2.BrickColor=BrickColor.new(Color3.fromRGB(255,220,0))
-  nd2.Material=Enum.Material.Neon; nd2.Anchored=true; nd2.CanCollide=false; nd2.Transparency=0.35
+  local nd3=Instance.new("Part",pF); nd3.Name="Node_"..i
+  nd3.Size=Vector3.new(10,0.5,10); nd3.CFrame=CFrame.new(cx+o.X,cy+0.6,cz+o.Z)
+  nd3.BrickColor=BrickColor.new(Color3.fromRGB(255,220,0))
+  nd3.Material=Enum.Material.Neon; nd3.Anchored=true; nd3.CanCollide=false; nd3.Transparency=0.35
 end
 
 local dcs={{f="Arvores",n=${dA}},{f="Pedras",n=${dP}},{f="Arbustos",n=${dArb}}}
 for _,g in ipairs(dcs) do
   local p2=0; local at=0
   while p2<g.n and at<g.n*12 do at=at+1
-    local px=cx+(math.random()-0.5)*220
-    local pz=cz+(math.random()-0.5)*170
+    local px=cx+(math.random()-.5)*220; local pz=cz+(math.random()-.5)*170
     if not near(px,pz,nodes,cx,cz,14) then spwn(g.f,dF,px,cy,pz); p2=p2+1 end
   end
 end
@@ -529,46 +515,79 @@ local function mkr(nm,wx,wz,col)
   lb.Text=nm; lb.TextColor3=Color3.new(1,1,1); lb.TextStrokeTransparency=0
   lb.Font=Enum.Font.GothamBold; lb.TextScaled=true
 end
-mkr("SpawnEnemy", cx+nodes[1].X,       cz+nodes[1].Z,       Color3.fromRGB(220,40,40))
-mkr("EndPoint",   cx+nodes[#nodes].X,  cz+nodes[#nodes].Z,  Color3.fromRGB(40,80,220))
-mkr("PlayerSpawn",cx,                  cz,                   Color3.fromRGB(40,200,80))
-print("✅ ${arenaName} gerado! Template:${cfg.template} | Path:${cfg.pathShape} | Decos:${cfg.totalDecos}")`;
+mkr("SpawnEnemy", cx+nodes[1].X,      cz+nodes[1].Z,      Color3.fromRGB(220,40,40))
+mkr("EndPoint",   cx+nodes[#nodes].X, cz+nodes[#nodes].Z, Color3.fromRGB(40,80,220))
+mkr("PlayerSpawn",cx,                 cz,                  Color3.fromRGB(40,200,80))
+print("✅ ${arenaName} | ${cfg.template} | ${cfg.pathShape} | Decos:${cfg.totalDecos}")`;
 }
 
-// ── MAIN GENERATE ───────────────────────────────────────
+// ── Render ───────────────────────────────────────────────
+function renderResult(cfg, posX) {
+  document.getElementById('resultName').textContent = cfg.arenaName;
+  document.getElementById('aiDesc').textContent = cfg.description;
+
+  const isGemini = cfg.source === 'gemini';
+  document.getElementById('resultBadge').textContent = isGemini ? '🤖 GEMINI AI' : '⚙️ LOCAL';
+  document.getElementById('sourceTag').textContent = isGemini ? 'Gemini 1.5 Flash' : 'Geração Local';
+  document.getElementById('sourceTag').className = 'source-tag ' + (isGemini ? 'source-gemini' : 'source-local');
+
+  document.getElementById('configGrid').innerHTML = [
+    {key:'Template',    val:cfg.template},
+    {key:'Caminho',     val:cfg.pathShape},
+    {key:'Dificuldade', val:cfg.difficulty},
+    {key:'Path Nodes',  val:cfg.nodeCount+' nodes'},
+    {key:'Total Decos', val:cfg.totalDecos+' modelos'},
+    {key:'Tamanho',     val:'240×180 studs'},
+  ].map(c=>`<div class="config-item"><div class="config-key">${c.key}</div><div class="config-val">${c.val}</div></div>`).join('');
+
+  const d = cfg.decorations;
+  const mx = Math.max(d.Arvores,d.Pedras,d.Arbustos,1);
+  const colors = {Arvores:'#3d7fff',Pedras:'#aaaaaa',Arbustos:'#00e5a0'};
+  document.getElementById('decoBars').innerHTML = Object.entries(d).map(([k,v])=>`
+    <div class="deco-row">
+      <div class="deco-name">${k}</div>
+      <div class="deco-bar-bg"><div class="deco-bar-fill" style="width:${v/mx*100}%;background:${colors[k]}"></div></div>
+      <div class="deco-count">${v}</div>
+    </div>`).join('');
+
+  document.getElementById('luaCode').textContent = buildLua(cfg, posX);
+  document.getElementById('output-section').style.display = 'block';
+  document.getElementById('output-section').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── Main generate ────────────────────────────────────────
 async function generate() {
-  const desc     = document.getElementById('description').value.trim();
-  const diff     = document.getElementById('difficulty').value;
-  const dens     = document.getElementById('density').value;
-  const posX     = parseInt(document.getElementById('posX').value) || 0;
-  const name     = document.getElementById('arenaName').value.trim();
-  const num      = parseInt(document.getElementById('arenaNum').value) || 1;
-  const extra    = document.getElementById('extra').value.trim();
+  const desc = document.getElementById('description').value.trim();
+  const diff = document.getElementById('difficulty').value;
+  const dens = document.getElementById('density').value;
+  const posX = parseInt(document.getElementById('posX').value)||0;
+  const name = document.getElementById('arenaName').value.trim();
+  const num  = parseInt(document.getElementById('arenaNum').value)||1;
+  const xtra = document.getElementById('extra').value.trim();
 
   if (!desc) { showError('Descreva o mapa antes de gerar!'); return; }
 
   const btn = document.getElementById('genBtn');
   const bar = document.getElementById('loadingBar');
   btn.disabled = true;
-  btn.textContent = useApi ? '🤖 IA PENSANDO...' : '⚙️ GERANDO...';
+  btn.textContent = useApi ? '🤖 GEMINI PENSANDO...' : '⚙️ GERANDO...';
   bar.classList.add('active');
   document.getElementById('errorBox').style.display = 'none';
 
   try {
     let cfg;
     if (useApi) {
-      cfg = await generateWithApi(desc, diff, dens, name, num, extra);
+      cfg = await generateWithGemini(desc, diff, dens, name, num, xtra);
     } else {
-      // Simula pequeno delay para parecer que "está pensando"
-      await new Promise(r => setTimeout(r, 600));
-      cfg = generateLocal(desc, diff, dens, name, num, extra);
+      await new Promise(r => setTimeout(r, 500));
+      cfg = generateLocal(desc, diff, dens, name, num, xtra);
     }
     renderResult(cfg, posX);
   } catch(err) {
-    showError(err.message || 'Erro desconhecido. Tente novamente.');
+    showError(err.message || 'Erro desconhecido. Verifique sua API key e tente novamente.');
   } finally {
     btn.disabled = false;
-    btn.textContent = useApi ? '🤖 GERAR COM IA' : '⚡ GERAR MAPA';
+    btn.textContent = useApi ? '🤖 GERAR COM GEMINI' : '⚡ GERAR MAPA';
     bar.classList.remove('active');
   }
 }
