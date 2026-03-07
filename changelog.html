@@ -301,7 +301,11 @@
       const res = await fetch(`https://api.github.com/gists/${GIST_ID}`, { headers: { Accept: 'application/vnd.github.v3+json' }, cache: 'no-store' });
       if (!res.ok) throw new Error('Gist não encontrado');
       const gist = await res.json();
-      dados = JSON.parse(Object.values(gist.files)[0].content);
+
+      // Busca especificamente o arquivo de updates pelo nome
+      const arquivo = gist.files['tower-deep-updates.json'];
+      if (!arquivo) throw new Error('Arquivo tower-deep-updates.json não encontrado no Gist');
+      dados = JSON.parse(arquivo.content);
     } catch (err) {
       container.innerHTML = `<div class="error-box">⚠️ Não foi possível invocar os pergaminhos.<br><small style="opacity:.5">${err.message}</small></div>`;
       return;
