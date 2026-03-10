@@ -336,7 +336,7 @@ async function carregarRoadmap() {
       headers: { Accept: 'application/vnd.github.v3+json' }
     });
     const gist = await res.json();
-    const arquivo = gist.files?.['roadmap.json'];
+    const arquivo = gist.files?.['tower-deep-roadmap.json'];
     if (arquivo) {
       renderRoadmap(JSON.parse(arquivo.content));
       return;
