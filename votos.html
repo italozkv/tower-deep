@@ -81,6 +81,12 @@
     .vote-btn::before{content:'';position:absolute;inset:0;background:var(--glow);transform:scaleX(0);transform-origin:left;transition:transform .3s}
     .vote-btn:hover:not(:disabled){color:var(--gold-light);border-color:var(--gold)}.vote-btn:hover:not(:disabled)::before{transform:scaleX(1)}
     .vote-btn:disabled{opacity:.4;cursor:not-allowed}.vote-btn.voted{color:var(--gold);border-color:var(--gold);opacity:1;cursor:default}.vote-btn.voted::before{transform:scaleX(1);opacity:.5}
+    .vote-btns-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .contra-btn{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;padding:10px;cursor:pointer;border:1px solid rgba(180,60,60,.3);color:rgba(200,80,80,.7);background:none;width:100%;transition:all .25s;position:relative;overflow:hidden}
+    .contra-btn::before{content:'';position:absolute;inset:0;background:rgba(180,60,60,.08);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+    .contra-btn:hover:not(:disabled){color:#e05555;border-color:rgba(200,80,80,.6)}.contra-btn:hover:not(:disabled)::before{transform:scaleX(1)}
+    .contra-btn:disabled{opacity:.4;cursor:not-allowed}.contra-btn.voted-contra{color:#e05555;border-color:rgba(200,80,80,.7);opacity:1;cursor:default}.contra-btn.voted-contra::before{transform:scaleX(1);opacity:.5}
+    .vote-aprovacao{font-family:'Cinzel',serif;font-size:.58rem;color:rgba(201,168,76,.45);text-align:right;margin-top:2px}
     .empty-state{text-align:center;padding:80px 24px;font-style:italic;color:rgba(201,168,76,.3)}
     .loading{text-align:center;padding:80px 24px;font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.3em;color:var(--gold-dim);animation:fadeIn 1s ease}
     .discord-badge{display:inline-flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;padding:3px 10px;border:1px solid rgba(88,101,242,.4);color:#7289da;background:rgba(88,101,242,.06);margin-bottom:4px}
@@ -508,10 +514,28 @@ function maxVotos() {
   return Math.max(...features.map(f => (f.votos || 0) + (votosLocais[f.id] ? 1 : 0)), 1);
 }
 
+function atualizarBarras() {
+  const mx = maxVotos();
+  features.forEach(f => {
+    const votos = (f.votos||0) + (votosLocais[f.id]?1:0);
+    const votosContra = (f.votosContra||0) + (votosLocais[f.id+'_contra']?1:0);
+    const total = votos + votosContra;
+    const aprovacao = total > 0 ? Math.round((votos/total)*100) : 0;
+    const bar = document.getElementById(`bar-${f.id}`);
+    const aprov = document.getElementById(`aprov-${f.id}`);
+    if (bar) bar.style.width = Math.round((votos/mx)*100) + '%';
+    if (aprov) aprov.textContent = aprovacao + '% aprova';
+  });
+}
+
 function renderCard(f) {
   const jaVotou = !!votosLocais[f.id];
-  const total = (f.votos || 0) + (jaVotou ? 1 : 0);
-  const pct = Math.round((total / maxVotos()) * 100);
+  const jaVotouContra = !!votosLocais[f.id + '_contra'];
+  const votos = (f.votos || 0) + (jaVotou ? 1 : 0);
+  const votosContra = (f.votosContra || 0) + (jaVotouContra ? 1 : 0);
+  const total = votos + votosContra;
+  const aprovacao = total > 0 ? Math.round((votos / total) * 100) : 0;
+  const pct = Math.round((votos / Math.max(maxVotos(), 1)) * 100);
   const catLabel = { torre:'Torre', mapa:'Mapa', mecanica:'Mecânica', evento:'Evento', outro:'Outro' }[f.cat] || f.cat;
   const origemBadge = f.origem === 'discord' ? '<span class="discord-badge">♦ via Discord</span>' : '';
   return `
@@ -526,11 +550,14 @@ function renderCard(f) {
       <div class="vote-bar-wrap">
         <div class="vote-bar-track"><div class="vote-bar-fill" id="bar-${f.id}" style="width:0%"></div></div>
         <div class="vote-meta">
-          <span class="vote-count" id="count-${f.id}">${total.toLocaleString('pt-BR')} votos</span>
-          <span class="vote-pct">${pct}%</span>
+          <span class="vote-count" id="count-${f.id}"><span style="color:var(--gold-dim)">⬆ ${votos}</span> <span style="color:rgba(200,80,80,.7);margin-left:8px">⬇ ${votosContra}</span></span>
+          <span class="vote-pct" id="aprov-${f.id}">${aprovacao}% aprova</span>
         </div>
       </div>
-      <button class="vote-btn ${jaVotou?'voted':''}" id="btn-${f.id}" ${jaVotou?'disabled':''} onclick="votar('${f.id}')">${jaVotou?'✓ Votado':'⬆ Votar'}</button>
+      <div class="vote-btns-row">
+        <button class="vote-btn ${jaVotou?'voted':''}" id="btn-${f.id}" ${jaVotou||jaVotouContra?'disabled':''} onclick="votar('${f.id}')">${jaVotou?'✓ Votado':'⬆ Votar'}</button>
+        <button class="contra-btn ${jaVotouContra?'voted-contra':''}" id="cbtn-${f.id}" ${jaVotou||jaVotouContra?'disabled':''} onclick="votarContra('${f.id}')">${jaVotouContra?'✗ Contra':'⬇ Contra'}</button>
+      </div>
     </div>`;
 }
 
@@ -547,12 +574,7 @@ function render(filtro = 'todos') {
   }
   grid.innerHTML = lista.map(renderCard).join('');
   requestAnimationFrame(() => {
-    const mx = maxVotos();
-    lista.forEach(f => {
-      const total = (f.votos||0) + (votosLocais[f.id]?1:0);
-      const bar = document.getElementById(`bar-${f.id}`);
-      if (bar) bar.style.width = Math.round((total/mx)*100) + '%';
-    });
+    atualizarBarras();
     const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.08});
     document.querySelectorAll('#voteGrid .reveal').forEach(el => obs.observe(el));
   });
@@ -560,24 +582,43 @@ function render(filtro = 'todos') {
 
 // ── VOTE ─────────────────────────────────────────────────────
 function votar(id) {
-  if (votosLocais[id]) return;
+  if (votosLocais[id] || votosLocais[id + '_contra']) return;
   votosLocais[id] = true;
   localStorage.setItem(STORE_KEY, JSON.stringify(votosLocais));
   const f = features.find(x => x.id === id);
   if (!f) return;
-  const total = (f.votos||0) + 1;
+  const votos = (f.votos||0) + 1;
+  const votosContra = (f.votosContra||0);
+  const total = votos + votosContra;
+  const aprovacao = total > 0 ? Math.round((votos/total)*100) : 100;
   const card = document.getElementById(`card-${id}`);
   const btn = document.getElementById(`btn-${id}`);
+  const cbtn = document.getElementById(`cbtn-${id}`);
   const count = document.getElementById(`count-${id}`);
   if (card) card.classList.add('voted-this');
   if (btn) { btn.textContent = '✓ Votado'; btn.classList.add('voted'); btn.disabled = true; }
-  if (count) count.textContent = total.toLocaleString('pt-BR') + ' votos';
-  const mx = maxVotos();
-  document.querySelectorAll('.vote-bar-fill').forEach(b => {
-    const fid = b.id.replace('bar-','');
-    const feat = features.find(x => x.id === fid);
-    if (feat) { const t = (feat.votos||0)+(votosLocais[fid]?1:0); b.style.width = Math.round((t/mx)*100)+'%'; }
-  });
+  if (cbtn) cbtn.disabled = true;
+  if (count) count.innerHTML = `<span style="color:var(--gold-dim)">⬆ ${votos}</span> <span style="color:rgba(200,80,80,.7);margin-left:8px">⬇ ${votosContra}</span>`;
+  atualizarBarras();
+}
+
+function votarContra(id) {
+  if (votosLocais[id] || votosLocais[id + '_contra']) return;
+  votosLocais[id + '_contra'] = true;
+  localStorage.setItem(STORE_KEY, JSON.stringify(votosLocais));
+  const f = features.find(x => x.id === id);
+  if (!f) return;
+  const votos = (f.votos||0);
+  const votosContra = (f.votosContra||0) + 1;
+  const total = votos + votosContra;
+  const aprovacao = total > 0 ? Math.round((votos/total)*100) : 0;
+  const btn = document.getElementById(`btn-${id}`);
+  const cbtn = document.getElementById(`cbtn-${id}`);
+  const count = document.getElementById(`count-${id}`);
+  if (btn) btn.disabled = true;
+  if (cbtn) { cbtn.textContent = '✗ Contra'; cbtn.classList.add('voted-contra'); cbtn.disabled = true; }
+  if (count) count.innerHTML = `<span style="color:var(--gold-dim)">⬆ ${votos}</span> <span style="color:rgba(200,80,80,.7);margin-left:8px">⬇ ${votosContra}</span>`;
+  atualizarBarras();
 }
 
 // ── FILTER ────────────────────────────────────────────────────
