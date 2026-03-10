@@ -17,14 +17,15 @@
       --shadow:rgba(0,0,0,0.4);
     }
     [data-theme="light"]{
-      --gold:#a0722a;--gold-light:#7a5218;--gold-dim:#c8a05a;
-      --ink:#faf6ee;--ink2:#f4ede0;--ink3:#ede3d0;
-      --divine:#5a3e10;--glow:rgba(160,114,42,0.12);
-      --text-body:rgba(90,62,16,0.85);--text-sub:rgba(120,85,30,0.6);
-      --card-bg:rgba(255,255,255,0.7);--card-border:rgba(160,114,42,0.2);
-      --nav-bg:rgba(250,246,238,0.92);--nav-border:rgba(160,114,42,0.2);
-      --input-bg:rgba(255,255,255,0.8);--input-border:rgba(160,114,42,0.3);
-      --shadow:rgba(90,62,16,0.15);
+      /* Tema Sepia/Pergaminho — elegante como um manuscrito antigo */
+      --gold:#8b5e1a;--gold-light:#6b4510;--gold-dim:#a07535;
+      --ink:#f5ede0;--ink2:#ede0cc;--ink3:#e4d3b8;
+      --divine:#3d2408;--glow:rgba(139,94,26,0.15);
+      --text-body:rgba(61,36,8,0.82);--text-sub:rgba(100,65,20,0.6);
+      --card-bg:rgba(255,248,235,0.85);--card-border:rgba(139,94,26,0.18);
+      --nav-bg:rgba(245,237,224,0.96);--nav-border:rgba(139,94,26,0.15);
+      --input-bg:rgba(255,252,245,0.9);--input-border:rgba(139,94,26,0.25);
+      --shadow:rgba(61,36,8,0.12);
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
     body{background:var(--ink);color:var(--divine);font-family:'EB Garamond',serif;font-size:1.1rem;line-height:1.75;overflow-x:hidden;min-height:100vh}
@@ -215,79 +216,11 @@
   
     #theme-toggle{background:none;border:1px solid var(--card-border);color:var(--gold);width:32px;height:32px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .25s;flex-shrink:0}
     #theme-toggle:hover{border-color:var(--gold);background:var(--glow)}
-    body{transition:background .3s,color .3s}
-    [data-theme="light"] body{background:var(--ink)}
-    [data-theme="light"] .site-nav{background:var(--nav-bg);border-bottom-color:var(--nav-border)}
-    [data-theme="light"] .nav-logo{color:var(--gold-light)}
-    [data-theme="light"] .nav-links a{color:var(--gold-dim)}
-    [data-theme="light"] .nav-links a:hover,[data-theme="light"] .nav-links a.active{color:var(--gold-light);background:var(--glow)}
-    [data-theme="light"] .nebula-bg{opacity:0.3}
-    [data-theme="light"] .stars-bg::before,[data-theme="light"] .stars-bg::after{opacity:0.15}
-  
-    /* ═══ TEMA CLARO — OVERRIDES COMPLETOS ═══ */
-    [data-theme="light"] body { background: var(--ink); color: var(--divine); }
-    [data-theme="light"] .site-nav { background: var(--nav-bg) !important; border-bottom-color: var(--nav-border); }
-    [data-theme="light"] .nebula-bg { opacity: 0.08; }
-    [data-theme="light"] .stars-bg::before,
-    [data-theme="light"] .stars-bg::after { opacity: 0.06; }
-    /* Nav mobile */
-    [data-theme="light"] .nav-links { background: var(--nav-bg); }
-    /* Scroll-to-top button */
-    [data-theme="light"] .scroll-top { background: var(--ink2); }
-    /* Feature cards (index.html) */
-    [data-theme="light"] .feature-card { background: rgba(255,255,255,0.6) !important; border-color: var(--card-border); color: var(--divine); }
-    [data-theme="light"] .feature-icon { color: var(--gold); }
-    [data-theme="light"] .feature-title { color: var(--gold-light); }
-    [data-theme="light"] .feature-desc { color: var(--text-body); }
-    /* Discord section */
-    [data-theme="light"] .discord-section { background: rgba(255,255,255,0.5); border-color: var(--card-border); }
-    /* Stats bar */
-    [data-theme="light"] .stats-bar { background: rgba(255,255,255,0.6); border-color: var(--card-border); }
-    [data-theme="light"] .stat-value { color: var(--gold-light); }
-    [data-theme="light"] .stat-label { color: var(--text-sub); }
-    /* Changelog */
-    [data-theme="light"] .entry { background: var(--card-bg); border-color: var(--card-border); }
-    [data-theme="light"] .entry-title { color: var(--gold-light); }
-    [data-theme="light"] .entry-subtitle { color: var(--text-sub); }
-    [data-theme="light"] .changes-list li { color: var(--text-body); }
-    [data-theme="light"] .changes-list li::before { color: var(--gold); }
-    /* Roadmap */
-    [data-theme="light"] .rm-card { background: var(--card-bg); border-color: var(--card-border); }
-    [data-theme="light"] .rm-version { color: var(--gold-light); }
-    [data-theme="light"] .rm-title { color: var(--divine); }
-    [data-theme="light"] .rm-item { color: var(--text-body); }
-    [data-theme="light"] .timeline-line { background: var(--card-border); }
-    /* Votos */
-    [data-theme="light"] .vote-card { background: var(--card-bg); border-color: var(--card-border); }
-    [data-theme="light"] .card-title { color: var(--divine); }
-    [data-theme="light"] .card-desc { color: var(--text-body); }
-    [data-theme="light"] .vote-count { color: var(--gold-light); }
-    [data-theme="light"] .filters-wrap { background: var(--card-bg); border-color: var(--card-border); }
-    /* Wiki */
-    [data-theme="light"] .wiki-sidebar { background: var(--ink2); border-color: var(--card-border); }
-    [data-theme="light"] .wiki-card { background: var(--card-bg); border-color: var(--card-border); }
-    [data-theme="light"] .wiki-card-name { color: var(--gold-light); }
-    [data-theme="light"] .wiki-detail { background: var(--card-bg); border-color: var(--card-border); }
-    [data-theme="light"] .modal { background: var(--ink2); border-color: var(--card-border); }
-    [data-theme="light"] .modal-overlay { background: rgba(200,180,150,0.6); }
-    [data-theme="light"] .field-input,[data-theme="light"] .field-textarea,[data-theme="light"] .field-select { background: var(--input-bg); border-color: var(--input-border); color: var(--divine); }
-    [data-theme="light"] .sidebar-link { color: var(--text-body); }
-    [data-theme="light"] .sidebar-link:hover,[data-theme="light"] .sidebar-link.active { color: var(--gold-light); }
-    [data-theme="light"] .cat-heading { color: var(--gold-dim); }
-    /* Ranking */
-    [data-theme="light"] .rank-entry { background: var(--card-bg); border-color: var(--card-border); }
-    [data-theme="light"] .rank-name { color: var(--divine); }
-    [data-theme="light"] .rank-notice { background: var(--card-bg); border-color: var(--card-border); }
-    [data-theme="light"] .podium-block { background: var(--card-bg); border-color: var(--card-border); }
-    /* Footer */
-    [data-theme="light"] .site-footer { border-top-color: var(--card-border); }
-    /* General */
-    [data-theme="light"] .btn-divine { color: var(--gold-light); border-color: var(--gold); }
-    [data-theme="light"] .btn-ghost { color: var(--gold-dim); border-color: var(--card-border); }
-    [data-theme="light"] .badge { background: rgba(160,114,42,0.12); color: var(--gold-light); }
-    /* Fix hardcoded dark nav bg */
-    [data-theme="light"] .site-nav { background: rgba(250,246,238,0.92) !important; }
-
+    body{transition:background .3s,color .3s}    [data-theme="light"] .site-nav{background:var(--nav-bg);border-bottom-color:var(--nav-border)}    [data-theme="light"] .nav-links a{color:var(--gold-dim)}    [data-theme="light"] .nebula-bg{opacity:0.3}  
+    /* Nav mobile */    /* Scroll-to-top button */    /* Feature cards (index.html) */    [data-theme="light"] .feature-icon { color: var(--gold); }    [data-theme="light"] .feature-desc { color: var(--text-body); }
+    /* Discord section */    /* Stats bar */    [data-theme="light"] .stat-value { color: var(--gold-light); }    /* Changelog */    [data-theme="light"] .entry-title { color: var(--gold-light); }    [data-theme="light"] .changes-list li { color: var(--text-body); }    /* Roadmap */    [data-theme="light"] .rm-version { color: var(--gold-light); }    [data-theme="light"] .rm-item { color: var(--text-body); }    /* Votos */    [data-theme="light"] .card-title { color: var(--divine); }    [data-theme="light"] .vote-count { color: var(--gold-light); }    /* Wiki */    [data-theme="light"] .wiki-card { background: var(--card-bg); border-color: var(--card-border); }    [data-theme="light"] .wiki-detail { background: var(--card-bg); border-color: var(--card-border); }    [data-theme="light"] .modal-overlay { background: rgba(200,180,150,0.6); }    [data-theme="light"] .sidebar-link { color: var(--text-body); }    [data-theme="light"] .cat-heading { color: var(--gold-dim); }
+    /* Ranking */    [data-theme="light"] .rank-name { color: var(--divine); }    [data-theme="light"] .podium-block { background: var(--card-bg); border-color: var(--card-border); }
+    /* Footer */    /* General */    [data-theme="light"] .btn-ghost { color: var(--gold-dim); border-color: var(--card-border); }
 
     /* ══ COMO JOGAR ══ */
     .howto-section { max-width: 1000px; margin: 0 auto; padding: 80px 24px; }
@@ -346,10 +279,314 @@
     .discord-members { font-family: 'Cinzel', serif; font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(88,101,242,.6); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .discord-members strong { color: #a8b0ff; font-size: 1.1rem; }
 
-    /* light theme fixes */
-    [data-theme="light"] .next-update-card { background: var(--card-bg); border-color: var(--card-border); }
-    [data-theme="light"] .screenshot-slide { background: rgba(255,255,255,.6); border-color: var(--card-border); }
-    [data-theme="light"] .howto-step { background: transparent; }
+    /* light theme fixes */    [data-theme="light"] .screenshot-slide { background: rgba(255,255,255,.6); border-color: var(--card-border); }
+
+    /* ═══ TEMA CLARO REDESENHADO — Pergaminho do Olimpo ═══ */
+    [data-theme="light"] body {
+      background: var(--ink);
+      background-image:
+        radial-gradient(ellipse 120% 60% at 50% -10%, rgba(201,168,76,0.06) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+      color: var(--divine);
+    }
+    [data-theme="light"] .stars-bg::before,
+    [data-theme="light"] .stars-bg::after { opacity: 0; }
+    [data-theme="light"] .nebula-bg { opacity: 0; }
+
+    /* Nav */
+    [data-theme="light"] .site-nav {
+      background: rgba(245,237,224,0.97) !important;
+      border-bottom: 1px solid rgba(139,94,26,0.2) !important;
+      box-shadow: 0 2px 20px rgba(61,36,8,0.08);
+    }
+    [data-theme="light"] .nav-logo { color: var(--gold-light); text-shadow: none; }
+    [data-theme="light"] .nav-links { background: rgba(245,237,224,0.97); }
+    [data-theme="light"] .nav-links a { color: rgba(100,65,20,0.7); }
+    [data-theme="light"] .nav-links a:hover,
+    [data-theme="light"] .nav-links a.active {
+      color: var(--gold-light);
+      background: rgba(139,94,26,0.08);
+      border-color: rgba(139,94,26,0.2);
+    }
+
+    /* Cards & containers */
+    [data-theme="light"] .feature-card {
+      background: rgba(255,248,235,0.9) !important;
+      border: 1px solid rgba(139,94,26,0.12);
+      box-shadow: 0 2px 12px rgba(61,36,8,0.06);
+    }
+    [data-theme="light"] .feature-card:hover { background: rgba(255,252,242,0.95) !important; }
+    [data-theme="light"] .feature-icon { filter: none; }
+    [data-theme="light"] .feature-title { color: var(--gold-light); }
+    [data-theme="light"] .feature-desc { color: var(--text-body); }
+
+    /* Stats bar */
+    [data-theme="light"] .stats-bar {
+      background: rgba(237,224,204,0.7);
+      border-color: rgba(139,94,26,0.15);
+      backdrop-filter: blur(8px);
+    }
+    [data-theme="light"] .stat-value { color: var(--gold-light); text-shadow: none; }
+    [data-theme="light"] .stat-label { color: var(--text-sub); }
+
+    /* God cards */
+    [data-theme="light"] .god-card {
+      background: linear-gradient(160deg, rgba(255,248,235,0.95), rgba(245,237,224,0.9));
+      border-color: rgba(139,94,26,0.15);
+    }
+    [data-theme="light"] .god-card:hover { border-color: rgba(139,94,26,0.35); }
+    [data-theme="light"] .god-name { color: var(--gold-light); }
+    [data-theme="light"] .god-role { color: var(--text-sub); }
+
+    /* Howto steps */
+    [data-theme="light"] .step-number { -webkit-text-stroke-color: rgba(139,94,26,0.2); }
+    [data-theme="light"] .howto-step:hover .step-number { -webkit-text-stroke-color: rgba(139,94,26,0.5); }
+    [data-theme="light"] .step-title { color: var(--gold-light); }
+    [data-theme="light"] .step-desc { color: var(--text-body); }
+
+    /* Screenshots */
+    [data-theme="light"] .screenshot-slide {
+      background: rgba(255,248,235,0.9);
+      border-color: rgba(139,94,26,0.15);
+    }
+    [data-theme="light"] .screenshots-btn { border-color: rgba(139,94,26,0.25); color: var(--gold-dim); }
+    [data-theme="light"] .screenshots-dot { background: rgba(139,94,26,0.2); }
+    [data-theme="light"] .screenshots-dot.active { background: var(--gold); }
+
+    /* Next update */
+    [data-theme="light"] .next-update-card {
+      background: linear-gradient(135deg, rgba(255,248,235,0.9), rgba(245,237,224,0.8));
+      border-color: rgba(139,94,26,0.2);
+    }
+    [data-theme="light"] .next-update-text { color: var(--gold-light); text-shadow: none; }
+
+    /* Discord section */
+    [data-theme="light"] .discord-section {
+      background: rgba(237,224,204,0.4);
+      border-top: 1px solid rgba(139,94,26,0.1);
+      border-bottom: 1px solid rgba(139,94,26,0.1);
+    }
+    [data-theme="light"] .discord-section h2 { color: var(--gold-light); }
+    [data-theme="light"] .discord-section p { color: var(--text-body); }
+
+    /* Changelog entries */
+    [data-theme="light"] .entry {
+      background: rgba(255,248,235,0.85);
+      border-color: rgba(139,94,26,0.12);
+      box-shadow: 0 2px 12px rgba(61,36,8,0.05);
+    }
+    [data-theme="light"] .entry:hover { border-color: rgba(139,94,26,0.25); }
+    [data-theme="light"] .entry-title { color: var(--gold-light); }
+    [data-theme="light"] .entry-subtitle { color: var(--text-sub); }
+    [data-theme="light"] .changes-list li { color: var(--text-body); }
+    [data-theme="light"] .changes-list li::before { color: var(--gold); }
+    [data-theme="light"] .badge { background: rgba(139,94,26,0.1); color: var(--gold-light); border-color: rgba(139,94,26,0.2); }
+
+    /* Roadmap */
+    [data-theme="light"] .rm-card {
+      background: rgba(255,248,235,0.85);
+      border-color: rgba(139,94,26,0.15);
+    }
+    [data-theme="light"] .rm-version { color: var(--gold-light); }
+    [data-theme="light"] .rm-title { color: var(--divine); }
+    [data-theme="light"] .rm-item { color: var(--text-body); }
+    [data-theme="light"] .timeline-line { background: rgba(139,94,26,0.15); }
+
+    /* Votos */
+    [data-theme="light"] .vote-card {
+      background: rgba(255,248,235,0.85);
+      border-color: rgba(139,94,26,0.15);
+    }
+    [data-theme="light"] .vote-card:hover { border-color: rgba(139,94,26,0.3); }
+    [data-theme="light"] .card-title { color: var(--divine); }
+    [data-theme="light"] .card-desc { color: var(--text-body); }
+    [data-theme="light"] .vote-count { color: var(--gold-light); }
+    [data-theme="light"] .filters-wrap {
+      background: rgba(237,224,204,0.6);
+      border-color: rgba(139,94,26,0.15);
+    }
+    [data-theme="light"] .filter-btn { color: var(--text-sub); border-color: rgba(139,94,26,0.2); }
+    [data-theme="light"] .filter-btn.active,
+    [data-theme="light"] .filter-btn:hover { color: var(--gold-light); border-color: var(--gold); background: rgba(139,94,26,0.08); }
+
+    /* Wiki */
+    [data-theme="light"] .wiki-sidebar {
+      background: rgba(237,224,204,0.7);
+      border-color: rgba(139,94,26,0.15);
+    }
+    [data-theme="light"] .wiki-card {
+      background: rgba(255,248,235,0.85);
+      border-color: rgba(139,94,26,0.12);
+    }
+    [data-theme="light"] .wiki-card:hover { border-color: rgba(139,94,26,0.3); }
+    [data-theme="light"] .wiki-card-name { color: var(--gold-light); }
+    [data-theme="light"] .wiki-detail {
+      background: rgba(255,248,235,0.9);
+      border-color: rgba(139,94,26,0.15);
+    }
+    [data-theme="light"] .modal {
+      background: rgba(245,237,224,0.98);
+      border-color: rgba(139,94,26,0.2);
+    }
+    [data-theme="light"] .modal-overlay { background: rgba(61,36,8,0.4); }
+    [data-theme="light"] .sidebar-link { color: var(--text-body); }
+    [data-theme="light"] .sidebar-link:hover,
+    [data-theme="light"] .sidebar-link.active { color: var(--gold-light); }
+    [data-theme="light"] .cat-heading { color: var(--gold-dim); }
+    [data-theme="light"] .field-input,
+    [data-theme="light"] .field-textarea,
+    [data-theme="light"] .field-select {
+      background: var(--input-bg);
+      border-color: var(--input-border);
+      color: var(--divine);
+    }
+
+    /* Ranking */
+    [data-theme="light"] .rank-entry {
+      background: rgba(255,248,235,0.85);
+      border-color: rgba(139,94,26,0.12);
+    }
+    [data-theme="light"] .rank-entry:hover { border-color: rgba(139,94,26,0.25); }
+    [data-theme="light"] .rank-name { color: var(--divine); }
+    [data-theme="light"] .rank-notice {
+      background: rgba(255,248,235,0.85);
+      border-color: rgba(139,94,26,0.15);
+    }
+    [data-theme="light"] .podium-block {
+      background: rgba(255,248,235,0.85);
+      border-color: rgba(139,94,26,0.15);
+    }
+
+    /* Footer */
+    [data-theme="light"] .site-footer { border-top-color: rgba(139,94,26,0.15); }
+    [data-theme="light"] .footer-logo { color: var(--gold-dim); }
+    [data-theme="light"] .site-footer p { color: rgba(100,65,20,0.5); }
+    [data-theme="light"] .site-footer a { color: var(--gold-dim); }
+    [data-theme="light"] .site-footer a:hover { color: var(--gold-light); }
+
+    /* Botões */
+    [data-theme="light"] .btn-divine { color: var(--gold-light); border-color: var(--gold); }
+    [data-theme="light"] .btn-primary { box-shadow: 0 0 20px rgba(139,94,26,0.2); }
+    [data-theme="light"] .scroll-top { background: var(--ink2); border-color: rgba(139,94,26,0.3); }
+
+    /* Section eyebrows e títulos */
+    [data-theme="light"] .section-eyebrow { color: var(--gold-dim); }
+    [data-theme="light"] h2 { color: var(--gold-light) !important; text-shadow: none !important; }
+
+    /* CTA section */
+    [data-theme="light"] .cta-section { background: linear-gradient(180deg, transparent, rgba(139,94,26,0.04), transparent); }
+    [data-theme="light"] .cta-section p { color: var(--text-body); }
+
+    /* Toggle button */
+    [data-theme="light"] #theme-toggle { border-color: rgba(139,94,26,0.25); color: var(--gold-dim); }
+    [data-theme="light"] #theme-toggle:hover { border-color: var(--gold); background: rgba(139,94,26,0.08); }
+
+
+    /* ═══ MELHORIAS VISUAIS GLOBAIS ═══ */
+
+    /* Separadores de seção mais elegantes */
+    .section-eyebrow {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-eyebrow::before, .section-eyebrow::after {
+      content: '';
+      display: inline-block;
+      width: 30px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim));
+    }
+    .section-eyebrow::after {
+      background: linear-gradient(270deg, transparent, var(--gold-dim));
+    }
+
+    /* Scroll suave com highlight */
+    html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
+    /* Seleção de texto com cor do jogo */
+    ::selection { background: rgba(201,168,76,0.25); color: var(--gold-light); }
+
+    /* Nav com separadores mais refinados */
+    .nav-links li + li { border-left: none; }
+
+    /* Botão primário com shimmer */
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+    }
+    .btn-primary:hover::after { left: 120%; }
+
+    /* Feature cards com bordas superiores coloridas no hover */
+    .feature-card { cursor: default; }
+
+    /* Stats bar — valores com contagem animada */
+    .stat-value {
+      transition: transform 0.3s ease;
+    }
+    .stat-item:hover .stat-value {
+      transform: scale(1.08);
+    }
+
+    /* God cards — glow no hover */
+    .god-card::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(135deg, rgba(201,168,76,0.1), transparent, rgba(201,168,76,0.05));
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .god-card:hover::after { opacity: 1; }
+
+    /* Footer — linha decorativa */
+    .site-footer::before {
+      content: '⚜ ✦ ⚜';
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: .7rem;
+      letter-spacing: .5em;
+      color: rgba(201,168,76,.2);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    /* Scroll top — mais elegante */
+    .scroll-top {
+      font-family: 'Cinzel', serif;
+      font-size: .55rem;
+      letter-spacing: .1em;
+    }
+
+    /* Dark theme specific — estrelas mais visíveis */
+    [data-theme="dark"] .nebula-bg,
+    :root .nebula-bg {
+      background:
+        radial-gradient(ellipse 70% 50% at 15% 25%, rgba(42,74,122,.12) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 65% at 85% 75%, rgba(139,26,26,.09) 0%, transparent 70%),
+        radial-gradient(ellipse 90% 35% at 50% 5%, rgba(201,168,76,.05) 0%, transparent 70%);
+    }
+
+    /* Linha divisória decorativa entre seções */
+    .features-section, .gods-section, .howto-section {
+      position: relative;
+    }
+
+    /* Reveal animation mais fluida */
+    .reveal { transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
 
   </style>
   <script>
@@ -595,17 +832,32 @@
   const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-  const UNIVERSE_ID = '136302244140571'; // ← Troque pelo Universe ID do seu jogo
+  const UNIVERSE_ID = '136302244140571';
+  const PROXIES = [
+    id => `https://games.roproxy.com/v1/games?universeIds=${id}`,
+    id => `https://roblox.roproxy.com/v1/games?universeIds=${id}`,
+    id => `https://api.roblox.com/v2/games?universeIds=${id}`,
+  ];
   async function fetchPlayers() {
-    try {
-      const res = await fetch(`https://games.roproxy.com/v1/games?universeIds=${UNIVERSE_ID}`);
-      const data = await res.json();
-      const count = data?.data?.[0]?.playing;
-      document.getElementById('players-online').textContent = count !== undefined ? count.toLocaleString('pt-BR') : '—';
-    } catch { document.getElementById('players-online').textContent = '—'; }
+    const el = document.getElementById('players-online');
+    for (const proxy of PROXIES) {
+      try {
+        const res = await fetch(proxy(UNIVERSE_ID), { signal: AbortSignal.timeout(5000) });
+        if (!res.ok) continue;
+        const data = await res.json();
+        const count = data?.data?.[0]?.playing;
+        if (count !== undefined) {
+          el.textContent = count.toLocaleString('pt-BR');
+          return;
+        }
+      } catch {}
+    }
+    // Fallback: mostrar "Em breve" em vez de travessão morto
+    el.textContent = 'Em breve';
+    el.style.fontSize = '1.1rem';
   }
   fetchPlayers();
-  setInterval(fetchPlayers, 60000);
+  setInterval(fetchPlayers, 90000);
 </script>
 
   <script>
