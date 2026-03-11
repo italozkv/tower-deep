@@ -673,7 +673,6 @@ const CFG = {
   // GITHUB_TOKEN salvo no navegador (localStorage) — nunca fica no código
   get GITHUB_TOKEN()  { return localStorage.getItem('admin_github_token') || ''; },
   set GITHUB_TOKEN(v) { if (v) localStorage.setItem('admin_github_token', v); },
-
   GIST_ID: '828d67529bc2b06909370685b0c6be56',        // ← ID do seu Gist principal
   GIST_ROADMAP_ID: '0e326672a32c9a11079d5332f57052a4', // ← ID do Gist de roadmap (pode ser o mesmo)
   ADMIN_NAME: 'Admin', // Nome exibido no histórico
@@ -736,16 +735,15 @@ window.addEventListener('DOMContentLoaded', () => {
    PANEL INIT
 ═══════════════════════════════════════════════════════════════ */
 async function initPanel() {
-  // Pede o GitHub token se ainda não estiver salvo no navegador
   if (!CFG.GITHUB_TOKEN) {
-    const t = prompt('🔑 Cole seu GitHub Token (ghp_...) para conectar ao Gist:
+    const t = prompt('Cole seu GitHub Token (ghp_...) para conectar ao Gist:
 
 Ele ficará salvo só no seu navegador.');
     if (t && t.trim().startsWith('ghp_')) {
       CFG.GITHUB_TOKEN = t.trim();
-      notify('✅ GitHub Token salvo no navegador!');
+      notify('GitHub Token salvo no navegador!');
     } else if (t) {
-      notify('⚠️ Token inválido. Deve começar com ghp_', true);
+      notify('Token inválido. Deve começar com ghp_', true);
     }
   }
   await loadAllData();
@@ -815,13 +813,13 @@ function trocarGithubToken() {
 
 Cole o novo token (ghp_...) ou deixe em branco para manter:'
     : 'Cole seu GitHub Token (ghp_...):';
-  const t = prompt('🔑 GitHub Token
+  const t = prompt('GitHub Token
 ' + msg);
-  if (t === null) return; // cancelou
+  if (t === null) return;
   if (t.trim() === '' && atual) { notify('Token mantido.'); return; }
-  if (!t.trim().startsWith('ghp_')) { notify('⚠️ Token inválido. Deve começar com ghp_', true); return; }
+  if (!t.trim().startsWith('ghp_')) { notify('Token inválido. Deve começar com ghp_', true); return; }
   CFG.GITHUB_TOKEN = t.trim();
-  notify('✅ GitHub Token atualizado! Recarregando dados...');
+  notify('GitHub Token atualizado!');
   loadAllData().then(() => renderDash());
 }
 
