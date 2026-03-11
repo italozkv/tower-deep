@@ -275,6 +275,7 @@ tr:hover td{background:rgba(255,255,255,.015)}
   <button class="tab"     onclick="go('reports',this)">📊 Relatórios</button>
   <div class="topbar-right">
     <div class="top-badge" id="online-badge">● Carregando…</div>
+    <button class="logout-btn" style="background:rgba(240,192,96,.12);color:#f0c060;border-color:rgba(240,192,96,.3);margin-right:4px" onclick="trocarGithubToken()" title="Trocar GitHub Token">🔑 Token</button>
     <button class="logout-btn" onclick="doLogout()">Sair</button>
   </div>
 </div>
@@ -669,7 +670,10 @@ const CFG = {
   // Token padrão: "tower-admin-2026" → altere para o seu e atualize o hash abaixo
   TOKEN_HASH: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
 
-  GITHUB_TOKEN: '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',   // ← Preencha com seu GitHub token (necessário para leitura/escrita no Gist)
+  // GITHUB_TOKEN salvo no navegador (localStorage) — nunca fica no código
+  get GITHUB_TOKEN()  { return localStorage.getItem('admin_github_token') || ''; },
+  set GITHUB_TOKEN(v) { if (v) localStorage.setItem('admin_github_token', v); },
+
   GIST_ID: '828d67529bc2b06909370685b0c6be56',        // ← ID do seu Gist principal
   GIST_ROADMAP_ID: '0e326672a32c9a11079d5332f57052a4', // ← ID do Gist de roadmap (pode ser o mesmo)
   ADMIN_NAME: 'Admin', // Nome exibido no histórico
@@ -732,6 +736,18 @@ window.addEventListener('DOMContentLoaded', () => {
    PANEL INIT
 ═══════════════════════════════════════════════════════════════ */
 async function initPanel() {
+  // Pede o GitHub token se ainda não estiver salvo no navegador
+  if (!CFG.GITHUB_TOKEN) {
+    const t = prompt('🔑 Cole seu GitHub Token (ghp_...) para conectar ao Gist:
+
+Ele ficará salvo só no seu navegador.');
+    if (t && t.trim().startsWith('ghp_')) {
+      CFG.GITHUB_TOKEN = t.trim();
+      notify('✅ GitHub Token salvo no navegador!');
+    } else if (t) {
+      notify('⚠️ Token inválido. Deve começar com ghp_', true);
+    }
+  }
   await loadAllData();
   renderDash();
   loadItemCatalog();
@@ -792,6 +808,23 @@ async function gistWrite(filename, data, gistId) {
 /* ═══════════════════════════════════════════════════════════════
    NAVIGATION
 ═══════════════════════════════════════════════════════════════ */
+function trocarGithubToken() {
+  const atual = CFG.GITHUB_TOKEN;
+  const msg = atual
+    ? 'Token atual: ' + atual.substring(0,12) + '...
+
+Cole o novo token (ghp_...) ou deixe em branco para manter:'
+    : 'Cole seu GitHub Token (ghp_...):';
+  const t = prompt('🔑 GitHub Token
+' + msg);
+  if (t === null) return; // cancelou
+  if (t.trim() === '' && atual) { notify('Token mantido.'); return; }
+  if (!t.trim().startsWith('ghp_')) { notify('⚠️ Token inválido. Deve começar com ghp_', true); return; }
+  CFG.GITHUB_TOKEN = t.trim();
+  notify('✅ GitHub Token atualizado! Recarregando dados...');
+  loadAllData().then(() => renderDash());
+}
+
 function go(tab, el) {
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
