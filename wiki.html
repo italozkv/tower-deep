@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <link rel="icon" type="image/png" href="ragnasd2.png">
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tower Deep — Wiki</title>
@@ -651,19 +650,20 @@ function loadLocalImg(input, inputId, previewId) {
 
 <!-- NAV -->
 <nav class="site-nav">
-  <a class="nav-logo" href="index.html">Tower Deep</a>
-  <button id="theme-toggle" onclick="toggleTheme()" title="Tema Claro" aria-label="Alternar tema">☀️</button>
-  <button class="nav-hamburger" onclick="this.nextElementSibling.classList.toggle('open')">
-    <span></span><span></span><span></span>
-  </button>
-  <ul class="nav-links">
+  <a href="index.html" class="nav-logo">⚜ Tower Deep</a>
+  <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Início</a></li>
     <li><a href="wiki.html" class="active">Wiki</a></li>
     <li><a href="changelog.html">Changelog</a></li>
     <li><a href="roadmap.html">Roadmap</a></li>
     <li><a href="enquetes.html">Enquetes</a></li>
     <li><a href="ranking.html">Ranking</a></li>
+    <li><a href="https://www.roblox.com/pt/games/136302244140571/Tower-Deep" target="_blank">▶ Jogar</a></li>
   </ul>
+  <button id="theme-toggle" onclick="toggleTheme()" title="Tema Claro" aria-label="Alternar tema">☀️</button>
+  <button class="nav-hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <div class="page">
