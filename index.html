@@ -30,11 +30,11 @@
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
     body{background:var(--ink);color:var(--divine);font-family:'EB Garamond',serif;font-size:1.1rem;line-height:1.75;overflow-x:hidden;min-height:100vh}
-    .stars-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+    .stars-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:0.35}
     .stars-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(1px 1px at 8% 15%,rgba(201,168,76,.7) 0%,transparent 100%),radial-gradient(1px 1px at 22% 72%,rgba(201,168,76,.4) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 37% 8%,rgba(240,208,128,.8) 0%,transparent 100%),radial-gradient(1px 1px at 53% 50%,rgba(201,168,76,.5) 0%,transparent 100%),radial-gradient(2px 2px at 80% 78%,rgba(240,208,128,.6) 0%,transparent 100%),radial-gradient(1px 1px at 91% 12%,rgba(201,168,76,.5) 0%,transparent 100%),radial-gradient(2px 2px at 31% 43%,rgba(240,208,128,.9) 0%,transparent 100%),radial-gradient(1px 1px at 75% 58%,rgba(201,168,76,.4) 0%,transparent 100%),radial-gradient(1px 1px at 19% 35%,rgba(201,168,76,.4) 0%,transparent 100%);animation:twinkle 9s ease-in-out infinite alternate}
     .stars-bg::after{content:'';position:absolute;inset:0;background-image:radial-gradient(1.5px 1.5px at 63% 18%,rgba(240,208,128,.7) 0%,transparent 100%),radial-gradient(1px 1px at 44% 92%,rgba(201,168,76,.5) 0%,transparent 100%),radial-gradient(2px 2px at 11% 7%,rgba(240,208,128,.8) 0%,transparent 100%),radial-gradient(1px 1px at 50% 3%,rgba(201,168,76,.6) 0%,transparent 100%);animation:twinkle 13s ease-in-out infinite alternate-reverse}
     @keyframes twinkle{0%{opacity:.5}100%{opacity:1}}
-    .nebula-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 50% at 15% 25%,rgba(42,74,122,.10) 0%,transparent 70%),radial-gradient(ellipse 55% 65% at 85% 75%,rgba(139,26,26,.07) 0%,transparent 70%),radial-gradient(ellipse 90% 35% at 50% 5%,rgba(201,168,76,.04) 0%,transparent 70%)}
+    .nebula-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 70% 50% at 15% 25%,rgba(42,74,122,.06) 0%,transparent 70%),radial-gradient(ellipse 55% 65% at 85% 75%,rgba(139,26,26,.04) 0%,transparent 70%),radial-gradient(ellipse 90% 35% at 50% 5%,rgba(201,168,76,.02) 0%,transparent 70%)}
     .site-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:60px;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,.12)}
     .nav-logo{font-family:'Cinzel Decorative',serif;font-size:.9rem;font-weight:700;color:var(--gold-light);text-decoration:none;letter-spacing:.1em;text-shadow:0 0 20px rgba(201,168,76,.4)}
     .nav-links{display:flex;gap:4px;list-style:none}.nav-links a{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;padding:6px 16px;border:1px solid transparent;transition:all .25s ease}
@@ -57,10 +57,35 @@
     .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}.reveal.visible{opacity:1;transform:translateY(0)}
     @media(max-width:700px){.nav-links{display:none;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--nav-bg);border-bottom:1px solid rgba(201,168,76,.15);padding:12px 0}.nav-links.open{display:flex}.nav-links a{padding:12px 24px;border:none}.nav-hamburger{display:flex}.site-nav{padding:0 20px}}
 
+    /* ── FUNDO DO OLIMPO ── */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image: url('https://i.postimg.cc/MH8nRnF7/fundo123.png');
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      animation: fadeIn 1.8s ease both;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg,
+        rgba(4,3,2,0.50) 0%,
+        rgba(4,3,2,0.20) 35%,
+        rgba(4,3,2,0.25) 65%,
+        rgba(4,3,2,0.85) 100%
+      );
+    }
+
     .hero {
       min-height: 100vh; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center; padding: 0 24px; position: relative;
+      overflow: hidden;
     }
     .divine-rings {
       position: absolute;
@@ -620,6 +645,8 @@
 
 <div class="page">
   <section class="hero">
+    <!-- Fundo épico do Olimpo -->
+    <div class="hero-bg"></div>
     <div class="divine-rings">
       <div class="ring ring-1"></div>
       <div class="ring ring-2"></div>
